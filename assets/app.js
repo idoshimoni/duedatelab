@@ -78,6 +78,27 @@
   // calculation yet (`.pl-result` hidden or missing), we fall back to the
   // page URL only. Calculator inputs never leave the browser, only the
   // result summary the user explicitly chose to share.
+  //
+  // On-screen copy addresses the viewer in second person ("You're about
+  // 22 weeks along"). When shared, the recipient would read that as if it
+  // were addressed to them. `personalize()` flips second person to first
+  // person so the shared text reads like the sender is speaking about
+  // themselves ("I'm about 22 weeks along").
+  function personalize(t) {
+    if (!t) return t;
+    // Longer patterns first so contractions and "You are" don't collide
+    // with the bare "You" rule.
+    t = t.replace(/\bYou['\u2019]re\b/g, "I'm");
+    t = t.replace(/\byou['\u2019]re\b/g, "I'm");
+    t = t.replace(/\bYou are\b/g, "I am");
+    t = t.replace(/\byou are\b/g, "I am");
+    t = t.replace(/\bYour\b/g, "My");
+    t = t.replace(/\byour\b/g, "my");
+    t = t.replace(/\bYou\b/g, "I");
+    t = t.replace(/\byou\b/g, "I");
+    return t;
+  }
+
   function getResultText() {
     var wrap = document.querySelector('.pl-result');
     if (!wrap || wrap.classList.contains('hidden')) return '';
@@ -92,7 +113,7 @@
       var et = (expl.innerText || expl.textContent || '').trim().replace(/\s+/g, ' ');
       if (et) parts.push(et);
     }
-    return parts.join('. ');
+    return personalize(parts.join('. '));
   }
 
   function initShare() {
@@ -131,10 +152,24 @@
         window.open(url, '_blank', 'noopener');
       });
     });
-    // Print / save: leaves the browser print dialog, which on mobile lets the user save as PDF.
+    // Save as PDF: opens the browser print dialog with a result-only view.
+    // `body.pl-print-result-only` turns on the @media print rules that hide
+    // header, form, nav, ads, FAQ, legal, footer, and the share buttons
+    // themselves — so the saved PDF is just the headline result plus a
+    // brand/URL footer. Class is removed on afterprint (and as a belt-and-
+    // braces timeout) so the user's next regular Ctrl+P still prints the
+    // full page.
     document.querySelectorAll('[data-share-image]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
+        document.body.classList.add('pl-print-result-only');
+        function cleanup() {
+          document.body.classList.remove('pl-print-result-only');
+          window.removeEventListener('afterprint', cleanup);
+        }
+        window.addEventListener('afterprint', cleanup);
+        // Fallback: some mobile browsers don't fire afterprint reliably.
+        setTimeout(cleanup, 5000);
         window.print();
       });
     });

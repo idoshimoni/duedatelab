@@ -244,3 +244,68 @@ a { color: var(--navy); }
 
 /* Utility */
 .hidden { display: none !important; }
+
+/* Print: Save-as-PDF button toggles body.pl-print-result-only so that only
+   the result card prints, not the entire page (header, form, FAQ, footer,
+   ads, share buttons). Regular Ctrl+P on a page without that class prints
+   the full page as normal. */
+@media print {
+  body.pl-print-result-only .pl-header,
+  body.pl-print-result-only .pl-drawer,
+  body.pl-print-result-only .pl-card,
+  body.pl-print-result-only .pl-explain,
+  body.pl-print-result-only .pl-faq,
+  body.pl-print-result-only .pl-related,
+  body.pl-print-result-only .pl-footer,
+  body.pl-print-result-only .pl-breadcrumb,
+  body.pl-print-result-only .pl-article-breadcrumb,
+  body.pl-print-result-only .pl-share,
+  body.pl-print-result-only .pl-h1,
+  body.pl-print-result-only .pl-sub,
+  body.pl-print-result-only ins,
+  body.pl-print-result-only .adsbygoogle {
+    display: none !important;
+  }
+  body.pl-print-result-only .pl-result {
+    display: block !important;
+    margin: 0 !important;
+    padding: 32px 24px !important;
+    background: #fff !important;
+    color: #1A2E4A !important;
+    border: none !important;
+    box-shadow: none !important;
+    text-align: center !important;
+  }
+  body.pl-print-result-only .pl-result-big {
+    font-size: 36px !important;
+    font-weight: 800 !important;
+    color: #1A2E4A !important;
+    margin-bottom: 12px !important;
+  }
+  body.pl-print-result-only .pl-result-expl {
+    font-size: 16px !important;
+    color: #1A2E4A !important;
+    margin-bottom: 18px !important;
+  }
+  body.pl-print-result-only .pl-result::before {
+    content: "DueDateLab";
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    color: #EC0D5C;
+    letter-spacing: 0.5px;
+    margin-bottom: 24px;
+  }
+  body.pl-print-result-only .pl-result::after {
+    content: "duedatelab.com";
+    display: block;
+    font-size: 12px;
+    color: #5A6B82;
+    margin-top: 24px;
+  }
+  body.pl-print-result-only .pl-page {
+    padding: 0 !important;
+    max-width: none !important;
+  }
+  @page { margin: 20mm; }
+}
