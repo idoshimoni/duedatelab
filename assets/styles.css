@@ -187,7 +187,10 @@ a { color: var(--navy); }
 .pl-legal h2 { font-size: 20px; font-weight: 700; margin: 28px 0 10px; letter-spacing: -0.3px; }
 .pl-legal p, .pl-legal li { font-size: 16px; line-height: 1.6; }
 .pl-legal ul, .pl-legal ol { padding-left: 22px; }
-.pl-legal a { color: var(--navy); }
+.pl-legal a { color: var(--navy); text-decoration: none; border-bottom: 1px solid var(--border); }
+.pl-legal a:hover { border-color: var(--crimson); color: var(--crimson); }
+.pl-legal a[href^="mailto:"] { color: var(--crimson-dark); font-weight: 600; border-bottom-color: var(--crimson-soft); }
+.pl-legal a[href^="mailto:"]:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
 
 /* Footer */
 .pl-footer { background: var(--navy); color: rgba(255,255,255,0.75); padding: 40px 16px 24px; margin-top: 48px; }
