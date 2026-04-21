@@ -44,6 +44,12 @@
 
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    if (window.gtag) {
+      window.gtag('event', 'sleep_needs_viewed', {
+        age_bucket: b.label
+      });
+    }
   });
 
   function stat(num, label) {

@@ -128,6 +128,14 @@
     resultStats.innerHTML = stat(pW+suff(pW),'Weight %') + stat(pH+suff(pH),'Height %') + stat(bmi.toFixed(1),'BMI');
     result.classList.remove('hidden');
     result.scrollIntoView({behavior:'smooth',block:'start'});
+
+    if (window.gtag) {
+      window.gtag('event', 'percentile_checked', {
+        sex: sex,
+        unit: currentUnit,
+        age_months: Math.round(ageM)
+      });
+    }
   });
 
   function suff(n){ var s=n%100; if(s>=11&&s<=13) return 'th'; switch(n%10){case 1:return 'st';case 2:return 'nd';case 3:return 'rd';default:return 'th';} }

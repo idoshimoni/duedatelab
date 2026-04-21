@@ -86,6 +86,14 @@
 
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    // GA4 event: only fires if gtag was loaded and consent is granted.
+    if (window.gtag) {
+      window.gtag('event', 'due_date_calculated', {
+        mode: mode,
+        trimester: trimester
+      });
+    }
   });
 
   function stat(num, label) {
