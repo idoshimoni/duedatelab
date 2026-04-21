@@ -67,7 +67,7 @@
   // ── GA4 loader (only fires after consent is granted) ───
   function loadGA4() {
     if (window.__ga4Loaded) return;
-    if (!GA4_ID || GA4_ID.indexOf('G-') !== 0 || GA4_ID === 'G-PG9K79G7RK') return;
+    if (!GA4_ID || GA4_ID.indexOf('G-') !== 0) return;
     window.__ga4Loaded = true;
 
     gtag('js', new Date());
