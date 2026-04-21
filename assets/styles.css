@@ -107,7 +107,11 @@ a { color: var(--navy); }
 .pl-mode-tabs button .pl-mode-sub { display: block; font-weight: 500; font-size: 12px; color: var(--muted); }
 
 /* Result */
-.pl-result { margin-top: 16px; background: var(--crimson-soft); border-radius: var(--radius-card); border-top: 4px solid var(--crimson); padding: 24px; max-width: 640px; margin-left: auto; margin-right: auto; }
+.pl-result { margin-top: 16px; background: var(--crimson-soft); border-radius: var(--radius-card); border-top: 4px solid var(--crimson); padding: 24px; max-width: 640px; margin-left: auto; margin-right: auto; scroll-margin-top: 72px; }
+/* Keep the top edge of scroll targets clear of the 56px sticky header on every
+   breakpoint (desktop + mobile). Applies to calc forms too so the "Try again"
+   scrollIntoView doesn't tuck the form header under the sticky nav. */
+.pl-form, form[id$="-form"] { scroll-margin-top: 72px; }
 .pl-result-big { font-size: 36px; font-weight: 800; line-height: 1.1; letter-spacing: -0.8px; margin: 0 0 8px; }
 @media (min-width: 1024px) { .pl-result-big { font-size: 48px; } }
 .pl-result-expl { font-size: 16px; color: var(--text-soft); margin: 0 0 20px; }
