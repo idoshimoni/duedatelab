@@ -1,6 +1,1 @@
-# DueDateLab ads.txt
-# This file will be populated with the publisher line Google AdSense
-# provides after approval, in the format:
-#   google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
-# Until then, it exists so crawlers and AdSense readiness scans see a
-# valid, non-404 ads.txt at the site root.
+google.com, pub-1544088205717934, DIRECT, f08c47fec0942fa0
