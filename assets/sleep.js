@@ -42,6 +42,16 @@
       stat(b.napTotal + 'h', 'Naps') +
       stat(b.naps, 'Naps/day');
 
+    // Share text: flip bucket label ("0-3 months (newborn)") so the category
+    // leads, then state the recommendation. Reads better on WhatsApp / X
+    // than the visual big + subtitle pair, where "14-17 hours / 24h" looks
+    // like a fraction once flattened.
+    var m = b.label.match(/^(.+?) \((.+?)\)$/);
+    var catLabel = m ? (m[2].charAt(0).toUpperCase() + m[2].slice(1)) + ' (' + m[1] + ')' : b.label;
+    var napsClause = b.naps === '0' ? '' : ', including naps';
+    result.setAttribute('data-share-override',
+      catLabel + ': ' + b.total + ' hours of sleep per day' + napsClause + ' (AAP).');
+
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 

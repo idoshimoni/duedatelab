@@ -102,6 +102,13 @@
   function getResultText() {
     var wrap = document.querySelector('.pl-result');
     if (!wrap || wrap.classList.contains('hidden')) return '';
+    // Escape hatch: if the tool has built a full share sentence at compute
+    // time (because its on-screen big/expl pair doesn't flow as plain text),
+    // use that verbatim. Sleep Needs uses this because its big value is a
+    // number with a small subtitle chip ("14-17 hours / 24h") that reads
+    // awkwardly flattened.
+    var override = wrap.getAttribute('data-share-override');
+    if (override) return personalize(override);
     var big = wrap.querySelector('.pl-result-big');
     var expl = wrap.querySelector('.pl-result-expl');
     // Optional per-tool label. On the page, the headline gets visual
