@@ -1,7 +1,6 @@
 # DueDateLab ads.txt
-# Populate after AdSense approval with the line Google gives you, format:
-# google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
-#
-# Until then, this file exists so the root is reachable (avoids 404 warnings
-# in crawlers and AdSense readiness scans).
-placeholder.example.com, 0000, DIRECT, placeholder
+# This file will be populated with the publisher line Google AdSense
+# provides after approval, in the format:
+#   google.com, pub-XXXXXXXXXXXXXXXX, DIRECT, f08c47fec0942fa0
+# Until then, it exists so crawlers and AdSense readiness scans see a
+# valid, non-404 ads.txt at the site root.
