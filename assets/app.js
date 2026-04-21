@@ -6,7 +6,7 @@
 
   // ── Config ───────────────────────────────────────────
   // Replace with real Measurement ID once the GA4 property is created.
-  var GA4_ID = 'G-XXXXXXXXXX';
+  var GA4_ID = 'G-PG9K79G7RK';
   var CONSENT_KEY = 'pl-consent';   // 'granted' | 'denied'
   var LEGACY_KEY  = 'pl-cookie';    // old key, migrated once then removed
 
@@ -67,7 +67,7 @@
   // ── GA4 loader (only fires after consent is granted) ───
   function loadGA4() {
     if (window.__ga4Loaded) return;
-    if (!GA4_ID || GA4_ID.indexOf('G-') !== 0 || GA4_ID === 'G-XXXXXXXXXX') return;
+    if (!GA4_ID || GA4_ID.indexOf('G-') !== 0 || GA4_ID === 'G-PG9K79G7RK') return;
     window.__ga4Loaded = true;
 
     gtag('js', new Date());
