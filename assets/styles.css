@@ -205,6 +205,8 @@ a { color: var(--navy); }
 .pl-footer a { color: rgba(255,255,255,0.75); text-decoration: none; display: block; padding: 4px 0; font-size: 15px; }
 .pl-footer a:hover { color: #fff; }
 .pl-footer-note { max-width: 960px; margin: 0 auto; font-size: 12px; color: rgba(255,255,255,0.45); padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
+.pl-footer-note a { display: inline; padding: 0; font-size: inherit; }
+.pl-footer-note a:hover { color: #fff; text-decoration: underline; }
 
 /* Cookie banner */
 .pl-cookie { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 8px 16px; display: flex; align-items: center; gap: 12px; font-size: 13px; min-height: 48px; z-index: 40; flex-wrap: wrap; }

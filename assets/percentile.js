@@ -77,6 +77,14 @@
   }
   function lmsZScore(x,L,M,S){ if(L===0) return Math.log(x/M)/S; return (Math.pow(x/M,L)-1)/(L*S); }
   function percentile(z){ return Math.round(normalCdf(z)*100); }
+  function formatPercentile(z){
+    var p = normalCdf(z) * 100;
+    if (p >= 99.5) return { label: '>99th', numeric: 99, tail: 'high' };
+    if (p < 0.5)  return { label: '<1st',  numeric: 1,  tail: 'low'  };
+    var n = Math.round(p);
+    return { label: n + suffix(n), numeric: n, tail: null };
+  }
+  function suffix(n){ var s=n%100; if(s>=11&&s<=13) return 'th'; switch(n%10){case 1:return 'st';case 2:return 'nd';case 3:return 'rd';default:return 'th';} }
   function lookup(table,months){ months=Math.max(0,Math.min(60,Math.round(months))); return table[months]; }
 
   var form = document.getElementById('pct-form');
@@ -118,14 +126,22 @@
 
     var w = lookup(sex==='boy'?W_BOY:W_GIRL, ageM);
     var h = lookup(sex==='boy'?H_BOY:H_GIRL, ageM);
-    var pW = percentile(lmsZScore(weightKg, w[0], w[1], w[2]));
-    var pH = percentile(lmsZScore(heightCm, h[0], h[1], h[2]));
+    var zW = lmsZScore(weightKg, w[0], w[1], w[2]);
+    var zH = lmsZScore(heightCm, h[0], h[1], h[2]);
+    var pW = percentile(zW);
+    var pH = percentile(zH);
+    var fW = formatPercentile(zW);
+    var fH = formatPercentile(zH);
     var bmi = weightKg / Math.pow(heightCm/100, 2);
 
-    resultBig.innerHTML = pW + '<span style="font-size:0.45em;font-weight:700;">th</span> <span style="font-size:0.45em;font-weight:600;color:#5A6B82;">percentile weight</span>';
+    resultBig.innerHTML = fW.label + ' <span style="font-size:0.45em;font-weight:600;color:#5A6B82;">percentile weight</span>';
     var ageLabel = ageM < 24 ? (ageM + ' month' + (ageM==1?'':'s')) : ((ageM/12).toFixed(1).replace(/\.0$/,'') + ' years');
-    resultExpl.textContent = 'Compared to WHO growth standards for ' + sex + 's at ' + ageLabel + '.';
-    resultStats.innerHTML = stat(pW+suff(pW),'Weight %') + stat(pH+suff(pH),'Height %') + stat(bmi.toFixed(1),'BMI');
+    var explText = 'Compared to WHO growth standards for ' + sex + 's at ' + ageLabel + '.';
+    if (fW.tail || fH.tail || Math.abs(zW) >= 2 || Math.abs(zH) >= 2) {
+      explText += ' This result is outside the typical range. It may be normal for your child, but the AAP recommends discussing growth trends outside the 3rd\u201397th percentile band with your pediatrician.';
+    }
+    resultExpl.textContent = explText;
+    resultStats.innerHTML = stat(fW.label,'Weight %') + stat(fH.label,'Height %') + stat(bmi.toFixed(1),'BMI');
     result.classList.remove('hidden');
     result.scrollIntoView({behavior:'smooth',block:'start'});
 
@@ -138,7 +154,6 @@
     }
   });
 
-  function suff(n){ var s=n%100; if(s>=11&&s<=13) return 'th'; switch(n%10){case 1:return 'st';case 2:return 'nd';case 3:return 'rd';default:return 'th';} }
   function stat(num,label){ return '<div class="pl-stat"><div class="pl-stat-num">'+num+'</div><div class="pl-stat-label">'+label+'</div></div>'; }
 
   setUnit('metric');
