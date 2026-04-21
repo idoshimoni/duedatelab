@@ -44,9 +44,28 @@
     var btn = document.querySelector('[data-drawer-toggle]');
     var drawer = document.querySelector('[data-drawer]');
     if (!btn || !drawer) return;
-    btn.addEventListener('click', function () {
+    function closeDrawer() {
+      drawer.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+    btn.addEventListener('click', function (e) {
+      e.stopPropagation();
       var open = drawer.classList.toggle('open');
       btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    // Close on link click (drawer dismisses when navigating)
+    drawer.addEventListener('click', function (e) {
+      if (e.target && e.target.tagName === 'A') closeDrawer();
+    });
+    // Close on outside tap
+    document.addEventListener('click', function (e) {
+      if (!drawer.classList.contains('open')) return;
+      if (drawer.contains(e.target) || btn.contains(e.target)) return;
+      closeDrawer();
+    });
+    // Close on Esc
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
     });
   }
 

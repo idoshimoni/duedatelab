@@ -55,8 +55,9 @@ a { color: var(--navy); }
 .pl-hamburger { margin-left: auto; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: #fff; cursor: pointer; }
 @media (min-width: 1024px) { .pl-hamburger { display: none; } }
 
-.pl-drawer { background: var(--navy); display: none; }
+.pl-drawer { background: var(--navy); display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 19; max-height: calc(100vh - 56px); overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
 .pl-drawer.open { display: block; }
+@media (min-width: 1024px) { .pl-drawer { display: none !important; } }
 .pl-drawer a { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; color: #fff; text-decoration: none; font-size: 17px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.08); border-left: 3px solid transparent; }
 .pl-drawer a.active { background: rgba(236,13,92,0.12); border-left-color: var(--crimson); }
 
