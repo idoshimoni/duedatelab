@@ -78,7 +78,7 @@
     var fertileEnd = PL.addDays(conception, 1);
 
     resultBig.innerHTML = PL.formatDate(conception);
-    resultExpl.innerHTML = 'Most likely conception date. Fertile window: <b>' + PL.shortDate(fertileStart) + '</b> – <b>' + PL.shortDate(fertileEnd) + '</b>.';
+    resultExpl.innerHTML = 'Fertile window: <b>' + PL.shortDate(fertileStart) + '</b> – <b>' + PL.shortDate(fertileEnd) + '</b>.';
 
     resultStats.innerHTML =
       stat(PL.shortDate(conception), 'Conceived') +

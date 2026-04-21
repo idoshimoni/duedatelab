@@ -104,10 +104,17 @@
     if (!wrap || wrap.classList.contains('hidden')) return '';
     var big = wrap.querySelector('.pl-result-big');
     var expl = wrap.querySelector('.pl-result-expl');
+    // Optional per-tool label. On the page, the headline gets visual
+    // hierarchy from typography; in plain text it needs a short prefix
+    // so the reader knows what the number or date represents.
+    // Examples: "My due date: June 15, 2026" vs just "June 15, 2026".
+    // Tools whose headline is already a complete thought (e.g. Chinese
+    // Gender: "It's a boy") omit data-share-label.
+    var label = wrap.getAttribute('data-share-label') || '';
     var parts = [];
     if (big) {
       var bt = (big.innerText || big.textContent || '').trim().replace(/\s+/g, ' ');
-      if (bt) parts.push(bt);
+      if (bt) parts.push(label ? (label + ': ' + bt) : bt);
     }
     if (expl) {
       var et = (expl.innerText || expl.textContent || '').trim().replace(/\s+/g, ' ');
