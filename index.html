@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<!-- pl-seo-block -->
+<link rel="canonical" href="https://duedatelab.com/"/>
+<meta name="robots" content="index,follow"/>
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg"/>
+<link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png"/>
+<meta name="theme-color" content="#1A2E4A"/>
+<meta property="og:type" content="website"/>
+<meta property="og:title" content="Due Date Calculator | DueDateLab"/>
+<meta property="og:description" content="Calculate your pregnancy due date from your last period, conception date, or a known due date. Free, private, and evidence-based."/>
+<meta property="og:url" content="https://duedatelab.com/"/>
+<meta property="og:image" content="https://duedatelab.com/assets/og-image.png"/>
+<meta property="og:site_name" content="DueDateLab"/>
+<meta property="og:locale" content="en_US"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Due Date Calculator | DueDateLab"/>
+<meta name="twitter:description" content="Calculate your pregnancy due date from your last period, conception date, or a known due date. Free, private, and evidence-based."/>
+<meta name="twitter:image" content="https://duedatelab.com/assets/og-image.png"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Due Date Calculator","description":"Calculate your pregnancy due date from your last period, conception date, or a known due date. Free, private, and evidence-based.","url":"https://duedatelab.com/","inLanguage":"en","publisher":{"@type":"Organization","name":"DueDateLab","url":"https://duedatelab.com","logo":{"@type":"ImageObject","url":"https://duedatelab.com/assets/logo.png"}},"applicationCategory":"HealthApplication","operatingSystem":"Web","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+<!-- /pl-seo-block -->
+<title>Due Date Calculator | DueDateLab</title>
+<meta name="description" content="Calculate your pregnancy due date from your last period, conception date, or a known due date. Free, private, and evidence-based."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css?v=3">
+</head>
+<body>
+<header class="pl-header">
+  <a class="pl-logo" href="index.html">DueDate<span class="dot">Lab</span></a>
+  <nav class="pl-nav">
+    <a href="index.html" class="active">Due Date</a>
+    <a href="chinese-gender-chart.html">Chinese Gender</a>
+    <a href="sleep-needs-by-age.html">Sleep Needs</a>
+    <a href="baby-percentile.html">Percentile</a>
+    <a href="conception-calculator.html">Conception</a>
+  </nav>
+  <button class="pl-hamburger" data-drawer-toggle aria-label="Menu" aria-expanded="false">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+  </button>
+</header>
+<div class="pl-drawer" data-drawer>
+  <a href="index.html" class="active">Due Date Calculator</a>
+  <a href="chinese-gender-chart.html">Chinese Gender Chart</a>
+  <a href="sleep-needs-by-age.html">Sleep Needs by Age</a>
+  <a href="baby-percentile.html">Baby Percentile</a>
+  <a href="conception-calculator.html">Conception Calculator</a>
+</div>
+
+<main class="pl-page">
+  <div class="pl-card">
+    <h1 class="pl-h1">Due Date Calculator</h1>
+    <p class="pl-sub">Estimate your due date from your last period, conception date, or a known due date.</p>
+    <form id="dd-form" novalidate>
+      <div class="pl-field" style="margin-bottom:20px">
+        <label>How do you want to calculate?</label>
+        <label class="pl-radio"><input type="radio" name="mode" value="lmp" checked> Last menstrual period</label>
+        <label class="pl-radio"><input type="radio" name="mode" value="conception"> Conception date</label>
+        <label class="pl-radio"><input type="radio" name="mode" value="duedate"> I already know my due date</label>
+      </div>
+      <div class="pl-field" id="dd-field-lmp">
+        <label for="dd-lmp">First day of last period</label>
+        <input class="pl-input" type="date" id="dd-lmp" name="lmp">
+      </div>
+      <div class="pl-field" id="dd-field-conc">
+        <label for="dd-conc">Estimated conception date</label>
+        <input class="pl-input" type="date" id="dd-conc" name="conception">
+      </div>
+      <div class="pl-field" id="dd-field-dd">
+        <label for="dd-dd">Due date</label>
+        <input class="pl-input" type="date" id="dd-dd" name="duedate">
+      </div>
+      <div class="pl-field">
+        <label for="dd-cycle">Cycle length (days)</label>
+        <input class="pl-input" type="number" id="dd-cycle" name="cycle" value="28" min="20" max="45">
+      </div>
+      <div id="dd-err" class="pl-err-msg"></div>
+      <button type="submit" class="pl-cta">Calculate due date</button>
+    </form>
+  </div>
+
+  <div class="pl-result hidden" id="dd-result">
+    <div class="pl-result-big" id="dd-big"></div>
+    <div class="pl-result-expl" id="dd-expl"></div>
+    <div class="pl-stat-grid c2" id="dd-stats"></div>
+    <div class="pl-timeline"><div class="pl-timeline-track" id="dd-track"></div></div>
+    <div class="pl-share">
+      <span class="pl-share-label">Share</span>
+      <button class="pl-share-btn" data-share-copy title="Copy link" aria-label="Copy link">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.72"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.72-1.72"/></svg>
+      </button>
+      <a class="pl-share-btn" data-share-whatsapp title="WhatsApp" aria-label="WhatsApp"><svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 2.1.55 4.14 1.6 5.94L2 22l4.3-1.13a9.9 9.9 0 005.74 1.46h.01c5.46 0 9.9-4.45 9.9-9.9S17.5 2 12.04 2zm0 18.12c-1.65 0-3.28-.44-4.7-1.28l-.34-.2-3.57.94.95-3.48-.22-.36a8.2 8.2 0 01-1.25-4.37c0-4.53 3.68-8.22 8.22-8.22 2.2 0 4.26.85 5.82 2.42a8.18 8.18 0 012.41 5.81c0 4.54-3.68 8.22-8.22 8.22z"/></svg></a>
+      <a class="pl-share-btn" data-share-x title="Share on X" aria-label="Share on X"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21.5l-7.29 8.33L22.5 22h-6.6l-5.17-6.76L4.8 22H1.54l7.8-8.91L1.5 2h6.77l4.67 6.18L18.244 2zm-2.34 18h1.84L8.2 4H6.26l9.64 16z"/></svg></a>
+      <button class="pl-share-btn" data-share-image title="Save as image" aria-label="Save as image"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></button>
+      <button class="pl-tryagain" id="dd-tryagain">Try again ↻</button>
+    </div>
+  </div>
+
+  <div class="pl-ad">
+    <div class="pl-ad-label">Advertisement</div>
+    <div class="pl-ad-slot">Ad slot · 728×90</div>
+  </div>
+
+  <section class="pl-related">
+    <h2 class="pl-related-h">More tools</h2>
+    <div class="pl-related-grid c4">
+      <a class="pl-related-card" href="chinese-gender-chart.html"><div class="pl-related-title">Chinese Gender Chart</div><p class="pl-related-desc">Boy or girl? Lunar-age novelty chart.</p></a>
+      <a class="pl-related-card" href="sleep-needs-by-age.html"><div class="pl-related-title">Sleep Needs by Age</div><p class="pl-related-desc">AAP-recommended sleep, 0–18y.</p></a>
+      <a class="pl-related-card" href="baby-percentile.html"><div class="pl-related-title">Baby Percentile</div><p class="pl-related-desc">WHO growth standards for weight &amp; length.</p></a>
+      <a class="pl-related-card" href="conception-calculator.html"><div class="pl-related-title">Conception Calculator</div><p class="pl-related-desc">When did you conceive? 4 ways to estimate.</p></a>
+    </div>
+  </section>
+
+  <section class="pl-explain">
+    <h2>How this works</h2>
+    <p>Pregnancies are dated from the first day of your last menstrual period (LMP), not from conception. The full term is <b>280 days</b> (40 weeks) from LMP, or about 266 days from conception. This rule (<i>Naegele's rule</i>) has been the clinical standard since 1812.</p>
+    <p>If your cycle is longer or shorter than 28 days, we adjust: a 32-day cycle pushes conception 4 days later, which moves the due date 4 days later too. Only about 5% of babies arrive on their predicted due date; most come within two weeks either side.</p>
+    <h2>When to see a clinician</h2>
+    <p>This tool is for planning, not diagnosis. Confirm your due date with your OB or midwife. An early ultrasound is the most accurate way to date a pregnancy.</p>
+  </section>
+  <aside class="pl-sources">
+    <h3>Sources</h3>
+    <ul>
+      <li><a href="https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-the-due-date" target="_blank" rel="noopener">ACOG: Methods for Estimating the Due Date (Committee Opinion 700)</a></li>
+      <li><a href="https://www.nhs.uk/pregnancy/finding-out/due-date-calculator/" target="_blank" rel="noopener">NHS: Due date calculator</a></li>
+    </ul>
+    <p class="pl-source-note">Naegele's rule: 280 days from the first day of the last menstrual period. Only ~5% of babies arrive on the predicted date.</p>
+  </aside>
+</main>
+
+<footer class="pl-footer">
+  <div class="pl-footer-grid">
+    <div>
+      <a class="pl-logo" href="index.html" style="font-size:22px">DueDate<span class="dot">Lab</span></a>
+      <p style="margin-top:12px;font-size:14px;max-width:340px;">Free, private, evidence-based pregnancy &amp; parenting calculators.</p>
+    </div>
+    <div>
+      <h4>Tools</h4>
+      <a href="index.html">Due Date</a>
+      <a href="chinese-gender-chart.html">Chinese Gender</a>
+      <a href="sleep-needs-by-age.html">Sleep Needs</a>
+      <a href="baby-percentile.html">Baby Percentile</a>
+      <a href="conception-calculator.html">Conception</a>
+    </div>
+    <div>
+      <h4>Company</h4>
+      <a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="terms.html">Terms</a><a href="disclaimer.html">Disclaimer</a><a href="contact.html">Contact</a>
+    </div>
+  </div>
+  <div class="pl-footer-note">© 2026 DueDateLab. Informational only. <a href="disclaimer.html" style="color:rgba(255,255,255,0.75)">Not medical advice</a>. See our <a href="privacy.html" style="color:rgba(255,255,255,0.75)">Privacy Policy</a>.</div>
+</footer>
+
+<div class="pl-cookie" data-cookie>
+  <div class="pl-cookie-text">We use cookies to measure traffic and (once live) to serve ads. See our <a href="privacy.html" style="color:#EC0D5C">Privacy Policy</a>.</div>
+  <button class="pl-cookie-btn" data-cookie-dismiss>Decline</button>
+  <button class="pl-cookie-btn accept" data-cookie-dismiss>Accept</button>
+</div>
+
+<script src="assets/app.js?v=3"></script>
+<script src="assets/duedate.js"></script>
+</body>
+</html>

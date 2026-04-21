@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://duedatelab.com/sitemap.xml
