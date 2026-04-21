@@ -73,7 +73,30 @@
   window.PL = window.PL || {};
 
   // ── Share widget ────────────────────────────────────────
+  // Share payload is composed at click time, not page load, so it reflects
+  // whatever result is currently on screen. If the user hasn't run a
+  // calculation yet (`.pl-result` hidden or missing), we fall back to the
+  // page URL only. Calculator inputs never leave the browser, only the
+  // result summary the user explicitly chose to share.
+  function getResultText() {
+    var wrap = document.querySelector('.pl-result');
+    if (!wrap || wrap.classList.contains('hidden')) return '';
+    var big = wrap.querySelector('.pl-result-big');
+    var expl = wrap.querySelector('.pl-result-expl');
+    var parts = [];
+    if (big) {
+      var bt = (big.innerText || big.textContent || '').trim().replace(/\s+/g, ' ');
+      if (bt) parts.push(bt);
+    }
+    if (expl) {
+      var et = (expl.innerText || expl.textContent || '').trim().replace(/\s+/g, ' ');
+      if (et) parts.push(et);
+    }
+    return parts.join('. ');
+  }
+
   function initShare() {
+    // Copy link: URL only, so the user can paste into any message they want.
     document.querySelectorAll('[data-share-copy]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
@@ -85,14 +108,30 @@
         });
       });
     });
+    // WhatsApp: prefill with result (if any) on two lines, then URL.
     document.querySelectorAll('[data-share-whatsapp]').forEach(function (a) {
-      a.href = 'https://wa.me/?text=' + encodeURIComponent(document.title + ' ' + window.location.href);
       a.target = '_blank'; a.rel = 'noopener';
+      // Fallback href for keyboard navigation / right-click copy.
+      a.href = 'https://wa.me/?text=' + encodeURIComponent(window.location.href);
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var r = getResultText();
+        var payload = r ? (r + '\n\n' + window.location.href) : window.location.href;
+        window.open('https://wa.me/?text=' + encodeURIComponent(payload), '_blank', 'noopener');
+      });
     });
+    // X: text param gets the result (or page title as fallback), url param gets the URL.
     document.querySelectorAll('[data-share-x]').forEach(function (a) {
-      a.href = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(document.title);
       a.target = '_blank'; a.rel = 'noopener';
+      a.href = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(document.title);
+      a.addEventListener('click', function (e) {
+        e.preventDefault();
+        var text = getResultText() || document.title;
+        var url = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(text);
+        window.open(url, '_blank', 'noopener');
+      });
     });
+    // Print / save: leaves the browser print dialog, which on mobile lets the user save as PDF.
     document.querySelectorAll('[data-share-image]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
