@@ -168,6 +168,8 @@ a { color: var(--navy); }
 .pl-explain h2 { font-size: 22px; font-weight: 700; margin: 28px 0 10px; letter-spacing: -0.3px; }
 .pl-explain p { margin: 0 0 14px; }
 .pl-explain ol, .pl-explain ul { padding-left: 22px; margin: 0 0 14px; }
+.pl-explain a { color: var(--navy); text-decoration: none; border-bottom: 1px solid var(--border); }
+.pl-explain a:hover { border-color: var(--crimson); color: var(--crimson); }
 
 /* Sources block */
 .pl-sources { max-width: 720px; margin: 24px auto 0; background: #fff; border: 1px solid var(--border); border-radius: var(--radius-card); padding: 18px 22px; }
