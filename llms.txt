@@ -8,6 +8,7 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 - [Due Date Calculator methodology](https://duedatelab.com/methodology/due-date-calculator): Naegele's rule, LMP and conception-date methods, ultrasound adjustment, ACOG and NHS source citations
 - [Conception Date Calculator methodology](https://duedatelab.com/methodology/conception-calculator): LMP-to-conception math, ovulation-window assumptions, ACOG and NICE source citations
+- [Ovulation Calculator methodology](https://duedatelab.com/methodology/ovulation-calculator): Luteal-phase-anchored ovulation prediction, 6-day Wilcox fertile window, ACOG, NICE, Wilcox 1995, and Lenton 1984 source citations
 - [Baby Percentile Calculator methodology](https://duedatelab.com/methodology/baby-percentile): WHO and CDC growth-standard derivation, LMS parameters, age-to-percentile formula
 - [Chinese Gender Chart methodology](https://duedatelab.com/methodology/chinese-gender-chart): Historical origin, lunar-age calculation, accuracy analysis against PubMed studies, entertainment-only framing
 - [Sleep Needs by Age methodology](https://duedatelab.com/methodology/sleep-needs-by-age): AAP and CDC-aligned ranges, infant-through-toddler bands, PubMed sleep-consensus source
@@ -16,6 +17,7 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 - [Due Date Calculator](https://duedatelab.com/): Estimate pregnancy due date from LMP, conception date, or known due date
 - [Conception Date Calculator](https://duedatelab.com/conception-calculator): Estimate conception date from due date or LMP
+- [Ovulation Calculator](https://duedatelab.com/ovulation-calculator): Predict ovulation day and 6-day fertile window from LMP and cycle length
 - [Baby Percentile Calculator](https://duedatelab.com/baby-percentile): WHO and CDC growth chart percentiles for weight, length, and head circumference
 - [Chinese Gender Chart](https://duedatelab.com/chinese-gender-chart): Traditional Chinese lunar age and conception month chart (entertainment, not clinical)
 - [Sleep Needs by Age](https://duedatelab.com/sleep-needs-by-age): AAP-aligned sleep duration estimates by infant and toddler age
