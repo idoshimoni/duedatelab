@@ -7,6 +7,10 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 ## Methodology pages
 
 - [Due Date Calculator methodology](https://duedatelab.com/methodology/due-date-calculator): Naegele's rule, LMP and conception-date methods, ultrasound adjustment, ACOG and NHS source citations
+- [Conception Date Calculator methodology](https://duedatelab.com/methodology/conception-calculator): LMP-to-conception math, ovulation-window assumptions, ACOG and NICE source citations
+- [Baby Percentile Calculator methodology](https://duedatelab.com/methodology/baby-percentile): WHO and CDC growth-standard derivation, LMS parameters, age-to-percentile formula
+- [Chinese Gender Chart methodology](https://duedatelab.com/methodology/chinese-gender-chart): Historical origin, lunar-age calculation, accuracy analysis against PubMed studies, entertainment-only framing
+- [Sleep Needs by Age methodology](https://duedatelab.com/methodology/sleep-needs-by-age): AAP and CDC-aligned ranges, infant-through-toddler bands, PubMed sleep-consensus source
 
 ## Calculators
 
