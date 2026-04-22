@@ -125,5 +125,5 @@
   }
 
   var tryagain = document.getElementById('cgc-tryagain');
-  if (tryagain) tryagain.addEventListener('click', function (e) { e.preventDefault(); result.classList.add('hidden'); form.reset(); form.elements['cycle'].value = 28; setMode('date'); form.scrollIntoView({behavior:'smooth'}); });
+  if (tryagain) tryagain.addEventListener('click', function (e) { e.preventDefault(); result.classList.add('hidden'); form.reset(); form.elements['cycle'].value = 28; setMode('date'); window.PL.scrollToTop(); });
 })();

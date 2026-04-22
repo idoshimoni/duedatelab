@@ -67,5 +67,5 @@
   }
 
   var tryagain = document.getElementById('sleep-tryagain');
-  if (tryagain) tryagain.addEventListener('click', function (e) { e.preventDefault(); result.classList.add('hidden'); form.reset(); form.scrollIntoView({behavior:'smooth'}); });
+  if (tryagain) tryagain.addEventListener('click', function (e) { e.preventDefault(); result.classList.add('hidden'); form.reset(); window.PL.scrollToTop(); });
 })();

@@ -158,5 +158,5 @@
 
   setUnit('metric');
   var tryagain = document.getElementById('pct-tryagain');
-  if (tryagain) tryagain.addEventListener('click', function(e){ e.preventDefault(); result.classList.add('hidden'); form.reset(); setUnit('metric'); form.scrollIntoView({behavior:'smooth'}); });
+  if (tryagain) tryagain.addEventListener('click', function(e){ e.preventDefault(); result.classList.add('hidden'); form.reset(); setUnit('metric'); window.PL.scrollToTop(); });
 })();

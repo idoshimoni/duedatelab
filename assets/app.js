@@ -229,4 +229,21 @@
   };
   window.PL.addDays = function (d, n) { var x = new Date(d); x.setDate(x.getDate() + n); return x; };
   window.PL.diffDays = function (a, b) { return Math.round((a - b) / 86400000); };
+
+  // ── Scroll helper ────────────────────────────────────────
+  // Shared by every calculator's "Try again" button so the user is returned
+  // to the top of the page on reset instead of being stranded mid-page where
+  // the now-hidden result used to be. Uses rAF to let the DOM mutations that
+  // immediately precede it (form.reset(), result.classList.add('hidden'))
+  // commit first, otherwise mobile Safari cancels the smooth scroll when the
+  // page height shrinks mid-animation.
+  window.PL.scrollToTop = function () {
+    requestAnimationFrame(function () {
+      try {
+        window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+      } catch (e) {
+        window.scrollTo(0, 0);
+      }
+    });
+  };
 })();

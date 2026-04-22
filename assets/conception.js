@@ -109,5 +109,5 @@
   }
 
   var tryagain = document.getElementById('con-tryagain');
-  if (tryagain) tryagain.addEventListener('click', function (e) { e.preventDefault(); result.classList.add('hidden'); form.reset(); setMode('lmp'); form.scrollIntoView({behavior:'smooth'}); });
+  if (tryagain) tryagain.addEventListener('click', function (e) { e.preventDefault(); result.classList.add('hidden'); form.reset(); setMode('lmp'); window.PL.scrollToTop(); });
 })();
