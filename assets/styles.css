@@ -160,6 +160,8 @@ a { color: var(--navy); }
 .pl-related-card:hover { border-color: var(--navy); box-shadow: 0 2px 12px rgba(26,46,74,0.08); }
 .pl-related-title { font-weight: 700; font-size: 15px; margin: 0 0 2px; }
 .pl-related-desc { font-size: 13px; color: var(--text-soft); margin: 0; line-height: 1.45; }
+.pl-related-card strong { display: block; font-weight: 700; font-size: 15px; margin: 0 0 2px; }
+.pl-related-card span { display: block; font-size: 13px; color: var(--text-soft); line-height: 1.45; font-weight: 400; }
 
 /* Ad */
 .pl-ad { margin: 24px auto; text-align: center; max-width: 728px; }
