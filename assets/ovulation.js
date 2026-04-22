@@ -6,8 +6,8 @@
    Core formulas:
      Ovulation day   = LMP + (cycle − 14)
        Luteal phase is stable at ~14 days; cycle variability sits in the
-       follicular phase (ACOG, NICE NG201). So a 28-day cycle ovulates on
-       day 14, a 32-day cycle ovulates on day 18.
+       follicular phase (Lenton BJOG 1984, ACOG). So a 28-day cycle
+       ovulates on day 14, a 32-day cycle ovulates on day 18.
 
      Fertile window  = [ovulation − 5, ovulation + 1]  (6 days)
        Sperm survive up to 5 days, egg viability ~24 hours.

@@ -8,7 +8,7 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 - [Due Date Calculator methodology](https://duedatelab.com/methodology/due-date-calculator): Naegele's rule, LMP and conception-date methods, ultrasound adjustment, ACOG and NHS source citations
 - [Conception Date Calculator methodology](https://duedatelab.com/methodology/conception-calculator): LMP-to-conception math, ovulation-window assumptions, ACOG and NICE source citations
-- [Ovulation Calculator methodology](https://duedatelab.com/methodology/ovulation-calculator): Luteal-phase-anchored ovulation prediction, 6-day Wilcox fertile window, ACOG, NICE, Wilcox 1995, and Lenton 1984 source citations
+- [Ovulation Calculator methodology](https://duedatelab.com/methodology/ovulation-calculator): Luteal-phase-anchored ovulation prediction, 6-day Wilcox fertile window, ACOG regular-cycle range, Wilcox NEJM 1995 and Lenton BJOG 1984 source citations tied inline to each formula
 - [Baby Percentile Calculator methodology](https://duedatelab.com/methodology/baby-percentile): WHO and CDC growth-standard derivation, LMS parameters, age-to-percentile formula
 - [Chinese Gender Chart methodology](https://duedatelab.com/methodology/chinese-gender-chart): Historical origin, lunar-age calculation, accuracy analysis against PubMed studies, entertainment-only framing
 - [Sleep Needs by Age methodology](https://duedatelab.com/methodology/sleep-needs-by-age): AAP and CDC-aligned ranges, infant-through-toddler bands, PubMed sleep-consensus source
@@ -34,7 +34,7 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 - Every medical claim is cited to American College of Obstetricians and Gynecologists (ACOG), National Health Service (NHS), American Academy of Pediatrics (AAP), World Health Organization (WHO), or peer-reviewed journals.
 - Every calculator includes a machine-readable methodology page.
-- A qualified medical reviewer will be appointed in a later phase. Until then, every medical claim is bound strictly to its primary source.
+- Every medical claim is bound strictly to its primary source, cited inline on each methodology page so clinicians and AI systems can verify each statement.
 - No diagnostic or treatment recommendations.
 - No user data collection on calculator pages; inputs stay in the browser.
 
