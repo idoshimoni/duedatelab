@@ -189,12 +189,34 @@
     });
   }
 
+  // ── Logo click tracking ─────────────────────────────────
+  // Fires a GA4 event when the DueDateLab logo is clicked, in either the
+  // header or footer. Navigation to "/" is left to the anchor's native
+  // behavior, so the event is a side effect, not a replacement. Consent
+  // Mode v2 above governs whether this is a full or modeled ping.
+  //   Targets both legacy ".pl-logo" and the new inline-SVG ".ddl-logo"
+  //   so tracking works before and after the logo swap.
+  function initLogoClick() {
+    document.querySelectorAll('.pl-logo, .ddl-logo').forEach(function (a) {
+      a.addEventListener('click', function () {
+        if (typeof window.gtag !== 'function') return;
+        var loc = a.closest('header') ? 'header'
+                : a.closest('footer') ? 'footer'
+                : 'other';
+        window.gtag('event', 'logo_click', {
+          link_location: loc,
+          page_path: window.location.pathname
+        });
+      });
+    });
+  }
+
   // ── DOM ready ────────────────────────────────────────────
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
-  ready(function () { initDrawer(); initShare(); });
+  ready(function () { initDrawer(); initShare(); initLogoClick(); });
 
   // ── Date helpers ─────────────────────────────────────────
   window.PL.formatDate = function (d) {

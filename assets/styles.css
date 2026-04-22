@@ -45,9 +45,14 @@ a { color: var(--navy); }
 /* Header */
 .pl-header { background: var(--navy); height: 56px; display: flex; align-items: center; padding: 0 16px; position: sticky; top: 0; z-index: 20; }
 @media (min-width: 1024px) { .pl-header { padding: 0 32px; } }
-.pl-logo { font-weight: 800; font-size: 20px; color: #fff; letter-spacing: -0.3px; text-decoration: none; }
-.pl-logo .dot { position: relative; }
-.pl-logo .dot::after { content: ''; position: absolute; top: 1px; right: -3px; width: 5px; height: 5px; background: var(--crimson); border-radius: 50%; }
+/* Brand logo: inline SVG + wordmark. currentColor flips with context
+   (white on navy header/footer, navy on light backgrounds). The crimson
+   dot is locked to #EC0D5C per brand guidelines — never recolor. */
+.ddl-logo { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; font-size: 22px; line-height: 1; color: var(--navy); letter-spacing: -0.3px; text-decoration: none; }
+.ddl-logo em { font-style: normal; color: var(--crimson); }
+.ddl-logo-mark { flex: 0 0 auto; display: block; }
+.pl-header .ddl-logo, .pl-footer .ddl-logo { color: #fff; }
+.pl-footer .ddl-logo { display: inline-flex; font-size: 22px; padding: 0; }
 .pl-nav { display: none; gap: 28px; margin-left: auto; margin-right: auto; }
 @media (min-width: 1024px) { .pl-nav { display: flex; } }
 .pl-nav a { color: #fff; text-decoration: none; font-size: 15px; font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; }
