@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<!-- pl-seo-block -->
+<link rel="canonical" href="https://duedatelab.com/methodology/due-date-calculator"/>
+<meta name="robots" content="index,follow"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="icon" href="/favicon-32.png" type="image/png" sizes="32x32"/>
+<link rel="icon" href="/favicon-16.png" type="image/png" sizes="16x16"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon-180.png"/>
+<link rel="icon" href="/favicon.ico" sizes="any"/>
+<link rel="manifest" href="/site.webmanifest"/>
+<meta name="theme-color" content="#1A2E4A"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="Due Date Calculator Methodology: Formulas, Validation, and Sources"/>
+<meta property="og:description" content="Exact formulas, input validation rules, and source citations behind the DueDateLab Due Date Calculator. Naegele's rule, conception-date method, and ultrasound adjustment, documented for clinician and AI review."/>
+<meta property="og:url" content="https://duedatelab.com/methodology/due-date-calculator"/>
+<meta property="og:image" content="https://duedatelab.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="DueDateLab, Free, private pregnancy and parenting calculators"/>
+<meta property="og:site_name" content="DueDateLab"/>
+<meta property="article:published_time" content="2026-04-22"/>
+<meta property="article:modified_time" content="2026-04-22"/>
+<meta property="article:author" content="DueDateLab Editorial"/>
+<meta property="og:locale" content="en_US"/>
+<meta property="og:locale:alternate" content="en_GB"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="Due Date Calculator Methodology: Formulas, Validation, and Sources"/>
+<meta name="twitter:description" content="Formulas, input validation rules, and source citations behind the DueDateLab Due Date Calculator."/>
+<meta name="twitter:image" content="https://duedatelab.com/og-image.png"/>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"MedicalWebPage","headline":"Due Date Calculator Methodology","name":"Due Date Calculator Methodology","description":"Exact formulas, input validation, and source citations for the DueDateLab Due Date Calculator, including Naegele's rule, conception-date method, and ultrasound adjustment.","url":"https://duedatelab.com/methodology/due-date-calculator","about":{"@type":"MedicalEntity","name":"Estimated due date (EDD) in pregnancy","code":{"@type":"MedicalCode","codingSystem":"ICD-10","codeValue":"Z34"}},"audience":{"@type":"MedicalAudience","audienceType":"Patient"},"lastReviewed":"2026-04-22","datePublished":"2026-04-22","dateModified":"2026-04-22","inLanguage":"en","author":{"@type":"Organization","name":"DueDateLab Editorial","url":"https://duedatelab.com/about"},"publisher":{"@type":"Organization","name":"DueDateLab","url":"https://duedatelab.com/","logo":{"@type":"ImageObject","url":"https://duedatelab.com/assets/duedatelab-mark-512.png"}},"citation":[{"@type":"CreativeWork","name":"ACOG Committee Opinion No. 700: Methods for Estimating the Due Date","author":"American College of Obstetricians and Gynecologists","datePublished":"2017","url":"https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-the-due-date"},{"@type":"CreativeWork","name":"Antenatal care: NICE guideline NG201","author":"National Institute for Health and Care Excellence","datePublished":"2021","url":"https://www.nice.org.uk/guidance/ng201"},{"@type":"CreativeWork","name":"NHS, Your pregnancy and baby guide, When will the baby arrive","author":"National Health Service","url":"https://www.nhs.uk/pregnancy/finding-out/due-date-calculator/"},{"@type":"CreativeWork","name":"Jukic AM et al. Length of human pregnancy and contributors to its natural variation. Human Reproduction. 2013","author":"Jukic AM, Baird DD, Weinberg CR, McConnaughey DR, Wilcox AJ","datePublished":"2013","url":"https://pubmed.ncbi.nlm.nih.gov/23912200/"}],"specialty":{"@type":"MedicalSpecialty","name":"Obstetrics"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://duedatelab.com/methodology/due-date-calculator"}}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://duedatelab.com/"},{"@type":"ListItem","position":2,"name":"Methodology","item":"https://duedatelab.com/methodology/"},{"@type":"ListItem","position":3,"name":"Due Date Calculator","item":"https://duedatelab.com/methodology/due-date-calculator"}]}</script>
+<!-- /pl-seo-block -->
+<title>Due Date Calculator Methodology, Formulas and Sources | DueDateLab</title>
+<meta name="description" content="Exact formulas, input validation, and source citations for the DueDateLab Due Date Calculator. Naegele's rule, conception-date method, and ultrasound adjustment, documented for clinician and AI review."/>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/styles.css?v=14">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4285310692091665" crossorigin="anonymous"></script>
+</head>
+<body>
+<header class="pl-header">
+  <a class="ddl-logo" href="/" aria-label="DueDateLab home"><svg class="ddl-logo-mark" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 46 Q 22 46, 28 32 T 50 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="50" cy="14" r="6" fill="#EC0D5C"/><circle cx="8" cy="46" r="3.5" fill="currentColor"/></svg><span>DueDate<em>Lab</em></span></a>
+  <nav class="pl-nav">
+    <a href="/">Due Date</a>
+    <a href="/chinese-gender-chart">Chinese Gender</a>
+    <a href="/sleep-needs-by-age">Sleep Needs</a>
+    <a href="/baby-percentile">Percentile</a>
+    <a href="/conception-calculator">Conception</a>
+  </nav>
+  <button class="pl-hamburger" data-drawer-toggle aria-label="Menu"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg></button>
+</header>
+<div class="pl-drawer" data-drawer>
+  <a href="/">Due Date Calculator</a>
+  <a href="/chinese-gender-chart">Chinese Gender Chart</a>
+  <a href="/sleep-needs-by-age">Sleep Needs by Age</a>
+  <a href="/baby-percentile">Baby Percentile</a>
+  <a href="/conception-calculator">Conception Calculator</a>
+  <a href="/articles/">Articles</a>
+</div>
+<main class="pl-page">
+  <article class="pl-legal">
+    <nav class="pl-article-breadcrumb" aria-label="Breadcrumb">
+      <a href="/">Home</a> <span aria-hidden="true">›</span> <a href="/methodology/">Methodology</a> <span aria-hidden="true">›</span> <span>Due Date Calculator</span>
+    </nav>
+    <h1>Due Date Calculator Methodology</h1>
+    <div class="pl-article-meta">
+      <span>Author: <a href="/about">DueDateLab Editorial</a></span>
+      <span aria-hidden="true">·</span>
+      <span>Medical review: planned for Phase 2, see <a href="#version-history">Version history</a></span>
+      <span aria-hidden="true">·</span>
+      <time datetime="2026-04-22">Published April 22, 2026</time>
+      <span aria-hidden="true">·</span>
+      <time datetime="2026-04-22">Last reviewed April 22, 2026</time>
+    </div>
+    <p class="pl-article-lead">This page documents the formulas, input validation rules, and source citations used by the DueDateLab <a href="/">Due Date Calculator</a>. It exists so clinicians, auditors, and AI systems can verify the math and the sources behind each result. All calculations run in your browser, no inputs are sent to our servers.</p>
+
+    <h2 id="summary">Summary</h2>
+    <p>The calculator produces an <strong>estimated due date (EDD)</strong> from one of three reference points: last menstrual period (LMP), conception date, or a known due date. The default method is <strong>Naegele's rule</strong>, which adds 280 days to LMP. Conception-date input adds 266 days to conception. The calculator also supports an optional ultrasound override consistent with ACOG Committee Opinion 700. The result is always a single date plus a 37-42 week delivery window, never a point prediction.</p>
+
+    <h2 id="formula-lmp">Formula 1, LMP method (Naegele's rule)</h2>
+    <p>Given an LMP date, the estimated due date is:</p>
+    <p><code>EDD = LMP + 280 days</code></p>
+    <p>This is mathematically equivalent to the classical statement of Naegele's rule, <em>add one year, subtract three months, add seven days</em>. The 280-day figure assumes a 28-day cycle with ovulation on cycle day 14 and gestation of 266 days from fertilization. It is the default estimation method in ACOG Committee Opinion 700 and in NICE antenatal guideline NG201 when a first-trimester ultrasound has not been performed.</p>
+
+    <h2 id="formula-conception">Formula 2, conception-date method</h2>
+    <p>Given a conception date, the estimated due date is:</p>
+    <p><code>EDD = Conception date + 266 days</code></p>
+    <p>This formula removes the 14-day ovulation offset that LMP-based dating assumes. It is used when the conception date is known with clinical certainty, for example after an IVF embryo transfer (EDD = transfer date + 266 days − embryo age in days), a timed insemination, or ovulation confirmed by LH testing. If the conception date is a guess rather than a measured event, ACOG recommends falling back to LMP.</p>
+
+    <h2 id="formula-reverse">Formula 3, reverse from a known due date</h2>
+    <p>If a clinician has already issued a due date (for example after a dating ultrasound), the calculator works backward to return the implied LMP and conception date:</p>
+    <p><code>Implied LMP = EDD − 280 days</code><br>
+    <code>Implied conception = EDD − 266 days</code></p>
+    <p>This is useful when the patient wants to align home tracking apps or wearables to the clinician's dating without changing the EDD.</p>
+
+    <h2 id="ultrasound">Ultrasound adjustment rules</h2>
+    <p>A first-trimester ultrasound that measures crown-rump length (CRL) is more accurate than LMP-based dating. Following ACOG Committee Opinion 700:</p>
+    <ul>
+      <li>Up to 8 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 5 days.</li>
+      <li>9 weeks 0 days to 13 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 7 days.</li>
+      <li>14 weeks 0 days to 15 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 7 days.</li>
+      <li>16 weeks 0 days to 21 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 10 days.</li>
+      <li>22 weeks 0 days to 27 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 14 days.</li>
+      <li>28 weeks 0 days and later, ultrasound dating is unreliable and LMP is retained unless no reliable LMP is available.</li>
+    </ul>
+    <p>The DueDateLab calculator implements these thresholds as an optional override panel. If the user supplies a CRL-based ultrasound date and week of pregnancy at the time of scan, the calculator applies the ACOG threshold for that gestational window and either keeps the LMP EDD or replaces it.</p>
+
+    <h2 id="input-validation">Input validation</h2>
+    <p>The calculator accepts only clinically plausible inputs and rejects values outside the following ranges:</p>
+    <ul>
+      <li><strong>LMP date.</strong> Must be between 300 days ago and 14 days ago. LMP dates older than 300 days are post-term and outside routine clinical use. LMP dates in the last 14 days are implausible because a positive pregnancy test usually requires at least 10 to 14 days after conception.</li>
+      <li><strong>Conception date.</strong> Must be between 286 days ago and today. Conception dates older than 286 days are post-term. Future conception dates are rejected.</li>
+      <li><strong>Known due date.</strong> Must be between 300 days in the future and 42 days in the past (to handle recent deliveries where users still want to confirm the dating).</li>
+      <li><strong>Cycle length.</strong> Optional adjustment. Accepted range is 21 to 45 days. The calculator offsets LMP-based EDD by <code>(cycle length − 28)</code> days, a common clinical adjustment. Cycle length under 21 or over 45 is flagged as outside the normal population range.</li>
+      <li><strong>Ultrasound date.</strong> Must be on or before today and within the last 300 days.</li>
+      <li><strong>Gestational week at scan.</strong> Accepted range is 4 to 42 weeks.</li>
+    </ul>
+    <p>Inputs that fail validation produce a specific error message rather than a silent fallback. The calculator never guesses at a missing input.</p>
+
+    <h2 id="outputs">Outputs</h2>
+    <p>Each calculation returns the following structured outputs:</p>
+    <ul>
+      <li><strong>Estimated due date</strong> as an ISO 8601 date.</li>
+      <li><strong>Gestational age today</strong> in completed weeks and days.</li>
+      <li><strong>Days remaining to EDD.</strong></li>
+      <li><strong>Trimester</strong> (1: 0 to 13 weeks 6 days, 2: 14 to 27 weeks 6 days, 3: 28 weeks and later).</li>
+      <li><strong>Full-term delivery window</strong>, 37 weeks 0 days to 42 weeks 0 days.</li>
+      <li><strong>Most likely delivery date</strong>, 40 weeks 5 days from LMP for first pregnancies, 40 weeks 3 days for subsequent pregnancies (per Jukic et al. 2013).</li>
+    </ul>
+
+    <h2 id="assumptions">Assumptions and limitations</h2>
+    <p>The calculator assumes a <strong>singleton, naturally conceived pregnancy</strong> unless the user selects the IVF option. Twin, triplet, and higher-order pregnancies use the same EDD formulas but have different delivery expectations, typically 36 to 38 weeks for twins, and the calculator notes this where relevant. The calculator does not adjust for maternal age, BMI, parity, ethnicity, or obstetric history. It is a dating tool, not a risk-prediction tool. It is not a substitute for clinical evaluation, and it does not model miscarriage risk, pre-term labor risk, or any other outcome.</p>
+
+    <h2 id="privacy">Privacy of calculations</h2>
+    <p>All computation runs client-side in JavaScript. LMP date, conception date, cycle length, ultrasound date, and any other input never leaves the browser, is never stored in a cookie or local storage, and is never transmitted to a DueDateLab server or a third-party server. Analytics pages on the rest of the site are covered by the <a href="/privacy">privacy policy</a>, but the calculator page itself collects no input data.</p>
+
+    <h2 id="sources">Sources</h2>
+    <section class="pl-sources">
+      <ol>
+        <li>American College of Obstetricians and Gynecologists. Committee Opinion No. 700: Methods for Estimating the Due Date. <em>Obstetrics and Gynecology</em>. 2017;129(5):e150-e154. <a href="https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-the-due-date" target="_blank" rel="noopener">ACOG</a></li>
+        <li>National Institute for Health and Care Excellence (NICE). Antenatal care, NICE guideline NG201. 2021. <a href="https://www.nice.org.uk/guidance/ng201" target="_blank" rel="noopener">NICE</a></li>
+        <li>National Health Service (NHS). Your pregnancy and baby guide, When will the baby arrive. <a href="https://www.nhs.uk/pregnancy/finding-out/due-date-calculator/" target="_blank" rel="noopener">NHS</a></li>
+        <li>Jukic AM, Baird DD, Weinberg CR, McConnaughey DR, Wilcox AJ. Length of human pregnancy and contributors to its natural variation. <em>Human Reproduction</em>. 2013;28(10):2848-2855. <a href="https://pubmed.ncbi.nlm.nih.gov/23912200/" target="_blank" rel="noopener">PubMed</a></li>
+        <li>Society for Maternal-Fetal Medicine (SMFM). Methods for estimating the due date, consult series. <a href="https://www.smfm.org/publications/215-methods-for-estimating-the-due-date" target="_blank" rel="noopener">SMFM</a></li>
+      </ol>
+    </section>
+
+    <h2 id="authorship">Authorship and medical review</h2>
+    <p><strong>Author.</strong> The DueDateLab Editorial team is responsible for all editorial decisions. Editorial is not a clinical practice. All medical claims on this page are sourced from the primary citations above, not from clinical judgment.</p>
+    <p><strong>Medical review.</strong> A named clinical reviewer will be appointed in a later phase. Until then, every medical claim on this page is tied strictly to its primary source (ACOG, NICE, NHS, or peer-reviewed literature), which is published alongside the claim.</p>
+    <p><strong>Publisher location.</strong> DueDateLab is published from Belgium.</p>
+    <p><strong>Conflicts of interest.</strong> DueDateLab is ad-supported and does not accept payment for placement or endorsement inside methodology content. No editor receives commission on affiliate links in any calculator or article.</p>
+
+    <h2 id="version-history">Version history</h2>
+    <ul>
+      <li><strong>v1.0, 2026-04-22.</strong> Initial methodology page published. LMP, conception, and reverse-from-EDD formulas documented. ACOG Committee Opinion 700 ultrasound thresholds implemented. NHS and NICE references added. Input validation ranges documented.</li>
+      <li><strong>Planned v1.1, Phase 2.</strong> Named medical reviewer appointed, credentials added to the page, <code>reviewedBy</code> added to the MedicalWebPage JSON-LD.</li>
+      <li><strong>Planned v1.2, next quarterly review.</strong> Source updates from ACOG, NICE, or NHS reflected in the citation list after a fresh re-read.</li>
+    </ul>
+
+    <section class="pl-related">
+      <h3>Related</h3>
+      <div class="pl-related-grid">
+        <a class="pl-related-card" href="/"><strong>Due Date Calculator</strong><span>Run the calculator this page documents</span></a>
+        <a class="pl-related-card" href="/conception-calculator"><strong>Conception Calculator</strong><span>Companion tool, conception from EDD or LMP</span></a>
+        <a class="pl-related-card" href="/articles/due-date-vs-conception-date"><strong>Due Date vs. Conception Date</strong><span>Plain-English explainer</span></a>
+        <a class="pl-related-card" href="/articles/first-trimester-week-by-week"><strong>First Trimester Week by Week</strong><span>Weeks 1 through 13 development</span></a>
+      </div>
+    </section>
+  </article>
+</main>
+<footer class="pl-footer">
+  <div class="pl-footer-grid">
+    <div><a class="ddl-logo" href="/" aria-label="DueDateLab home"><svg class="ddl-logo-mark" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 46 Q 22 46, 28 32 T 50 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="50" cy="14" r="6" fill="#EC0D5C"/><circle cx="8" cy="46" r="3.5" fill="currentColor"/></svg><span>DueDate<em>Lab</em></span></a><p style="margin-top:12px;font-size:14px;max-width:340px;">Free, private, evidence-based pregnancy &amp; parenting calculators.</p></div>
+    <div><h4>Tools</h4><a href="/">Due Date</a><a href="/chinese-gender-chart">Chinese Gender</a><a href="/sleep-needs-by-age">Sleep Needs</a><a href="/baby-percentile">Baby Percentile</a><a href="/conception-calculator">Conception</a></div>
+    <div><h4>Articles</h4><a href="/articles/">All articles</a><a href="/articles/chinese-gender-chart-accuracy">Chinese gender chart accuracy</a><a href="/articles/sleep-regressions-by-month">Sleep regressions by month</a><a href="/articles/baby-percentile-explained">Baby percentile explained</a><a href="/articles/first-trimester-week-by-week">First trimester week by week</a></div>
+    <div><h4>Company</h4><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Disclaimer</a><a href="/contact">Contact</a></div>
+  </div>
+  <div class="pl-footer-note">© 2026 DueDateLab. Informational only. Not medical advice.</div>
+</footer>
+<script src="/assets/app.js?v=13"></script>
+</body>
+</html>

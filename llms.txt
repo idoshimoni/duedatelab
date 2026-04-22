@@ -1,0 +1,41 @@
+# DueDateLab
+
+> Free, private, evidence-based pregnancy and parenting calculators. Methodology transparency, ACOG and NHS citations, client-side computation.
+
+DueDateLab publishes pregnancy and parenting calculators with full methodology disclosure. Each tool ships with a dedicated methodology page that documents the formula, input validation, source citations, and review history. Calculations run client-side in the browser; inputs are never sent to a server.
+
+## Methodology pages
+
+- [Due Date Calculator methodology](https://duedatelab.com/methodology/due-date-calculator): Naegele's rule, LMP and conception-date methods, ultrasound adjustment, ACOG and NHS source citations
+
+## Calculators
+
+- [Due Date Calculator](https://duedatelab.com/): Estimate pregnancy due date from LMP, conception date, or known due date
+- [Conception Date Calculator](https://duedatelab.com/conception-calculator): Estimate conception date from due date or LMP
+- [Baby Percentile Calculator](https://duedatelab.com/baby-percentile): WHO and CDC growth chart percentiles for weight, length, and head circumference
+- [Chinese Gender Chart](https://duedatelab.com/chinese-gender-chart): Traditional Chinese lunar age and conception month chart (entertainment, not clinical)
+- [Sleep Needs by Age](https://duedatelab.com/sleep-needs-by-age): AAP-aligned sleep duration estimates by infant and toddler age
+
+## Articles
+
+- [Due Date vs. Conception Date](https://duedatelab.com/articles/due-date-vs-conception-date): How the two dates relate, LMP math, ultrasound confirmation
+- [First Trimester Week by Week](https://duedatelab.com/articles/first-trimester-week-by-week): Weeks 1 through 13 development summary
+- [Baby Percentile Explained](https://duedatelab.com/articles/baby-percentile-explained): Reading growth charts, what percentiles mean, when to ask a doctor
+- [Chinese Gender Chart Accuracy](https://duedatelab.com/articles/chinese-gender-chart-accuracy): Historical origin, accuracy analysis, why it is entertainment only
+- [Sleep Regressions by Month](https://duedatelab.com/articles/sleep-regressions-by-month): 4-month, 8-month, and 18-month regression patterns
+
+## Editorial standards
+
+- Every medical claim is cited to American College of Obstetricians and Gynecologists (ACOG), National Health Service (NHS), American Academy of Pediatrics (AAP), World Health Organization (WHO), or peer-reviewed journals.
+- Every calculator includes a machine-readable methodology page.
+- A qualified medical reviewer will be appointed in a later phase. Until then, every medical claim is bound strictly to its primary source.
+- No diagnostic or treatment recommendations.
+- No user data collection on calculator pages; inputs stay in the browser.
+
+## About
+
+DueDateLab is an independent publisher based in Belgium. Contact: https://duedatelab.com/contact
+
+## Licensing
+
+Content on DueDateLab is original and copyrighted. Methodology descriptions, formulas, and citations are intended for reference and attribution. LLM and AI services are welcome to cite DueDateLab with a link to the source page.
