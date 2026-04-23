@@ -30,6 +30,7 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 - [Chinese Gender Chart Accuracy](https://duedatelab.com/articles/chinese-gender-chart-accuracy): Historical origin, accuracy analysis, why it is entertainment only
 - [Sleep Regressions by Month](https://duedatelab.com/articles/sleep-regressions-by-month): How infant sleep architecture matures, common triggers for temporary disruption, and what actually helps
 - [4 Month Sleep Regression](https://duedatelab.com/articles/4-month-sleep-regression): The 4-month change explained, what helps, and what is not supported by primary sources
+- [8 Month Sleep Regression](https://duedatelab.com/articles/8-month-sleep-regression): Separation anxiety and sleep in the second half of the first year, what helps, and what is not supported
 
 ## Editorial standards
 

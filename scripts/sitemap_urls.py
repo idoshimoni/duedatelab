@@ -32,6 +32,7 @@ URL_MAP = [
     {"url": "/articles/sleep-regressions-by-month",               "source": "articles/sleep-regressions-by-month.html",         "priority": "0.7", "changefreq": "monthly"},
     {"url": "/articles/baby-percentile-explained",                "source": "articles/baby-percentile-explained.html",          "priority": "0.7", "changefreq": "monthly"},
     {"url": "/articles/4-month-sleep-regression",                 "source": "articles/4-month-sleep-regression.html",           "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/articles/8-month-sleep-regression",                 "source": "articles/8-month-sleep-regression.html",           "priority": "0.7", "changefreq": "monthly"},
 
     # Methodology
     {"url": "/methodology/",                                      "source": "methodology/index.html",                           "priority": "0.8", "changefreq": "monthly"},
