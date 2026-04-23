@@ -120,12 +120,28 @@ def git(*args: str) -> str:
     return result.stdout.strip()
 
 
+_STAGED_CACHE: set[str] | None = None
+
+def _staged_set() -> set[str]:
+    """Set of paths (relative to dist/) currently staged for commit."""
+    global _STAGED_CACHE
+    if _STAGED_CACHE is None:
+        out = git("diff", "--cached", "--name-only", "--diff-filter=ACMR")
+        _STAGED_CACHE = set(out.splitlines()) if out else set()
+    return _STAGED_CACHE
+
+
 def last_commit_date_iso(source_rel: str) -> str:
     """
-    Return the ISO date of the last commit that touched the given file,
-    relative to dist/. Falls back to today if the file has never been
-    committed.
+    Return the ISO date to use as <lastmod> for the given file.
+
+    If the file is currently staged for commit, return today, so the
+    sitemap reflects the commit about to be created. Otherwise return
+    the date of its last commit. Falls back to today if the file has
+    never been committed.
     """
+    if source_rel in _staged_set():
+        return TODAY_ISO
     out = git("log", "-1", "--format=%cI", "--", source_rel)
     if not out:
         return TODAY_ISO
