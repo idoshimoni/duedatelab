@@ -1,0 +1,45 @@
+#!/usr/bin/env bash
+# DueDateLab pre-commit hook.
+#
+# Runs scripts/refresh_dates.py on any HTML files staged for commit,
+# so the visible "Last updated", JSON-LD dateModified, og:modified_time,
+# byline <time>, and the whole sitemap always match the commit date.
+#
+# Any files the script modifies are re-staged automatically, so the
+# commit captures the refreshed dates.
+#
+# To bypass this hook temporarily (not recommended), run:
+#   git commit --no-verify
+
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+cd "${repo_root}"
+
+# If no HTML is staged AND sitemap.xml is already up to date, nothing to do.
+staged_html="$(git diff --cached --name-only --diff-filter=ACMR | grep -E '\.html$' || true)"
+
+if [[ -z "${staged_html}" ]]; then
+  # Still run --check so a stale sitemap (e.g., a file was deleted) is caught.
+  if ! python3 scripts/refresh_dates.py --check >/dev/null 2>&1; then
+    echo "pre-commit: sitemap.xml drift detected, regenerating..."
+    python3 scripts/refresh_dates.py --all
+    git add sitemap.xml
+  fi
+  exit 0
+fi
+
+# Something HTML is staged. Refresh the staged set.
+python3 scripts/refresh_dates.py --staged
+
+# Re-stage every file the script might have modified.
+while IFS= read -r f; do
+  if [[ -f "${f}" ]]; then
+    git add "${f}"
+  fi
+done <<< "${staged_html}"
+
+# Sitemap.xml is regenerated on every --staged run; add it if it moved.
+if ! git diff --quiet -- sitemap.xml; then
+  git add sitemap.xml
+fi
