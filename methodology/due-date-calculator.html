@@ -92,12 +92,12 @@
     <h2 id="formula-lmp">Formula 1, LMP method (Naegele's rule)</h2>
     <p>Given an LMP date, the estimated due date is:</p>
     <p><code>EDD = LMP + 280 days</code></p>
-    <p>This is mathematically equivalent to the classical statement of Naegele's rule, <em>add one year, subtract three months, add seven days</em>. The 280-day figure assumes a 28-day cycle with ovulation on cycle day 14 and gestation of 266 days from fertilization. It is the default estimation method in ACOG Committee Opinion 700 and in NICE antenatal guideline NG201 when a first-trimester ultrasound has not been performed.</p>
+    <p>This is mathematically equivalent to the classical statement of Naegele's rule, <em>add one year, subtract three months, add seven days</em>. The 280-day figure assumes a 28-day cycle with ovulation on cycle day 14 and gestation of 266 days from fertilization. It is the default estimation method documented in ACOG Committee Opinion 700 when a first-trimester ultrasound has not been performed. NICE guideline NG201 takes a different default: it recommends a dating ultrasound between 11 weeks 2 days and 14 weeks 1 day rather than an LMP-based formula.</p>
 
     <h2 id="formula-conception">Formula 2, conception-date method</h2>
     <p>Given a conception date, the estimated due date is:</p>
     <p><code>EDD = Conception date + 266 days</code></p>
-    <p>This formula removes the 14-day ovulation offset that LMP-based dating assumes. It is used when the conception date is known with clinical certainty, for example after an IVF embryo transfer (EDD = transfer date + 266 days − embryo age in days), a timed insemination, or ovulation confirmed by LH testing. If the conception date is a guess rather than a measured event, ACOG recommends falling back to LMP.</p>
+    <p>This formula removes the 14-day ovulation offset that LMP-based dating assumes. It is used when the conception date is known with clinical certainty, for example after an IVF embryo transfer (EDD = transfer date + 266 days − embryo age in days), a timed insemination, or ovulation confirmed by LH testing. If the conception date is a guess rather than a measured event, clinical practice falls back to LMP-based dating.</p>
 
     <h2 id="formula-reverse">Formula 3, reverse from a known due date</h2>
     <p>If a clinician has already issued a due date (for example after a dating ultrasound), the calculator works backward to return the implied LMP and conception date:</p>
@@ -113,7 +113,7 @@
       <li>14 weeks 0 days to 15 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 7 days.</li>
       <li>16 weeks 0 days to 21 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 10 days.</li>
       <li>22 weeks 0 days to 27 weeks 6 days, the ultrasound EDD replaces the LMP EDD if they disagree by more than 14 days.</li>
-      <li>28 weeks 0 days and later, ultrasound dating is unreliable and LMP is retained unless no reliable LMP is available.</li>
+      <li>28 weeks 0 days and later, ultrasound is the least accurate dating method (accuracy approximately ± 21 to 30 days per ACOG Committee Opinion 700). ACOG allows replacing the EDD only if the first ultrasound of the pregnancy is performed in the third trimester and disagrees with LMP dating by more than 21 days.</li>
     </ul>
     <p>The DueDateLab calculator implements these thresholds as an optional override panel. If the user supplies a CRL-based ultrasound date and week of pregnancy at the time of scan, the calculator applies the ACOG threshold for that gestational window and either keeps the LMP EDD or replaces it.</p>
 
@@ -137,11 +137,11 @@
       <li><strong>Days remaining to EDD.</strong></li>
       <li><strong>Trimester</strong> (1: 0 to 13 weeks 6 days, 2: 14 to 27 weeks 6 days, 3: 28 weeks and later).</li>
       <li><strong>Full-term delivery window</strong>, 37 weeks 0 days to 42 weeks 0 days.</li>
-      <li><strong>Most likely delivery date</strong>, 40 weeks 5 days from LMP for first pregnancies, 40 weeks 3 days for subsequent pregnancies (per Jukic et al. 2013).</li>
+      <li><strong>Expected delivery window around the EDD.</strong> Healthy singleton gestational length varies by about 37 days between pregnancies, with a median of 268 days from ovulation (approximately 40 weeks 2 days from LMP) per Jukic et al. 2013. Parity, offspring sex, maternal BMI, and alcohol intake did not predict gestational length in that study.</li>
     </ul>
 
     <h2 id="assumptions">Assumptions and limitations</h2>
-    <p>The calculator assumes a <strong>singleton, naturally conceived pregnancy</strong> unless the user selects the IVF option. Twin, triplet, and higher-order pregnancies use the same EDD formulas but have different delivery expectations, typically 36 to 38 weeks for twins, and the calculator notes this where relevant. The calculator does not adjust for maternal age, BMI, parity, ethnicity, or obstetric history. It is a dating tool, not a risk-prediction tool. It is not a substitute for clinical evaluation, and it does not model miscarriage risk, pre-term labor risk, or any other outcome.</p>
+    <p>The calculator assumes a <strong>singleton, naturally conceived pregnancy</strong> unless the user selects the IVF option. Twin, triplet, and higher-order pregnancies use the same EDD formulas but have different delivery expectations, and a clinician should advise on the expected timing. The calculator does not adjust for maternal age, BMI, parity, ethnicity, or obstetric history. It is a dating tool, not a risk-prediction tool. It is not a substitute for clinical evaluation, and it does not model miscarriage risk, pre-term labor risk, or any other outcome.</p>
 
     <h2 id="privacy">Privacy of calculations</h2>
     <p>All computation runs client-side in JavaScript. LMP date, conception date, cycle length, ultrasound date, and any other input never leaves the browser, is never stored in a cookie or local storage, and is never transmitted to a DueDateLab server or a third-party server. Analytics pages on the rest of the site are covered by the <a href="/privacy">privacy policy</a>, but the calculator page itself collects no input data.</p>
@@ -150,10 +150,9 @@
     <section class="pl-sources">
       <ol>
         <li>American College of Obstetricians and Gynecologists. Committee Opinion No. 700: Methods for Estimating the Due Date. <em>Obstetrics and Gynecology</em>. 2017;129(5):e150-e154. <a href="https://www.acog.org/clinical/clinical-guidance/committee-opinion/articles/2017/05/methods-for-estimating-the-due-date" target="_blank" rel="noopener">ACOG</a></li>
-        <li>National Institute for Health and Care Excellence (NICE). Antenatal care, NICE guideline NG201. 2021. <a href="https://www.nice.org.uk/guidance/ng201" target="_blank" rel="noopener">NICE</a></li>
+        <li>National Institute for Health and Care Excellence (NICE). Antenatal care, NICE guideline NG201. 2021. Cited here for the first-trimester dating ultrasound recommendation (11 weeks 2 days to 14 weeks 1 day). <a href="https://www.nice.org.uk/guidance/ng201" target="_blank" rel="noopener">NICE</a></li>
         <li>National Health Service (NHS). Your pregnancy and baby guide, When will the baby arrive. <a href="https://www.nhs.uk/pregnancy/finding-out/due-date-calculator/" target="_blank" rel="noopener">NHS</a></li>
         <li>Jukic AM, Baird DD, Weinberg CR, McConnaughey DR, Wilcox AJ. Length of human pregnancy and contributors to its natural variation. <em>Human Reproduction</em>. 2013;28(10):2848-2855. <a href="https://pubmed.ncbi.nlm.nih.gov/23922246/" target="_blank" rel="noopener">PubMed</a></li>
-        <li>Society for Maternal-Fetal Medicine (SMFM). Publications and clinical guidelines, including the joint SMFM and ACOG guidance on due-date estimation. <a href="https://publications.smfm.org/" target="_blank" rel="noopener">SMFM</a></li>
       </ol>
     </section>
 
