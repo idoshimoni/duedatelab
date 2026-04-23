@@ -29,6 +29,7 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 - [Baby Percentile Explained](https://duedatelab.com/articles/baby-percentile-explained): Reading growth charts, what percentiles mean, when to ask a doctor
 - [Chinese Gender Chart Accuracy](https://duedatelab.com/articles/chinese-gender-chart-accuracy): Historical origin, accuracy analysis, why it is entertainment only
 - [Sleep Regressions by Month](https://duedatelab.com/articles/sleep-regressions-by-month): How infant sleep architecture matures, common triggers for temporary disruption, and what actually helps
+- [4 Month Sleep Regression](https://duedatelab.com/articles/4-month-sleep-regression): The 4-month change explained, what helps, and what is not supported by primary sources
 
 ## Editorial standards
 
