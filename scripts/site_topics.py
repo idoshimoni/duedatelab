@@ -127,6 +127,12 @@ URL_TOPICS = {
         "title": "8 Month Sleep Regression",
         "desc": "Separation anxiety and sleep.",
     },
+    "/articles/generations-by-year": {
+        "topics": ["pregnancy", "infancy"],
+        "page_type": "article",
+        "title": "Generations by Year",
+        "desc": "Birth year ranges for Boomers to Gen Beta.",
+    },
 
     # Methodology
     "/methodology/": {
@@ -203,6 +209,7 @@ INCLUDED_FOR_RELATED = {
     "articles/baby-percentile-explained.html",
     "articles/4-month-sleep-regression.html",
     "articles/8-month-sleep-regression.html",
+    "articles/generations-by-year.html",
 
     "methodology/due-date-calculator.html",
     "methodology/conception-calculator.html",
