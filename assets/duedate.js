@@ -87,16 +87,12 @@
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // GA4 events: only fire if gtag was loaded and consent is granted.
-    // `calculator_submit` is the unified cross-tool event used as a GA4
-    // key event. `due_date_calculated` is preserved for tool-specific
-    // analysis (mode, trimester) and historical continuity.
+    // GA4 event: only fires if gtag was loaded and consent is granted.
+    // Only the static `tool` string is sent. User inputs (LMP date, conception
+    // date, due date, cycle length, chosen mode, computed trimester) never
+    // leave the browser, honoring the methodology privacy claim.
     if (window.gtag) {
       window.gtag('event', 'calculator_submit', { tool: 'due_date' });
-      window.gtag('event', 'due_date_calculated', {
-        mode: mode,
-        trimester: trimester
-      });
     }
   });
 

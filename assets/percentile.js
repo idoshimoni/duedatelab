@@ -145,13 +145,11 @@
     result.classList.remove('hidden');
     result.scrollIntoView({behavior:'smooth',block:'start'});
 
+    // Only the static `tool` string is sent. User inputs (sex, unit, age,
+    // weight, length) never leave the browser, honoring the methodology
+    // privacy claim.
     if (window.gtag) {
       window.gtag('event', 'calculator_submit', { tool: 'percentile' });
-      window.gtag('event', 'percentile_checked', {
-        sex: sex,
-        unit: currentUnit,
-        age_months: Math.round(ageM)
-      });
     }
   });
 

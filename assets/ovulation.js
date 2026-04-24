@@ -9,9 +9,9 @@
        follicular phase (Lenton BJOG 1984, ACOG). So a 28-day cycle
        ovulates on day 14, a 32-day cycle ovulates on day 18.
 
-     Fertile window  = [ovulation − 5, ovulation + 1]  (6 days)
-       Sperm survive up to 5 days, egg viability ~24 hours.
-       Reference: Wilcox, Weinberg, Baird, NEJM 1995;333:1517.
+     Fertile window  = [ovulation − 5, ovulation]  (6 days ending on ovulation)
+       Wilcox, Weinberg, Baird, NEJM 1995;333:1517. Pregnancies were
+       attributed to a six-day period ending on the day of ovulation.
 
      Peak fertility  = [ovulation − 2, ovulation]      (3 days)
        Highest daily conception probability per Wilcox 1995
@@ -55,7 +55,7 @@
 
     var ovulation   = PL.addDays(lmp, cycle - 14);
     var fertileStart = PL.addDays(ovulation, -5);
-    var fertileEnd   = PL.addDays(ovulation, 1);
+    var fertileEnd   = ovulation;  // Wilcox 1995: 6-day window ending on ovulation day
     var peakStart    = PL.addDays(ovulation, -2);
     var peakEnd      = ovulation;
     var nextPeriod   = PL.addDays(lmp, cycle);
@@ -81,7 +81,7 @@
     var todayPct = Math.max(0, Math.min(100, (daysFromLmp / cycle) * 100));
     var ovPct = ((cycle - 14) / cycle) * 100;
     var fwStartPct = Math.max(0, ((cycle - 14 - 5) / cycle) * 100);
-    var fwEndPct = Math.min(100, ((cycle - 14 + 1) / cycle) * 100);
+    var fwEndPct = Math.min(100, ((cycle - 14) / cycle) * 100);  // ends on ovulation (Wilcox 1995)
 
     resultTrack.innerHTML =
       '<div class="pl-timeline-seg" style="left:' + fwStartPct + '%;width:' + (fwEndPct - fwStartPct) + '%;background:#FFE4EC;"></div>' +
@@ -96,7 +96,7 @@
     for (var i = 1; i <= 3; i++) {
       var ov = PL.addDays(ovulation, cycle * i);
       var fs = PL.addDays(ov, -5);
-      var fe = PL.addDays(ov, 1);
+      var fe = ov;  // Wilcox 1995 window ends on ovulation
       nextRows +=
         '<tr>' +
         '<td>' + PL.shortDate(ov) + '</td>' +
@@ -113,11 +113,10 @@
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+    // Only the static `tool` string is sent. User inputs (LMP, cycle length)
+    // never leave the browser, honoring the methodology privacy claim.
     if (window.gtag) {
       window.gtag('event', 'calculator_submit', { tool: 'ovulation' });
-      window.gtag('event', 'ovulation_estimated', {
-        cycle_length: cycle
-      });
     }
   });
 

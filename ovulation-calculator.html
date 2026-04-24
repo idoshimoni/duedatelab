@@ -46,7 +46,8 @@
   <a class="ddl-logo" href="/" aria-label="DueDateLab home"><svg class="ddl-logo-mark" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 46 Q 22 46, 28 32 T 50 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="50" cy="14" r="6" fill="#EC0D5C"/><circle cx="8" cy="46" r="3.5" fill="currentColor"/></svg><span>DueDate<em>Lab</em></span></a>
   <nav class="pl-nav">
     <a href="/">Due Date</a>
-    <a href="/ovulation-calculator" class="active">Ovulation</a>
+        <a href="/period-calculator">Period</a>
+  <a href="/ovulation-calculator" class="active">Ovulation</a>
     <a href="/conception-calculator">Conception</a>
     <a href="/chinese-gender-chart">Chinese Gender</a>
     <a href="/sleep-needs-by-age">Sleep Needs</a>
@@ -56,6 +57,7 @@
 </header>
 <div class="pl-drawer" data-drawer>
   <a href="/">Due Date Calculator</a>
+  <a href="/period-calculator">Period Calculator</a>
   <a href="/ovulation-calculator" class="active">Ovulation Calculator</a>
   <a href="/conception-calculator">Conception Calculator</a>
   <a href="/chinese-gender-chart">Chinese Gender Chart</a>
@@ -101,7 +103,7 @@
   <section class="pl-explain">
     <h2>How we predict ovulation</h2>
     <p>Ovulation is set by the luteal phase, the second half of your cycle between ovulation and your next period. The luteal phase is stable at about <b>14 days</b> across healthy cycles, so the variation in cycle length sits in the follicular phase before ovulation. Ovulation day is therefore calculated as your last period plus (cycle length minus 14). Once you have a conception date, project forward with our <a href="/conception-calculator">Conception Calculator</a> or our <a href="/">Due Date Calculator</a>.</p>
-    <p>The <b>6-day fertile window</b> comes from Wilcox et al. (NEJM 1995), which tracked daily intercourse against hormonally confirmed ovulation across 221 cycles. Peak conception probability sits in the 2 days before ovulation and ovulation day itself. We flag that narrower peak-fertility window in the results so you can focus timing when it matters most.</p>
+    <p>The <b>6-day fertile window ending on ovulation day</b> comes from Wilcox et al. (NEJM 1995), which tracked daily intercourse against hormonally confirmed ovulation across 625 cycles from 221 women. Peak conception probability sits in the 2 days before ovulation and ovulation day itself. We flag that narrower peak-fertility window in the results so you can focus timing when it matters most.</p>
     <p>Read more: <a href="/articles/due-date-vs-conception-date">Due Date vs Conception Date</a>.</p>
   </section>
   <aside class="pl-sources">
@@ -134,7 +136,7 @@
       <a class="pl-related-card" href="/methodology/ovulation-calculator"><div class="pl-related-title">Ovulation methodology</div><p class="pl-related-desc">Wilcox 1995, Lenton 1984, cycle math.</p></a>
       <a class="pl-related-card" href="/chinese-gender-chart"><div class="pl-related-title">Chinese Gender Chart</div><p class="pl-related-desc">Boy or girl? Lunar-age novelty chart.</p></a>
       <a class="pl-related-card" href="/conception-calculator"><div class="pl-related-title">Conception Calculator</div><p class="pl-related-desc">When did you conceive? 4 ways to estimate.</p></a>
-      <a class="pl-related-card" href="/methodology/conception-calculator"><div class="pl-related-title">Conception methodology</div><p class="pl-related-desc">LMP, EDD reverse, IVF transfer.</p></a>
+      <a class="pl-related-card" href="/period-calculator"><div class="pl-related-title">Period Calculator</div><p class="pl-related-desc">Predict your next period from LMP and cycle length.</p></a>
     </div>
   </section>
 </main>
@@ -142,12 +144,12 @@
 <footer class="pl-footer">
   <div class="pl-footer-grid">
     <div><a class="ddl-logo" href="/" aria-label="DueDateLab home"><svg class="ddl-logo-mark" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 46 Q 22 46, 28 32 T 50 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="50" cy="14" r="6" fill="#EC0D5C"/><circle cx="8" cy="46" r="3.5" fill="currentColor"/></svg><span>DueDate<em>Lab</em></span></a><p style="margin-top:12px;font-size:14px;max-width:340px;">Free, private, evidence-based pregnancy and parenting calculators.</p></div>
-    <div><h4>Tools</h4><a href="/">Due Date</a><a href="/ovulation-calculator">Ovulation</a><a href="/conception-calculator">Conception</a><a href="/chinese-gender-chart">Chinese Gender</a><a href="/sleep-needs-by-age">Sleep Needs</a><a href="/baby-percentile">Baby Percentile</a></div>
+    <div><h4>Tools</h4><a href="/">Due Date</a><a href="/period-calculator">Period</a><a href="/ovulation-calculator">Ovulation</a><a href="/conception-calculator">Conception</a><a href="/chinese-gender-chart">Chinese Gender</a><a href="/sleep-needs-by-age">Sleep Needs</a><a href="/baby-percentile">Baby Percentile</a></div>
     <div><h4>Articles</h4><a href="/articles/due-date-vs-conception-date">Due Date vs Conception</a><a href="/articles/first-trimester-week-by-week">First Trimester</a><a href="/articles/chinese-gender-chart-accuracy">Chinese Gender Accuracy</a><a href="/articles/sleep-regressions-by-month">Sleep Regressions</a><a href="/articles/4-month-sleep-regression">4mo Sleep Regression</a><a href="/articles/8-month-sleep-regression">8mo Sleep Regression</a><a href="/articles/baby-percentile-explained">Percentiles Explained</a></div><div><h4>Company</h4><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Disclaimer</a><a href="/contact">Contact</a></div>
   </div>
   <div class="pl-footer-note">&copy; 2026 DueDateLab. Informational only. <a href="/disclaimer" style="color:rgba(255,255,255,0.75)">Not medical advice</a>.</div>
 </footer>
 <script src="/assets/app.js?v=14"></script>
-<script src="/assets/ovulation.js?v=2"></script>
+<script src="/assets/ovulation.js?v=3"></script>
 </body>
 </html>

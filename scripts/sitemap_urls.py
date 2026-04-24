@@ -23,6 +23,7 @@ URL_MAP = [
     {"url": "/baby-percentile",                 "source": "baby-percentile.html",                        "priority": "0.9", "changefreq": "monthly"},
     {"url": "/conception-calculator",           "source": "conception-calculator.html",                  "priority": "0.9", "changefreq": "monthly"},
     {"url": "/ovulation-calculator",            "source": "ovulation-calculator.html",                   "priority": "0.9", "changefreq": "monthly"},
+    {"url": "/period-calculator",               "source": "period-calculator.html",                      "priority": "0.9", "changefreq": "monthly"},
 
     # Articles
     {"url": "/articles/",                                         "source": "articles/index.html",                              "priority": "0.8", "changefreq": "weekly"},
@@ -39,6 +40,7 @@ URL_MAP = [
     {"url": "/methodology/due-date-calculator",                   "source": "methodology/due-date-calculator.html",             "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/conception-calculator",                 "source": "methodology/conception-calculator.html",           "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/ovulation-calculator",                  "source": "methodology/ovulation-calculator.html",            "priority": "0.8", "changefreq": "monthly"},
+    {"url": "/methodology/period-calculator",                     "source": "methodology/period-calculator.html",               "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/baby-percentile",                       "source": "methodology/baby-percentile.html",                 "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/sleep-needs-by-age",                    "source": "methodology/sleep-needs-by-age.html",              "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/chinese-gender-chart",                  "source": "methodology/chinese-gender-chart.html",            "priority": "0.8", "changefreq": "monthly"},

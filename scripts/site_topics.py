@@ -71,6 +71,12 @@ URL_TOPICS = {
         "title": "Ovulation Calculator",
         "desc": "Luteal-phase-anchored prediction and fertile window.",
     },
+    "/period-calculator": {
+        "topics": ["preconception", "dating"],
+        "page_type": "tool",
+        "title": "Period Calculator",
+        "desc": "Predict your next period from LMP and cycle length.",
+    },
 
     # Articles
     "/articles/": {
@@ -147,6 +153,12 @@ URL_TOPICS = {
         "title": "Ovulation methodology",
         "desc": "Wilcox 1995, Lenton 1984, cycle math.",
     },
+    "/methodology/period-calculator": {
+        "topics": ["preconception", "dating"],
+        "page_type": "methodology",
+        "title": "Period methodology",
+        "desc": "Formulas, cycle range, and sources.",
+    },
     "/methodology/baby-percentile": {
         "topics": ["infancy", "growth"],
         "page_type": "methodology",
@@ -182,6 +194,7 @@ INCLUDED_FOR_RELATED = {
     "baby-percentile.html",
     "conception-calculator.html",
     "ovulation-calculator.html",
+    "period-calculator.html",
 
     "articles/due-date-vs-conception-date.html",
     "articles/first-trimester-week-by-week.html",
@@ -194,6 +207,7 @@ INCLUDED_FOR_RELATED = {
     "methodology/due-date-calculator.html",
     "methodology/conception-calculator.html",
     "methodology/ovulation-calculator.html",
+    "methodology/period-calculator.html",
     "methodology/baby-percentile.html",
     "methodology/sleep-needs-by-age.html",
     "methodology/chinese-gender-chart.html",
@@ -224,10 +238,12 @@ SISTER_PAGES = {
     "/baby-percentile": "/methodology/baby-percentile",
     "/conception-calculator": "/methodology/conception-calculator",
     "/ovulation-calculator": "/methodology/ovulation-calculator",
+    "/period-calculator": "/methodology/period-calculator",
     "/methodology/due-date-calculator": "/",
     "/methodology/chinese-gender-chart": "/chinese-gender-chart",
     "/methodology/sleep-needs-by-age": "/sleep-needs-by-age",
     "/methodology/baby-percentile": "/baby-percentile",
     "/methodology/conception-calculator": "/conception-calculator",
     "/methodology/ovulation-calculator": "/ovulation-calculator",
+    "/methodology/period-calculator": "/period-calculator",
 }

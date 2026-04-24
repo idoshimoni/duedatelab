@@ -47,7 +47,8 @@
   <a class="ddl-logo" href="/" aria-label="DueDateLab home"><svg class="ddl-logo-mark" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 46 Q 22 46, 28 32 T 50 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="50" cy="14" r="6" fill="#EC0D5C"/><circle cx="8" cy="46" r="3.5" fill="currentColor"/></svg><span>DueDate<em>Lab</em></span></a>
   <nav class="pl-nav">
     <a href="/">Due Date</a>
-    <a href="/ovulation-calculator">Ovulation</a>
+        <a href="/period-calculator">Period</a>
+  <a href="/ovulation-calculator">Ovulation</a>
     <a href="/conception-calculator">Conception</a>
     <a href="/chinese-gender-chart">Chinese Gender</a>
     <a href="/sleep-needs-by-age">Sleep Needs</a>
@@ -57,6 +58,7 @@
 </header>
 <div class="pl-drawer" data-drawer>
   <a href="/">Due Date Calculator</a>
+  <a href="/period-calculator">Period Calculator</a>
   <a href="/ovulation-calculator">Ovulation Calculator</a>
   <a href="/conception-calculator">Conception Calculator</a>
   <a href="/chinese-gender-chart">Chinese Gender Chart</a>
@@ -92,13 +94,13 @@
     <h2 id="formula-ovulation">Formula 1, Ovulation day</h2>
     <p>Given an LMP date and cycle length in days:</p>
     <p><code>Ovulation day = LMP + (cycle length &minus; 14) days</code></p>
-    <p>For a standard 28-day cycle this reduces to <code>LMP + 14 days</code>. For a 32-day cycle, ovulation is <code>LMP + 18 days</code>. The fixed 14-day subtraction represents the median luteal-phase length observed in healthy ovulatory cycles. Individual luteal phases typically fall in the 11 to 16 day range, so the predicted date carries an uncertainty band of plus or minus about 2 days even when cycle length is accurately reported.</p>
+    <p>For a standard 28-day cycle this reduces to <code>LMP + 14 days</code>. For a 32-day cycle, ovulation is <code>LMP + 18 days</code>. The fixed 14-day subtraction reflects Lenton 1984's observed mean luteal-phase length of 14.13 &plusmn; 1.41 days across 327 ovulatory cycles. Lenton does not publish a hard &ldquo;normal range,&rdquo; so the 14-day value is best read as an approximate anchor rather than a precise individual prediction. Population-level cycle-to-cycle luteal-phase variability of a few days is expected, so the calculated ovulation date carries an uncertainty band of plus or minus a few days even when cycle length is accurately reported.</p>
 
     <h2 id="formula-fertile-window">Formula 2, Fertile window</h2>
     <p>Given ovulation day:</p>
     <p><code>Fertile window start = Ovulation day &minus; 5 days</code><br/>
-       <code>Fertile window end &nbsp; = Ovulation day + 1 day</code></p>
-    <p>This 6-day span is defined empirically by Wilcox et al. (NEJM 1995), which tracked daily intercourse against hormonally confirmed ovulation across 221 cycles. Outside this window, conception probability is near zero. The 24-hour buffer after ovulation reflects the viable lifespan of the egg.</p>
+       <code>Fertile window end &nbsp; = Ovulation day</code></p>
+    <p>This 6-day span is defined empirically by Wilcox et al. (NEJM 1995), which tracked daily intercourse against hormonally confirmed ovulation across 625 cycles from 221 women. The paper's exact conclusion is that pregnancies were attributed to a &ldquo;six-day period ending on the day of ovulation.&rdquo; Outside this window, conception probability is near zero.</p>
 
     <h2 id="formula-peak">Formula 3, Peak fertility</h2>
     <p>Given ovulation day:</p>
@@ -139,8 +141,8 @@
     <section class="pl-sources">
       <ol>
         <li>American College of Obstetricians and Gynecologists. Your First Period (Patient FAQ). <a href="https://www.acog.org/womens-health/faqs/your-first-period" target="_blank" rel="noopener">ACOG</a>. Cited for ACOG's published "normal" menstrual cycle range (21 to 45 days). The calculator's narrower 21 to 35 day input-validation range reflects the common adult calendar-based fertility-prediction convention rather than an ACOG-defined range.</li>
-        <li>Wilcox AJ, Weinberg CR, Baird DD. Timing of sexual intercourse in relation to ovulation, effects on the probability of conception. <em>New England Journal of Medicine</em>. 1995;333(23):1517-1521. <a href="https://pubmed.ncbi.nlm.nih.gov/7477165/" target="_blank" rel="noopener">PubMed</a>. Cited for the 6-day fertile window and 3-day peak-fertility window.</li>
-        <li>Lenton EA, Landgren BM, Sexton L. Normal variation in the length of the luteal phase of the menstrual cycle: identification of the short luteal phase. <em>British Journal of Obstetrics and Gynaecology</em>. 1984;91(7):685-689. <a href="https://pubmed.ncbi.nlm.nih.gov/6743610/" target="_blank" rel="noopener">PubMed</a>. Cited for luteal-phase constancy near 14 days, the anchor of the ovulation-day formula.</li>
+        <li>Wilcox AJ, Weinberg CR, Baird DD. Timing of sexual intercourse in relation to ovulation, effects on the probability of conception, survival of the pregnancy, and sex of the baby. <em>New England Journal of Medicine</em>. 1995;333(23):1517-1521. PMID 7477165. <a href="https://pubmed.ncbi.nlm.nih.gov/7477165/" target="_blank" rel="noopener">PubMed</a>. Cited for the 6-day fertile window ending on the day of ovulation, observed across 625 cycles from 221 women, and for the 3-day peak-fertility window.</li>
+        <li>Lenton EA, Landgren BM, Sexton L. Normal variation in the length of the luteal phase of the menstrual cycle: identification of the short luteal phase. <em>British Journal of Obstetrics and Gynaecology</em>. 1984;91(7):685-689. PMID 6743610. <a href="https://pubmed.ncbi.nlm.nih.gov/6743610/" target="_blank" rel="noopener">PubMed</a>. Cited for the observed mean luteal-phase length of 14.13 &plusmn; 1.41 days, which anchors the ovulation-day formula.</li>
       </ol>
     </section>
 
@@ -155,7 +157,7 @@
         <a class="pl-related-card" href="/ovulation-calculator"><strong>Ovulation Calculator</strong><span>Luteal-phase-anchored prediction and fertile window.</span></a>
         <a class="pl-related-card" href="/chinese-gender-chart"><strong>Chinese Gender Chart</strong><span>Boy or girl? Lunar-age novelty chart.</span></a>
         <a class="pl-related-card" href="/conception-calculator"><strong>Conception Calculator</strong><span>When did you conceive? 4 ways to estimate.</span></a>
-        <a class="pl-related-card" href="/methodology/conception-calculator"><strong>Conception methodology</strong><span>LMP, EDD reverse, IVF transfer.</span></a>
+        <a class="pl-related-card" href="/period-calculator"><strong>Period Calculator</strong><span>Predict your next period from LMP and cycle length.</span></a>
       </div>
     </section>
   </article>
@@ -163,7 +165,7 @@
 <footer class="pl-footer">
   <div class="pl-footer-grid">
     <div><a class="ddl-logo" href="/" aria-label="DueDateLab home"><svg class="ddl-logo-mark" width="32" height="32" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><path d="M8 46 Q 22 46, 28 32 T 50 14" stroke="currentColor" stroke-width="5" stroke-linecap="round" fill="none"/><circle cx="50" cy="14" r="6" fill="#EC0D5C"/><circle cx="8" cy="46" r="3.5" fill="currentColor"/></svg><span>DueDate<em>Lab</em></span></a><p style="margin-top:12px;font-size:14px;max-width:340px;">Free, private, evidence-based pregnancy and parenting calculators.</p></div>
-    <div><h4>Tools</h4><a href="/">Due Date</a><a href="/ovulation-calculator">Ovulation</a><a href="/conception-calculator">Conception</a><a href="/chinese-gender-chart">Chinese Gender</a><a href="/sleep-needs-by-age">Sleep Needs</a><a href="/baby-percentile">Baby Percentile</a></div>
+    <div><h4>Tools</h4><a href="/">Due Date</a><a href="/period-calculator">Period</a><a href="/ovulation-calculator">Ovulation</a><a href="/conception-calculator">Conception</a><a href="/chinese-gender-chart">Chinese Gender</a><a href="/sleep-needs-by-age">Sleep Needs</a><a href="/baby-percentile">Baby Percentile</a></div>
     <div><h4>Articles</h4><a href="/articles/">All articles</a><a href="/articles/chinese-gender-chart-accuracy">Chinese gender chart accuracy</a><a href="/articles/sleep-regressions-by-month">Sleep regressions by month</a><a href="/articles/4-month-sleep-regression">4 month sleep regression</a><a href="/articles/8-month-sleep-regression">8 month sleep regression</a><a href="/articles/baby-percentile-explained">Baby percentile explained</a><a href="/articles/first-trimester-week-by-week">First trimester week by week</a></div>
     <div><h4>Company</h4><a href="/about">About</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/disclaimer">Disclaimer</a><a href="/contact">Contact</a></div>
   </div>

@@ -55,11 +55,10 @@
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+    // Only the static `tool` string is sent. User age input and the derived
+    // age bucket never leave the browser, honoring the methodology privacy claim.
     if (window.gtag) {
       window.gtag('event', 'calculator_submit', { tool: 'sleep_needs' });
-      window.gtag('event', 'sleep_needs_viewed', {
-        age_bucket: b.label
-      });
     }
   });
 

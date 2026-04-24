@@ -98,12 +98,10 @@
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+    // Only the static `tool` string is sent. User birth date, conception
+    // month, and derived prediction never leave the browser.
     if (window.gtag) {
       window.gtag('event', 'calculator_submit', { tool: 'chinese_gender' });
-      window.gtag('event', 'chinese_gender_submitted', {
-        prediction: isBoy ? 'boy' : 'girl',
-        input_mode: currentMode
-      });
     }
   });
 

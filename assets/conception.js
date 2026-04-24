@@ -97,11 +97,10 @@
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
+    // Only the static `tool` string is sent. User inputs and the chosen mode
+    // never leave the browser, honoring the methodology privacy claim.
     if (window.gtag) {
       window.gtag('event', 'calculator_submit', { tool: 'conception' });
-      window.gtag('event', 'conception_estimated', {
-        mode: mode
-      });
     }
   });
 
