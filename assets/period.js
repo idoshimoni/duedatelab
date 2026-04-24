@@ -56,6 +56,12 @@
       errMsg.textContent = 'Couldn\u2019t read that date. Please re-enter.';
       return;
     }
+    // Reject future LMP dates (almost always a typo).
+    var today0 = new Date(); today0.setHours(0, 0, 0, 0);
+    if (lmp > today0) {
+      errMsg.textContent = 'That date is in the future. Please enter the first day of your last period.';
+      return;
+    }
 
     var nextPeriod   = PL.addDays(lmp, cycle);
     var periodEnd    = PL.addDays(nextPeriod, periodLen - 1);
@@ -75,6 +81,9 @@
         'Expected to end around <b>' + PL.shortDate(periodEnd) + '</b>.';
     } else if (daysUntil === 0) {
       resultExpl.innerHTML = 'Predicted for today. Expected to end around <b>' + PL.shortDate(periodEnd) + '</b>.';
+    } else if (Math.abs(daysUntil) > cycle + 14) {
+      // LMP is more than ~1.5 cycles in the past — likely a year typo.
+      resultExpl.innerHTML = '<b>' + Math.abs(daysUntil) + '</b> days ago. That is far in the past, so this result is historical rather than a useful forecast. Double-check the year on the LMP input and re-run if needed.';
     } else {
       resultExpl.innerHTML = 'Predicted <b>' + Math.abs(daysUntil) + '</b> day' + (Math.abs(daysUntil) === 1 ? '' : 's') + ' ago. If it has not arrived, consider a home pregnancy test or a clinician visit.';
     }
