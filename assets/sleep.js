@@ -56,6 +56,7 @@
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     if (window.gtag) {
+      window.gtag('event', 'calculator_submit', { tool: 'sleep_needs' });
       window.gtag('event', 'sleep_needs_viewed', {
         age_bucket: b.label
       });

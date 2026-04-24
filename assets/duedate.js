@@ -87,8 +87,12 @@
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // GA4 event: only fires if gtag was loaded and consent is granted.
+    // GA4 events: only fire if gtag was loaded and consent is granted.
+    // `calculator_submit` is the unified cross-tool event used as a GA4
+    // key event. `due_date_calculated` is preserved for tool-specific
+    // analysis (mode, trimester) and historical continuity.
     if (window.gtag) {
+      window.gtag('event', 'calculator_submit', { tool: 'due_date' });
       window.gtag('event', 'due_date_calculated', {
         mode: mode,
         trimester: trimester

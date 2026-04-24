@@ -99,6 +99,7 @@
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     if (window.gtag) {
+      window.gtag('event', 'calculator_submit', { tool: 'chinese_gender' });
       window.gtag('event', 'chinese_gender_submitted', {
         prediction: isBoy ? 'boy' : 'girl',
         input_mode: currentMode

@@ -135,6 +135,9 @@
     document.querySelectorAll('[data-share-copy]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'share_click', { method: 'copy', page_path: window.location.pathname });
+        }
         navigator.clipboard && navigator.clipboard.writeText(window.location.href).then(function () {
           var prev = btn.getAttribute('title');
           btn.setAttribute('title', 'Copied!');
@@ -150,6 +153,9 @@
       a.href = 'https://wa.me/?text=' + encodeURIComponent(window.location.href);
       a.addEventListener('click', function (e) {
         e.preventDefault();
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'share_click', { method: 'whatsapp', page_path: window.location.pathname });
+        }
         var r = getResultText();
         var payload = r ? (r + '\n\n' + window.location.href) : window.location.href;
         window.open('https://wa.me/?text=' + encodeURIComponent(payload), '_blank', 'noopener');
@@ -161,6 +167,9 @@
       a.href = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(document.title);
       a.addEventListener('click', function (e) {
         e.preventDefault();
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'share_click', { method: 'x', page_path: window.location.pathname });
+        }
         var text = getResultText() || document.title;
         var url = 'https://twitter.com/intent/tweet?url=' + encodeURIComponent(window.location.href) + '&text=' + encodeURIComponent(text);
         window.open(url, '_blank', 'noopener');
@@ -176,6 +185,9 @@
     document.querySelectorAll('[data-share-image]').forEach(function (btn) {
       btn.addEventListener('click', function (e) {
         e.preventDefault();
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'share_click', { method: 'pdf', page_path: window.location.pathname });
+        }
         document.body.classList.add('pl-print-result-only');
         function cleanup() {
           document.body.classList.remove('pl-print-result-only');
@@ -211,12 +223,37 @@
     });
   }
 
+  // ── Outbound source click tracking ──────────────────────
+  // Fires a GA4 event when a visitor clicks an outbound citation inside
+  // .pl-sources (flagship tool <aside> or article <section>). Scope is
+  // intentionally narrow: tracking every [target=_blank] anchor would
+  // include nav/logo/share links and produce noisy data. The delegated
+  // listener does not preventDefault so native navigation is untouched,
+  // the event is a side effect. Consent Mode v2 defaults govern whether
+  // this becomes a full or modeled ping.
+  function initOutboundSourceClick() {
+    document.addEventListener('click', function (e) {
+      var t = e.target;
+      var a = t && t.closest ? t.closest('.pl-sources a[target="_blank"]') : null;
+      if (!a) return;
+      if (typeof window.gtag !== 'function') return;
+      var href = a.getAttribute('href') || '';
+      var host = '';
+      try { host = new URL(href, window.location.href).host; } catch (err) {}
+      window.gtag('event', 'outbound_source_click', {
+        source_url: href,
+        source_host: host,
+        page_path: window.location.pathname
+      });
+    });
+  }
+
   // ── DOM ready ────────────────────────────────────────────
   function ready(fn) {
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
-  ready(function () { initDrawer(); initShare(); initLogoClick(); });
+  ready(function () { initDrawer(); initShare(); initLogoClick(); initOutboundSourceClick(); });
 
   // ── Date helpers ─────────────────────────────────────────
   window.PL.formatDate = function (d) {

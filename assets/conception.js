@@ -98,6 +98,7 @@
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     if (window.gtag) {
+      window.gtag('event', 'calculator_submit', { tool: 'conception' });
       window.gtag('event', 'conception_estimated', {
         mode: mode
       });

@@ -146,6 +146,7 @@
     result.scrollIntoView({behavior:'smooth',block:'start'});
 
     if (window.gtag) {
+      window.gtag('event', 'calculator_submit', { tool: 'percentile' });
       window.gtag('event', 'percentile_checked', {
         sex: sex,
         unit: currentUnit,

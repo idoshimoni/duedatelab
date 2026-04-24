@@ -114,6 +114,7 @@
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     if (window.gtag) {
+      window.gtag('event', 'calculator_submit', { tool: 'ovulation' });
       window.gtag('event', 'ovulation_estimated', {
         cycle_length: cycle
       });
