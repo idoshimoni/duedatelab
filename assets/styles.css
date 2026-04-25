@@ -882,3 +882,28 @@ button { font-family: inherit; }
   margin-right: 0;
   margin-bottom: 16px;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Responsive table fix for /articles/generations-by-year
+   At narrow viewports (<= 600px) the 4-column generation table
+   was wrapping every cell to 2-3 lines because each column got
+   ~86px. Switch to horizontal scroll on mobile, keep semantic
+   <table> structure for screen readers + schema.
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .pl-gen-table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .pl-gen-table thead,
+  .pl-gen-table tbody {
+    display: table;
+    width: max-content;
+    min-width: 100%;
+  }
+  .pl-gen-table th,
+  .pl-gen-table td {
+    white-space: nowrap;
+  }
+}
