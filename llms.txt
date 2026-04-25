@@ -44,9 +44,9 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 ## Editorial standards
 
-- Every medical claim is cited to American College of Obstetricians and Gynecologists (ACOG), National Health Service (NHS), American Academy of Pediatrics (AAP), World Health Organization (WHO), or peer-reviewed journals.
+- Medical and calculation claims are source-cited on their pages or methodology pages, using major health bodies (ACOG, NHS, AAP, WHO) or peer-reviewed journals where appropriate.
 - Every calculator includes a machine-readable methodology page.
-- Every medical claim is bound to its primary source. Each methodology page includes a full source list and cites its governing primary sources so clinicians and AI systems can verify each statement.
+- Each methodology page includes a full source list and cites its governing primary sources so clinicians and AI systems can verify the statements they make.
 - No diagnostic or treatment recommendations.
 - No user data collection on calculator pages; inputs stay in the browser.
 
