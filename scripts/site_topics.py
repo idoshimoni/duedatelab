@@ -184,6 +184,34 @@ URL_TOPICS = {
         "desc": "Lunar math, Villamor 2010 accuracy.",
     },
 
+    # IA hubs (PI2 from 2026-04-25 IA restructure). Hubs have no
+    # related-grid of their own (the hub IS the related grid), but they
+    # show up as candidates from other pages.
+    "/calculators/": {
+        "topics": ["hub"],
+        "page_type": "hub",
+        "title": "All Calculators",
+        "desc": "Index of every DueDateLab calculator.",
+    },
+    "/cycle-and-fertility/": {
+        "topics": ["preconception", "dating", "hub"],
+        "page_type": "hub",
+        "title": "Cycle and Fertility",
+        "desc": "Period, ovulation, fertile window, and conception tools.",
+    },
+    "/pregnancy/": {
+        "topics": ["pregnancy", "hub"],
+        "page_type": "hub",
+        "title": "Pregnancy",
+        "desc": "Pregnancy tools and trimester guides.",
+    },
+    "/baby-child/": {
+        "topics": ["infancy", "growth", "sleep", "hub"],
+        "page_type": "hub",
+        "title": "Baby and Child",
+        "desc": "Baby and child tools plus sleep and growth guides.",
+    },
+
     # Company pages (no related-grid)
     "/about":      {"topics": [], "page_type": "company", "title": "About",      "desc": ""},
     "/privacy":    {"topics": [], "page_type": "company", "title": "Privacy",    "desc": ""},

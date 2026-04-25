@@ -16,6 +16,12 @@ source_file is the path relative to the dist/ directory. Use
 SITE_BASE = "https://duedatelab.com"
 
 URL_MAP = [
+    # IA hubs (PI2 from 2026-04-25 IA restructure)
+    {"url": "/calculators/",                    "source": "calculators/index.html",                      "priority": "0.8", "changefreq": "monthly"},
+    {"url": "/cycle-and-fertility/",            "source": "cycle-and-fertility/index.html",              "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/",                      "source": "pregnancy/index.html",                        "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/baby-child/",                     "source": "baby-child/index.html",                       "priority": "0.7", "changefreq": "monthly"},
+
     # Home + flagship tools
     {"url": "/",                                "source": "index.html",                                  "priority": "1.0", "changefreq": "weekly"},
     {"url": "/chinese-gender-chart",            "source": "chinese-gender-chart.html",                   "priority": "0.9", "changefreq": "monthly"},

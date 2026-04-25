@@ -4,6 +4,13 @@
 
 DueDateLab publishes pregnancy and parenting calculators with full methodology disclosure. Each tool ships with a dedicated methodology page that documents the formula, input validation, source citations, and review history. Calculations run client-side in the browser; inputs are never sent to a server.
 
+## Hubs
+
+- [All Calculators](https://duedatelab.com/calculators/): Index of all DueDateLab calculators across cycle and fertility, pregnancy, and baby and child
+- [Cycle and Fertility](https://duedatelab.com/cycle-and-fertility/): Period, ovulation, fertile window, and conception-timing calculators with linked methodology
+- [Pregnancy](https://duedatelab.com/pregnancy/): Pregnancy tools and trimester guides, including due date estimates and Chinese Gender Chart (entertainment)
+- [Baby and Child](https://duedatelab.com/baby-child/): Baby and child tools plus sleep and growth guides, each with linked methodology
+
 ## Methodology pages
 
 - [Due Date Calculator methodology](https://duedatelab.com/methodology/due-date-calculator): Naegele's rule, LMP and conception-date methods, ultrasound adjustment, ACOG and NHS source citations

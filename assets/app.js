@@ -39,35 +39,10 @@
     document.head.appendChild(s);
   })();
 
-  // ── Mobile drawer ───────────────────────────────────────
-  function initDrawer() {
-    var btn = document.querySelector('[data-drawer-toggle]');
-    var drawer = document.querySelector('[data-drawer]');
-    if (!btn || !drawer) return;
-    function closeDrawer() {
-      drawer.classList.remove('open');
-      btn.setAttribute('aria-expanded', 'false');
-    }
-    btn.addEventListener('click', function (e) {
-      e.stopPropagation();
-      var open = drawer.classList.toggle('open');
-      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-    });
-    // Close on link click (drawer dismisses when navigating)
-    drawer.addEventListener('click', function (e) {
-      if (e.target && e.target.tagName === 'A') closeDrawer();
-    });
-    // Close on outside tap
-    document.addEventListener('click', function (e) {
-      if (!drawer.classList.contains('open')) return;
-      if (drawer.contains(e.target) || btn.contains(e.target)) return;
-      closeDrawer();
-    });
-    // Close on Esc
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape') closeDrawer();
-    });
-  }
+  // (Old initDrawer() removed: the OLD flat-nav drawer is replaced by the v4
+  // canonical block's pl-mobile-header + pl-drawer disclosure pattern. The
+  // hamburger + accordion handlers live in the v4 IIFE appended at the bottom
+  // of this file.)
 
   // Shared namespace.
   window.PL = window.PL || {};
@@ -253,7 +228,7 @@
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
-  ready(function () { initDrawer(); initShare(); initLogoClick(); initOutboundSourceClick(); });
+  ready(function () { initShare(); initLogoClick(); initOutboundSourceClick(); });
 
   // ── Date helpers ─────────────────────────────────────────
   window.PL.formatDate = function (d) {
@@ -283,4 +258,240 @@
       }
     });
   };
+})();/* DueDateLab — nav interactions (v2)
+ * W3C Disclosure Navigation pattern:
+ *   - Hover + click + Enter/Space toggles
+ *   - Esc closes and returns focus to controlling button
+ *   - Outside click closes
+ *   - focusout outside the nav region closes
+ *   - NO focus trap, NO required arrow keys, NO role="menu"
+ *
+ * Tracking events (consent-mode-gated; none send user inputs):
+ *   nav_click, dropdown_open, drawer_open, drawer_section_toggle,
+ *   calculator_start, result_next_step_click, footer_click
+ *
+ * Existing events preserved unchanged:
+ *   calculator_submit, share_click, outbound_source_click,
+ *   methodology_view, scroll_90, logo_click
+ */
+(function () {
+  'use strict';
+
+  // ── Helpers ───────────────────────────────────────────────
+  function track(name, params) {
+    if (typeof window.gtag === 'function') {
+      try { window.gtag('event', name, params || {}); } catch (e) {}
+    }
+  }
+  function pageRelative(href) {
+    if (!href) return '';
+    try {
+      var u = new URL(href, window.location.origin);
+      return u.pathname + (u.search || '') + (u.hash || '');
+    } catch (e) { return href; }
+  }
+
+  // ── Desktop dropdowns (W3C disclosure-navigation) ─────────
+  var nav = document.querySelector('.pl-nav');
+  var navItems = document.querySelectorAll('.pl-nav-item[data-pl-dropdown]');
+  var openItem = null;
+
+  function closeAll() {
+    navItems.forEach(function (item) {
+      var trigger = item.querySelector('.pl-nav-link');
+      var panel = item.querySelector('.pl-dropdown');
+      if (!trigger || !panel) return;
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.hidden = true;
+    });
+    openItem = null;
+  }
+
+  function openDropdown(item) {
+    if (openItem && openItem !== item) closeAll();
+    var trigger = item.querySelector('.pl-nav-link');
+    var panel = item.querySelector('.pl-dropdown');
+    if (!trigger || !panel) return;
+    if (trigger.getAttribute('aria-expanded') === 'true') return;
+    trigger.setAttribute('aria-expanded', 'true');
+    panel.hidden = false;
+    openItem = item;
+    track('dropdown_open', { nav_label: item.getAttribute('data-nav-label') || '' });
+  }
+
+  navItems.forEach(function (item) {
+    var trigger = item.querySelector('.pl-nav-link');
+    var panel = item.querySelector('.pl-dropdown');
+    if (!trigger || !panel) return;
+
+    // Hover (desktop only — pointer:fine)
+    var hoverTimer;
+    if (window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      item.addEventListener('mouseenter', function () {
+        clearTimeout(hoverTimer);
+        openDropdown(item);
+      });
+      item.addEventListener('mouseleave', function () {
+        hoverTimer = setTimeout(function () {
+          if (openItem === item) closeAll();
+        }, 140);
+      });
+    }
+
+    // Click toggles (button) — Enter/Space activate the click event natively
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      var isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      if (isOpen) closeAll();
+      else openDropdown(item);
+    });
+
+    // Esc on trigger or panel closes and returns focus
+    trigger.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && trigger.getAttribute('aria-expanded') === 'true') {
+        closeAll();
+        trigger.focus();
+      }
+    });
+    panel.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        closeAll();
+        trigger.focus();
+      }
+      // No arrow-key handling — Tab traverses naturally (no focus trap).
+    });
+  });
+
+  // Outside click closes
+  document.addEventListener('click', function (e) {
+    if (!openItem) return;
+    if (!openItem.contains(e.target)) closeAll();
+  });
+
+  // Focus leaving the OPEN ITEM closes (not just leaving the whole nav).
+  // Catches Tab-out from a dropdown to a sibling nav button.
+  if (nav) {
+    nav.addEventListener('focusout', function (e) {
+      if (!openItem) return;
+      var next = e.relatedTarget;
+      if (!next || !openItem.contains(next)) closeAll();
+    });
+
+    // Global nav Esc: close any open dropdown and return focus to its trigger.
+    nav.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && openItem) {
+        var trigger = openItem.querySelector('.pl-nav-link');
+        closeAll();
+        if (trigger) trigger.focus();
+      }
+    });
+  }
+
+  // Top-level nav link clicks (direct links + dropdown-item links + CTAs)
+  document.querySelectorAll('.pl-nav-list a[href]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track('nav_click', {
+        nav_area: 'desktop',
+        nav_label: a.getAttribute('data-nav-label') || '',
+        destination_path: pageRelative(a.getAttribute('href')),
+      });
+    });
+  });
+
+  // ── Mobile drawer ─────────────────────────────────────────
+  var drawer = document.querySelector('[data-pl-drawer]');
+  var hamburger = document.querySelector('[data-pl-hamburger]');
+
+  if (hamburger && drawer) {
+    hamburger.addEventListener('click', function () {
+      var willOpen = drawer.hidden;
+      drawer.hidden = !willOpen;
+      hamburger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      if (willOpen) {
+        track('drawer_open', { page_path: window.location.pathname });
+      }
+    });
+  }
+
+  // Accordion section headers
+  document.querySelectorAll('.pl-drawer-section-header').forEach(function (header) {
+    header.addEventListener('click', function () {
+      var id = header.getAttribute('aria-controls');
+      var panel = id && document.getElementById(id);
+      if (!panel) return;
+      var expanded = header.getAttribute('aria-expanded') === 'true';
+      header.setAttribute('aria-expanded', expanded ? 'false' : 'true');
+      panel.hidden = expanded;
+      track('drawer_section_toggle', {
+        section_label: header.getAttribute('data-section-label') || '',
+        expanded: !expanded,
+      });
+    });
+    header.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        // Esc collapses an open section and returns focus to header
+        if (header.getAttribute('aria-expanded') === 'true') {
+          header.click();
+        }
+      }
+    });
+  });
+
+  // Drawer link clicks (priority + sublinks)
+  document.querySelectorAll('.pl-drawer a[href]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track('nav_click', {
+        nav_area: 'drawer',
+        nav_label: a.getAttribute('data-nav-label') || '',
+        destination_path: pageRelative(a.getAttribute('href')),
+      });
+    });
+  });
+
+  // ── Footer link tracking ──────────────────────────────────
+  document.querySelectorAll('.pl-footer a[href][data-footer-section]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      track('footer_click', {
+        footer_section: a.getAttribute('data-footer-section'),
+        destination_path: pageRelative(a.getAttribute('href')),
+      });
+    });
+  });
+
+  // ── Calculator instrumentation hooks ──────────────────────
+  // calculator_start — fire on first input touch on a calculator page.
+  // The `tool` value is read from <body data-calculator="period|ovulation|...">.
+  var calcTool = document.body && document.body.getAttribute('data-calculator');
+  if (calcTool) {
+    var calcStartFired = false;
+    var onFirstTouch = function () {
+      if (calcStartFired) return;
+      calcStartFired = true;
+      track('calculator_start', { tool: calcTool });
+      document.removeEventListener('input', onFirstTouch, true);
+      document.removeEventListener('change', onFirstTouch, true);
+    };
+    document.addEventListener('input', onFirstTouch, true);
+    document.addEventListener('change', onFirstTouch, true);
+  }
+
+  // result_next_step_click — fire from result-panel next-step modules.
+  // Modules opt in via [data-next-step-module] on the wrapper and
+  // [data-next-step-link] on the anchor. Wired here for forward-compat;
+  // the modules themselves land on calculator pages in a separate task.
+  document.querySelectorAll('[data-next-step-module] a[data-next-step-link]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var module = a.closest('[data-next-step-module]');
+      track('result_next_step_click', {
+        tool: (module && module.getAttribute('data-tool')) || calcTool || '',
+        destination_path: pageRelative(a.getAttribute('href')),
+        module_label: (module && module.getAttribute('data-next-step-module')) || '',
+      });
+    });
+  });
+
+  // ── Preserved events (unchanged) ──────────────────────────
+  // calculator_submit, share_click, outbound_source_click,
+  // methodology_view, scroll_90, logo_click are wired in their existing
+  // call sites and are intentionally left untouched here.
 })();

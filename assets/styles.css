@@ -42,29 +42,20 @@ body {
 
 a { color: var(--navy); }
 
-/* Header */
-.pl-header { background: var(--navy); height: 56px; display: flex; align-items: center; padding: 0 16px; position: sticky; top: 0; z-index: 20; }
-@media (min-width: 1024px) { .pl-header { padding: 0 32px; } }
+/* Brand logo */
 /* Brand logo: inline SVG + wordmark. currentColor flips with context
    (white on navy header/footer, navy on light backgrounds). The crimson
-   dot is locked to #EC0D5C per brand guidelines — never recolor. */
+   dot is locked to #EC0D5C per brand guidelines — never recolor.
+   The OLD .pl-header / .pl-nav / .pl-hamburger / .pl-drawer rules were
+   removed during the 2026-04-25 IA-restructure integration. New
+   disclosure-nav rules live at the bottom of this file in the v4-styles
+   section (matching pl-nav-list, pl-dropdown, pl-mobile-header,
+   pl-drawer-section, pl-footer-grid 6-col, etc). */
 .ddl-logo { display: inline-flex; align-items: center; gap: 12px; font-weight: 800; font-size: 22px; line-height: 1; color: var(--navy); letter-spacing: -0.3px; text-decoration: none; }
 .ddl-logo em { font-style: normal; color: var(--crimson); }
 .ddl-logo-mark { flex: 0 0 auto; display: block; }
-.pl-header .ddl-logo, .pl-footer .ddl-logo { color: #fff; }
-.pl-footer .ddl-logo { display: inline-flex; font-size: 22px; padding: 0; }
-.pl-nav { display: none; gap: 28px; margin-left: auto; margin-right: auto; }
-@media (min-width: 1024px) { .pl-nav { display: flex; } }
-.pl-nav a { color: #fff; text-decoration: none; font-size: 15px; font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; }
-.pl-nav a.active { border-color: var(--crimson); }
-.pl-hamburger { margin-left: auto; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; background: transparent; border: none; color: #fff; cursor: pointer; }
-@media (min-width: 1024px) { .pl-hamburger { display: none; } }
-
-.pl-drawer { background: var(--navy); display: none; position: fixed; top: 56px; left: 0; right: 0; z-index: 19; max-height: calc(100vh - 56px); overflow-y: auto; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
-.pl-drawer.open { display: block; }
-@media (min-width: 1024px) { .pl-drawer { display: none !important; } }
-.pl-drawer a { display: flex; align-items: center; justify-content: space-between; padding: 14px 20px; color: #fff; text-decoration: none; font-size: 17px; font-weight: 600; border-bottom: 1px solid rgba(255,255,255,0.08); border-left: 3px solid transparent; }
-.pl-drawer a.active { background: rgba(236,13,92,0.12); border-left-color: var(--crimson); }
+.pl-header .ddl-logo, .pl-mobile-header .ddl-logo, .pl-footer .ddl-logo { color: #fff; }
+.pl-footer-brand .ddl-logo { display: inline-flex; font-size: 22px; padding: 0; margin-bottom: 16px; }
 
 /* Page scaffold */
 .pl-page { padding: 16px; }
@@ -204,17 +195,9 @@ a { color: var(--navy); }
 .pl-legal a[href^="mailto:"] { color: var(--crimson-dark); font-weight: 600; border-bottom-color: var(--crimson-soft); }
 .pl-legal a[href^="mailto:"]:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
 
-/* Footer */
-.pl-footer { background: var(--navy); color: rgba(255,255,255,0.75); padding: 40px 16px 24px; margin-top: 48px; }
-@media (min-width: 1024px) { .pl-footer { padding: 56px 32px 32px; } }
-.pl-footer-grid { display: grid; grid-template-columns: 1fr; gap: 32px; max-width: 960px; margin: 0 auto 32px; }
-@media (min-width: 1024px) { .pl-footer-grid { grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; } }
-.pl-footer h4 { color: #fff; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin: 0 0 12px; }
-.pl-footer a { color: rgba(255,255,255,0.75); text-decoration: none; display: block; padding: 4px 0; font-size: 15px; }
-.pl-footer a:hover { color: #fff; }
-.pl-footer-note { max-width: 960px; margin: 0 auto; font-size: 12px; color: rgba(255,255,255,0.45); padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.1); }
-.pl-footer-note a { display: inline; padding: 0; font-size: inherit; }
-.pl-footer-note a:hover { color: #fff; text-decoration: underline; }
+/* (OLD .pl-footer 4-column block was removed during the 2026-04-25 IA
+   restructure. The new 6-column footer rules live at the bottom of this
+   file in the v4-styles section.) */
 
 /* Cookie banner */
 .pl-cookie { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 8px 16px; display: flex; align-items: center; gap: 12px; font-size: 13px; min-height: 48px; z-index: 40; flex-wrap: wrap; }
@@ -315,4 +298,587 @@ a { color: var(--navy); }
     max-width: none !important;
   }
   @page { margin: 20mm; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   v4 IA restructure styles (2026-04-25)
+   Disclosure navigation, mobile drawer, 6-column footer.
+   See `Plugins/duedatelab-ia-mock-v4-2026-04-25/` for the source mock.
+   ───────────────────────────────────────────────────────────── */
+/* DueDateLab — Phase 2 nav/drawer/footer restructure (v2)
+ * Tokens locked: navy / crimson / white / bg / text-soft / border
+ * v2 changes: W3C disclosure-navigation pattern (no role=menu),
+ *             6-column footer, drawer priority links + accordions,
+ *             crimson removed from footer subgroup labels.
+ */
+:root {
+  --navy: #1A2E4A;
+  --crimson: #EC0D5C;
+  --crimson-dark: #C80A4E;
+  --crimson-soft: #FDE6EE;
+  --white: #FFFFFF;
+  --bg: #F7F8FA;
+  --text-soft: #5A6B82;
+  --border: #E6EAF1;
+  --shadow-card: 0 1px 2px rgba(26,46,74,0.05);
+  --shadow-dropdown: 0 2px 4px rgba(26,46,74,0.05), 0 12px 32px rgba(26,46,74,0.12);
+  --radius-card: 12px;
+  --radius-btn: 8px;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--navy);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a { color: inherit; text-decoration: none; }
+button { font-family: inherit; }
+
+/* ─────────────────────────────────────────────────────────────
+   HEADER + DESKTOP NAV (W3C Disclosure Navigation)
+   ───────────────────────────────────────────────────────────── */
+.pl-header {
+  background: var(--navy);
+  color: var(--white);
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 32px;
+  position: relative;
+  z-index: 50;
+}
+
+.pl-logo {
+  font-weight: 800;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+  color: var(--white);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  margin-right: 48px;
+}
+.pl-logo .lab {
+  position: relative;
+  padding-right: 9px;
+}
+.pl-logo .lab::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 4px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--crimson);
+}
+
+/* Disclosure-nav: <nav><ul><li>{<a> | <button>+<ul>}</li></ul></nav> */
+.pl-nav { height: 100%; }
+.pl-nav-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+  height: 100%;
+}
+.pl-nav-item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+}
+
+.pl-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0 16px;
+  height: 64px;
+  color: rgba(255,255,255,0.88);
+  font-size: 15px;
+  font-weight: 500;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+  transition: color 120ms ease;
+}
+.pl-nav-link:hover,
+.pl-nav-link:focus-visible { color: var(--white); outline: none; }
+.pl-nav-link[aria-expanded="true"] { color: var(--white); }
+.pl-nav-link:focus-visible { box-shadow: inset 0 0 0 2px rgba(255,255,255,0.45); border-radius: 4px; }
+
+.pl-nav-link .caret {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  transition: transform 160ms ease;
+  opacity: 0.7;
+}
+.pl-nav-link[aria-expanded="true"] .caret { transform: rotate(180deg); opacity: 1; }
+
+/* Active page (aria-current="page") and active dropdown parent */
+.pl-nav-link[aria-current="page"]::after,
+.pl-nav-item.is-section-active > .pl-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  height: 2px;
+  background: var(--crimson);
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   DROPDOWN PANEL (a <ul> with hidden attribute)
+   ───────────────────────────────────────────────────────────── */
+.pl-dropdown {
+  list-style: none;
+  margin: 0;
+  position: absolute;
+  top: calc(100% - 4px);
+  left: 0;
+  min-width: 340px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-dropdown);
+  padding: 10px;
+  z-index: 60;
+}
+.pl-dropdown[hidden] { display: none; }
+
+.pl-dropdown-group-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-soft);
+  padding: 10px 12px 6px;
+  list-style: none;
+}
+
+.pl-dropdown li { list-style: none; }
+.pl-dropdown li > a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--navy);
+  font-size: 14.5px;
+  font-weight: 500;
+  line-height: 1.3;
+  transition: background 120ms ease, color 120ms ease;
+}
+.pl-dropdown li > a:hover,
+.pl-dropdown li > a:focus-visible {
+  background: var(--crimson-soft);
+  color: var(--crimson-dark);
+  outline: none;
+}
+.pl-dropdown li > a .item-sub {
+  display: block;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--text-soft);
+  margin-top: 2px;
+}
+.pl-dropdown li > a:hover .item-sub { color: var(--crimson-dark); opacity: 0.85; }
+
+.pl-dropdown-cta {
+  color: var(--crimson-dark) !important;
+  font-weight: 600 !important;
+}
+.pl-dropdown-cta:hover,
+.pl-dropdown-cta:focus-visible {
+  background: var(--crimson-soft) !important;
+  color: var(--crimson-dark) !important;
+}
+
+.pl-badge {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--bg);
+  color: var(--text-soft);
+  border: 1px solid var(--border);
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+.pl-badge.badge-article {
+  background: var(--crimson-soft);
+  color: var(--crimson-dark);
+  border-color: transparent;
+}
+.pl-badge.badge-hub {
+  background: #E8F1FF;
+  color: #2F5AA8;
+  border-color: transparent;
+}
+.pl-badge.badge-entertainment {
+  background: #FFF6E0;
+  color: #8A6500;
+  border-color: transparent;
+}
+.pl-dropdown-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 8px 4px;
+  list-style: none;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE DRAWER (priority links + accordions)
+   ───────────────────────────────────────────────────────────── */
+.pl-mobile-header {
+  background: var(--navy);
+  height: 56px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  justify-content: space-between;
+  color: var(--white);
+}
+.pl-hamburger {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 0;
+  color: var(--white);
+  cursor: pointer;
+  padding: 0;
+}
+
+.pl-drawer {
+  background: var(--navy);
+  color: var(--white);
+  padding: 8px 0 16px;
+}
+
+.pl-drawer-priority { padding: 4px 0 8px; }
+
+.pl-drawer-link {
+  display: flex;
+  align-items: center;
+  min-height: 48px;
+  padding: 0 20px;
+  color: var(--white);
+  font-size: 17px;
+  font-weight: 600;
+  border-left: 3px solid transparent;
+}
+.pl-drawer-link.is-active,
+.pl-drawer-link[aria-current="page"] {
+  border-left-color: var(--crimson);
+  background: rgba(255,255,255,0.06);
+}
+
+.pl-drawer-section + .pl-drawer-section { border-top: 1px solid rgba(255,255,255,0.08); }
+
+.pl-drawer-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  padding: 0 20px;
+  background: transparent;
+  border: 0;
+  width: 100%;
+  color: rgba(255,255,255,0.55);
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+}
+.pl-drawer-section-header .chevron {
+  width: 12px;
+  height: 12px;
+  transition: transform 180ms ease;
+  opacity: 0.55;
+}
+.pl-drawer-section-header[aria-expanded="true"] .chevron { transform: rotate(90deg); }
+
+.pl-drawer-section-items {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 8px;
+}
+.pl-drawer-section-items[hidden] { display: none; }
+.pl-drawer-section-items li { list-style: none; }
+
+.pl-drawer-sublink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 44px;
+  padding: 0 20px 0 32px;
+  color: rgba(255,255,255,0.92);
+  font-size: 15px;
+  font-weight: 500;
+  border-left: 3px solid transparent;
+}
+.pl-drawer-sublink.is-active,
+.pl-drawer-sublink[aria-current="page"] {
+  border-left-color: var(--crimson);
+  background: rgba(255,255,255,0.06);
+}
+.pl-drawer-sublink .pl-badge {
+  font-size: 9px;
+  padding: 2px 6px;
+  background: rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.65);
+  border: 0;
+}
+.pl-drawer-sublink .pl-badge.badge-article {
+  background: rgba(236,13,92,0.18);
+  color: #FFC4D5;
+}
+.pl-drawer-sublink .pl-badge.badge-entertainment {
+  background: rgba(255,205,90,0.18);
+  color: #FFE2A1;
+}
+.pl-drawer-divider {
+  height: 1px;
+  background: rgba(255,255,255,0.08);
+  margin: 4px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-drawer-section-header .chevron,
+  .pl-nav-link .caret { transition: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   FOOTER — 6 columns, no crimson on subgroup labels
+   ───────────────────────────────────────────────────────────── */
+.pl-footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.75);
+  padding: 56px 40px 24px;
+}
+.pl-footer-grid {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.5fr) repeat(5, minmax(150px, 1fr));
+  gap: 32px;
+  max-width: 1280px;
+  margin: 0 auto;
+}
+.pl-footer-col h4 {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--white);
+  margin: 0 0 16px;
+}
+.pl-footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.pl-footer-col a {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.75);
+  transition: color 120ms ease;
+  line-height: 1.45;
+}
+.pl-footer-col a:hover { color: var(--white); }
+
+.pl-footer-brand p {
+  font-size: 13.5px;
+  line-height: 1.55;
+  color: rgba(255,255,255,0.65);
+  margin: 0 0 12px;
+  max-width: 260px;
+}
+.pl-footer-brand .pl-logo {
+  margin-right: 0;
+  margin-bottom: 16px;
+  display: flex;
+}
+.pl-footer-brand .legal {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  margin: 16px 0 0;
+}
+
+.pl-footer-cta {
+  margin-top: 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #FF6196;            /* AA on navy: 4.83:1 (was var(--crimson) at 3.12:1, fail) */
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.pl-footer-cta:hover,
+.pl-footer-cta:focus-visible { color: #FF8AB1; }
+
+.pl-footer-bottom {
+  max-width: 1200px;
+  margin: 48px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+}
+
+@media (max-width: 1240px) {
+  .pl-footer-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .pl-footer-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .pl-footer-grid { grid-template-columns: 1fr; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Responsive: desktop nav vs mobile header/drawer
+   Desktop breakpoint = 1024px
+   ───────────────────────────────────────────────────────────── */
+@media (min-width: 1024px) {
+  .pl-mobile-header,
+  .pl-hamburger,
+  .pl-drawer { display: none !important; }
+}
+
+@media (max-width: 1023px) {
+  .pl-header { display: none; }                /* hide desktop header */
+  .pl-mobile-header {
+    display: flex;
+    background: var(--navy);
+    color: var(--white);
+    height: 56px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    position: relative;
+    z-index: 50;
+  }
+  .pl-hamburger { display: inline-flex; }
+  .pl-drawer:not([hidden]) { display: block; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   :focus-visible — explicit, accessible focus rings
+   ───────────────────────────────────────────────────────────── */
+.pl-hamburger:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.65);
+  outline-offset: -3px;
+  border-radius: 4px;
+}
+.pl-drawer-link:focus-visible,
+.pl-drawer-sublink:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.65);
+  outline-offset: -2px;
+  background: rgba(255,255,255,0.06);
+}
+.pl-drawer-section-header:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.65);
+  outline-offset: -2px;
+}
+.pl-footer-col a:focus-visible {
+  outline: 2px solid rgba(255,255,255,0.65);
+  outline-offset: 2px;
+  border-radius: 2px;
+  color: var(--white);
+}
+.pl-footer-cta:focus-visible {
+  outline: 2px solid #FF6196;
+  outline-offset: 4px;
+  border-radius: 2px;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Hub-page styles (PI2: /calculators/, /pregnancy/,
+   /cycle-and-fertility/, /baby-child/)
+   ───────────────────────────────────────────────────────────── */
+.pl-hub { max-width: 1180px; margin: 0 auto; padding: 32px 24px 64px; }
+@media (max-width: 760px) { .pl-hub { padding: 24px 16px 48px; } }
+
+.pl-hub-header { margin-bottom: 32px; }
+.pl-breadcrumb { font-size: 13px; color: var(--text-soft); margin: 0 0 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 0; }
+.pl-breadcrumb a { color: var(--text-soft); text-decoration: none; transition: color 120ms ease; }
+.pl-breadcrumb a:hover, .pl-breadcrumb a:focus-visible { color: var(--crimson-dark); text-decoration: underline; outline: none; }
+.pl-breadcrumb a:focus-visible { outline: 2px solid var(--crimson-dark); outline-offset: 2px; border-radius: 2px; }
+.pl-breadcrumb [aria-current="page"] { color: var(--navy); font-weight: 600; }
+.pl-breadcrumb-sep { color: var(--text-soft); opacity: 0.6; margin: 0 4px; }
+
+.pl-hub .pl-h1 { font-size: 32px; line-height: 1.2; margin: 0 0 12px; letter-spacing: -0.3px; }
+@media (min-width: 1024px) { .pl-hub .pl-h1 { font-size: 40px; } }
+
+.pl-hub-intro { font-size: 17px; line-height: 1.55; color: var(--navy); max-width: 720px; margin: 0 0 16px; }
+
+.pl-hub-section { margin: 40px 0 0; }
+.pl-hub-section h2 { font-size: 22px; font-weight: 700; color: var(--navy); letter-spacing: -0.2px; margin: 0 0 16px; }
+
+.pl-hub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+@media (max-width: 480px) { .pl-hub-grid { grid-template-columns: 1fr; } }
+
+.pl-hub-card { display: flex; flex-direction: column; gap: 8px; padding: 20px; background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-card); color: var(--navy); text-decoration: none; transition: border-color 120ms ease, transform 120ms ease, box-shadow 120ms ease; box-shadow: var(--shadow-card); }
+.pl-hub-card:hover { border-color: var(--crimson-dark); transform: translateY(-1px); box-shadow: 0 6px 20px rgba(26,46,74,0.10); }
+.pl-hub-card:focus-visible { outline: 2px solid var(--crimson-dark); outline-offset: 3px; border-color: var(--crimson-dark); }
+.pl-hub-card-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.pl-hub-card-head h3 { font-size: 17px; font-weight: 600; margin: 0; line-height: 1.3; color: var(--navy); }
+.pl-hub-card-badge { flex-shrink: 0; }
+.pl-hub-card p { font-size: 14px; line-height: 1.5; color: var(--text-soft); margin: 0; }
+.pl-hub-card-cta { font-size: 13.5px; font-weight: 600; color: var(--crimson-dark); margin-top: auto; }
+.pl-hub-card:hover .pl-hub-card-cta { text-decoration: underline; }
+
+@media (prefers-reduced-motion: reduce) {
+  .pl-hub-card { transition: none; }
+  .pl-hub-card:hover { transform: none; }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Production SVG wordmark override (round-4 review §5)
+   The canonical block uses class="ddl-logo pl-logo" on every brand
+   anchor. The v4 mock's appended .pl-logo rule was designed for a
+   text-only mark and overrides .ddl-logo on shared properties because
+   it's later in source order with equal specificity. This .ddl-logo.pl-logo
+   block re-asserts the SVG-aware values via specificity (two classes vs
+   one), so the production wordmark renders correctly in header, mobile
+   header, and footer brand column at every breakpoint.
+   ───────────────────────────────────────────────────────────── */
+.ddl-logo.pl-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 22px;
+  line-height: 1;
+  letter-spacing: -0.3px;
+}
+.pl-header .ddl-logo.pl-logo {
+  margin-right: 48px;
+}
+.pl-mobile-header .ddl-logo.pl-logo {
+  margin-right: 0;
+}
+.pl-footer-brand .ddl-logo.pl-logo {
+  margin-right: 0;
+  margin-bottom: 16px;
 }
