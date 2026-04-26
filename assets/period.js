@@ -9,14 +9,10 @@
      Ovulation day   = LMP + (cycle - 14)        (Lenton 1984, ACOG)
      Fertile window  = [ovulation - 5, ovulation] (Wilcox 1995)
 
-   Step 3 v3 (2026-04-26-round3): renderer rewritten for the new pl-result
-   panel + cycle-strip SVG visual + pl-next-steps. Computation is unchanged.
-
-   NOTE on variable cycle length: the SVG strip is statically authored as a
-   28-cell layout. For cycles ≠ 28 we map cycleDay → cellIndex via
-   round((cycleDay - 1) * 28 / cycle). The fallback table carries the precise
-   dates regardless. The 28-cell visual is the verified mock; broader cycles
-   (21-45) are an accepted approximation in the visual layer.
+   Step 3.1 (2026-04-26-round1): SVG geometry now scales to the actual cycle
+   length. stripMetrics(cycle) computes cellW = 672 / cycle from the strip
+   anchor (left=24, width=672), so cell positions are correct for any cycle
+   length 21..45. Day-tick labels and background cells regenerate dynamically.
 */
 (function () {
   'use strict';
@@ -42,20 +38,87 @@
     if (nextSteps) nextSteps.classList.add('hidden');
   }
 
-  /* Map a cycle day (1..cycle) to an SVG cell index (0..27) on the
-     28-cell static strip. */
-  function cellIndex(cycleDayN, cycle) {
-    return Math.round((cycleDayN - 1) * 28 / cycle);
+  /* Strip metrics — scales cell width to the actual cycle length so the
+     visual geometry agrees with the text and the calendar dates regardless
+     of cycle length. The SVG anchors are: left=24, total cell-strip width
+     = 672 (originally 28 * 24). */
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  function clampDay(day, cycle) {
+    return Math.max(1, Math.min(cycle, day));
   }
-  /* Cell layout: startX = 24, cellWidth = 24 (22 + 2 gap) per SVG authoring.
-     bandX = 24 + cellIndex(startDay) * 24
-     bandW = (cellIndex(endDay+1) - cellIndex(startDay)) * 24 — this gives a
-       width that snaps to cell boundaries. */
-  function cellX(cycleDayN, cycle) { return 24 + cellIndex(cycleDayN, cycle) * 24; }
+  function stripMetrics(cycle) {
+    var left = 24;
+    var width = 672;
+    var cellW = width / cycle;
+    return { left: left, width: width, cellW: cellW };
+  }
+  function cellX(day, cycle) {
+    var m = stripMetrics(cycle);
+    var d = clampDay(day, cycle);
+    return m.left + (d - 1) * m.cellW;
+  }
+  function cellCenterX(day, cycle) {
+    var m = stripMetrics(cycle);
+    return cellX(day, cycle) + (m.cellW / 2);
+  }
   function cellSpan(startDay, endDay, cycle) {
-    var startX = cellX(startDay, cycle);
-    var endX = 24 + cellIndex(endDay + 1, cycle) * 24;
-    return { x: startX, w: Math.max(22, endX - startX) };
+    var m = stripMetrics(cycle);
+    var start = clampDay(startDay, cycle);
+    var end = clampDay(endDay, cycle);
+    var x = cellX(start, cycle);
+    var w = ((end - start) + 1) * m.cellW;
+    return { x: x, w: w };
+  }
+
+  /* Mobile cycle-strip key — stacked legend shown on viewports <640px so
+     inline labels above the strip don't collide. CSS hides this list at
+     wider viewports; the cycle SVG carries the same information there. */
+  function renderMobileKey(cycle, periodLen, fertileStart, fertileEnd, ovulation, nextPeriod) {
+    var ul = document.getElementById('pe-cycle-mobile-key');
+    if (!ul) return;
+    ul.removeAttribute('hidden');
+    ul.innerHTML =
+      '<li><strong>Period:</strong> days 1–5</li>'.replace('1–5', '1–' + periodLen) +
+      '<li><strong>Fertile window:</strong> days ' + fertileStart + '–' + fertileEnd + '</li>' +
+      '<li><strong>Estimated ovulation:</strong> day ' + ovulation + '</li>' +
+      '<li><strong>Next period:</strong> day ' + nextPeriod + '</li>';
+  }
+
+  /* Re-render the background cells + day-tick labels for the actual cycle.
+     Replaces the static 1..28 grid baked into the SVG so cycles of any
+     length (21..45) line up with the bands. */
+  function renderCycleGrid(cycle) {
+    var g = document.getElementById('pe-svg-grid');
+    if (!g) return;
+    while (g.firstChild) g.removeChild(g.firstChild);
+    var m = stripMetrics(cycle);
+    var rectW = Math.max(1, m.cellW - 2);
+    var showEveryDay = cycle <= 32;
+    for (var d = 1; d <= cycle; d++) {
+      var x = m.left + (d - 1) * m.cellW;
+      var stroke = (d <= 5 || (d >= 10 && d <= 15)) ? '#FFFFFF' : '#E6EAF1';
+      var sw = (d <= 5 || (d >= 10 && d <= 15)) ? '2' : '1';
+      var rect = document.createElementNS(SVG_NS, 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', 80);
+      rect.setAttribute('width', rectW);
+      rect.setAttribute('height', 48);
+      rect.setAttribute('fill', 'none');
+      rect.setAttribute('stroke', stroke);
+      rect.setAttribute('stroke-width', sw);
+      rect.setAttribute('rx', 4);
+      g.appendChild(rect);
+      if (!showEveryDay && d !== 1 && d % 5 !== 0 && d !== cycle) continue;
+      var t = document.createElementNS(SVG_NS, 'text');
+      t.setAttribute('x', x + rectW / 2);
+      t.setAttribute('y', 159);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('font-size', '11');
+      t.setAttribute('fill', '#1A2E4A');
+      t.setAttribute('font-weight', '500');
+      t.textContent = String(d);
+      g.appendChild(t);
+    }
   }
 
   function populateSvg(data) {
@@ -67,6 +130,9 @@
     var fertileEndDay = data.fertileEndDay;
     var ovulationDay = data.ovulationDay;
     var nextPeriodDay = data.nextPeriodDay;
+
+    /* Re-render the dynamic grid first so cells align with the user's cycle. */
+    renderCycleGrid(cycle);
 
     /* Period band: days 1..periodLen. */
     var pBand = document.getElementById('pe-svg-period-band');
@@ -84,25 +150,58 @@
       fBand.setAttribute('width', f.w);
     }
 
-    /* Ovulation marker: inclusive cycle day derived from computed date.
-       cx = cellX + 11 (cell centre). */
+    /* Ovulation marker: cell centre at the ovulation cycle day. */
     var ovG = document.getElementById('pe-svg-ovulation');
     if (ovG) {
-      var ovCx = cellX(ovulationDay, cycle) + 11;
+      var ovCx = cellCenterX(ovulationDay, cycle);
       var circle = ovG.querySelector('circle');
       if (circle) circle.setAttribute('cx', ovCx);
       ovG.querySelectorAll('text').forEach(function (t) { t.setAttribute('x', ovCx); });
     }
 
+    /* Next-period marker: a cell-width rectangle pinned to the last cycle day
+       (the user's "next period" sits the day after the cycle ends, but the
+       in-strip visual is the right-most cycle day). */
+    var nextG = document.getElementById('pe-svg-next');
+    if (nextG) {
+      var sm = stripMetrics(cycle);
+      var nextRect = nextG.querySelector('rect');
+      var nextCx = cellCenterX(cycle, cycle);
+      if (nextRect) {
+        nextRect.setAttribute('x', cellX(cycle, cycle) + 1);
+        nextRect.setAttribute('width', Math.max(8, sm.cellW - 2));
+      }
+      nextG.querySelectorAll('text').forEach(function (t) { t.setAttribute('x', nextCx); });
+    }
+
+    /* Reposition inline marker labels so they stay above the right cells
+       when the cycle scales. */
+    var periodMidX = cellCenterX(Math.ceil(periodLen / 2), cycle);
+    var fMid = Math.round((fertileStartDay + fertileEndDay) / 2);
+    var fertileMidX = cellCenterX(fMid, cycle);
+    var pTitle = document.getElementById('pe-svg-period-label');
+    if (pTitle) pTitle.setAttribute('x', periodMidX);
+    var fTitle = document.getElementById('pe-svg-fertile-label');
+    if (fTitle) fTitle.setAttribute('x', fertileMidX);
+
     /* Date labels. */
     var pDates = document.getElementById('pe-svg-period-dates');
-    if (pDates) pDates.textContent = PL.shortDate(lmp) + ' – ' + PL.shortDate(currentPeriodEnd);
+    if (pDates) {
+      pDates.setAttribute('x', periodMidX);
+      pDates.textContent = PL.shortDate(lmp) + ' – ' + PL.shortDate(currentPeriodEnd);
+    }
     var fDates = document.getElementById('pe-svg-fertile-dates');
-    if (fDates) fDates.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd);
+    if (fDates) {
+      fDates.setAttribute('x', fertileMidX);
+      fDates.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd);
+    }
     var ovDate = document.getElementById('pe-svg-ovulation-date');
     if (ovDate) ovDate.textContent = 'Day ' + ovulationDay + ' · ' + PL.shortDate(ovulation);
     var nDate = document.getElementById('pe-svg-next-date');
     if (nDate) nDate.textContent = 'Day ' + nextPeriodDay + ' · ' + PL.shortDate(nextPeriod);
+
+    /* Mobile key list — populated after grid + bands so labels reflect inputs. */
+    renderMobileKey(cycle, periodLen, fertileStartDay, fertileEndDay, ovulationDay, nextPeriodDay);
 
     var srDesc = document.querySelector('#pe-cs-desc');
     if (srDesc) {
@@ -178,8 +277,10 @@
     var ovulationDay    = cycleDay(ovulation, lmp);
     var nextPeriodDay   = cycleDay(nextPeriod, lmp);
 
-    /* Render. */
-    resultBig.textContent = PL.formatDate(nextPeriod);
+    /* Render. Hero shows the next-period window (start – end), matching the
+       stat strip and the user's mental model of "when is my next period". */
+    resultBig.textContent =
+      PL.shortDate(nextPeriod) + ' – ' + PL.shortDate(nextPeriodEnd);
     if (resultSub) {
       resultSub.textContent = 'Based on a ' + PL.formatDate(lmp) + ' LMP, a ' + cycle + '-day cycle, and a ' + periodLen + '-day period.';
     }

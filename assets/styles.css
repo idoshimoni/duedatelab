@@ -1402,13 +1402,22 @@ table.pl-chart-data th {
 }
 .pl-result-big {
   display: block;
-  font-size: clamp(56px, 7.5vw, 88px);
+  font-size: clamp(40px, 6vw, 64px);
   font-weight: 600;
-  line-height: 0.95;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
   color: var(--crimson);
   margin: 0 0 12px;
   font-variant-numeric: tabular-nums lining-nums;
+  overflow-wrap: normal;
+  word-break: normal;
+  text-wrap: balance;
+}
+@media (max-width: 640px) {
+  .pl-result-big {
+    font-size: clamp(34px, 10vw, 44px);
+    line-height: 1.05;
+  }
 }
 .pl-cta {
   width: 100%; min-height: 48px;
@@ -1429,4 +1438,30 @@ body[data-calculator] .pl-page {
   max-width: 760px;
   margin: 0 auto;
   padding: 24px 20px 56px;
+}
+
+/* Step 3.1 (2026-04-26-round1) — mobile cycle-strip key.
+   At <640px the inline marker labels above the cycle SVG strip overlap each
+   other. We hide them on mobile and show a stacked text key beneath the SVG
+   so the visual stays clean while the same information is preserved. */
+.pl-cycle-mobile-key {
+  list-style: none;
+  margin: 12px 0 0;
+  padding: 12px 14px;
+  background: var(--surface, #F8FAFD);
+  border: 1px solid var(--border, #E4E8F1);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--navy, #1A2E4A);
+  line-height: 1.5;
+}
+.pl-cycle-mobile-key li { margin: 0; padding: 4px 0; }
+.pl-cycle-mobile-key li + li { border-top: 1px dashed var(--border, #E4E8F1); }
+.pl-cycle-mobile-key strong { color: var(--navy, #1A2E4A); font-weight: 700; }
+@media (max-width: 640px) {
+  .pl-viz-svg .pl-inline-marker-label { display: none; }
+  .pl-cycle-mobile-key { display: block; }
+}
+@media (min-width: 641px) {
+  .pl-cycle-mobile-key { display: none; }
 }

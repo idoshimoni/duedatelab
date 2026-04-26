@@ -4,8 +4,10 @@
    IVF: conception = transfer date − embryo age. Due date = transfer + 266 - embryo age.
    Reverse (from birthday): conception ≈ birth − 266.
 
-   Step 3 v3 (2026-04-26-round3): renderer rewritten for the new pl-result
-   panel + cycle-strip SVG visual + pl-next-steps. Computation is unchanged.
+   Step 3.1 (2026-04-26-round1): SVG geometry now scales to the actual cycle
+   length. stripMetrics(cycle) computes cellW = 672 / cycle from the strip
+   anchor (left=24, width=672), so cell positions are correct for any cycle
+   length. Day-tick labels and background cells regenerate dynamically.
 */
 (function () {
   'use strict';
@@ -46,14 +48,77 @@
     if (nextSteps) nextSteps.classList.add('hidden');
   }
 
-  function cellIndex(cycleDayN, cycle) {
-    return Math.round((cycleDayN - 1) * 28 / cycle);
+  /* Strip metrics — see period.js. Same anchor (left=24, width=672). */
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  function clampDay(day, cycle) {
+    return Math.max(1, Math.min(cycle, day));
   }
-  function cellX(cycleDayN, cycle) { return 24 + cellIndex(cycleDayN, cycle) * 24; }
+  function stripMetrics(cycle) {
+    var left = 24;
+    var width = 672;
+    var cellW = width / cycle;
+    return { left: left, width: width, cellW: cellW };
+  }
+  function cellX(day, cycle) {
+    var m = stripMetrics(cycle);
+    var d = clampDay(day, cycle);
+    return m.left + (d - 1) * m.cellW;
+  }
+  function cellCenterX(day, cycle) {
+    var m = stripMetrics(cycle);
+    return cellX(day, cycle) + (m.cellW / 2);
+  }
   function cellSpan(startDay, endDay, cycle) {
-    var startX = cellX(startDay, cycle);
-    var endX = 24 + cellIndex(endDay + 1, cycle) * 24;
-    return { x: startX, w: Math.max(22, endX - startX) };
+    var m = stripMetrics(cycle);
+    var start = clampDay(startDay, cycle);
+    var end = clampDay(endDay, cycle);
+    var x = cellX(start, cycle);
+    var w = ((end - start) + 1) * m.cellW;
+    return { x: x, w: w };
+  }
+
+  function renderMobileKey(cycle, windowStart, windowEnd, peak) {
+    var ul = document.getElementById('con-cycle-mobile-key');
+    if (!ul) return;
+    ul.removeAttribute('hidden');
+    ul.innerHTML =
+      '<li><strong>Period:</strong> days 1–5</li>' +
+      '<li><strong>Conception window:</strong> days ' + windowStart + '–' + windowEnd + '</li>' +
+      '<li><strong>Most likely day:</strong> day ' + peak + '</li>';
+  }
+
+  function renderCycleGrid(cycle) {
+    var g = document.getElementById('con-svg-grid');
+    if (!g) return;
+    while (g.firstChild) g.removeChild(g.firstChild);
+    var m = stripMetrics(cycle);
+    var rectW = Math.max(1, m.cellW - 2);
+    var showEveryDay = cycle <= 32;
+    for (var d = 1; d <= cycle; d++) {
+      var x = m.left + (d - 1) * m.cellW;
+      var stroke = (d <= 5 || (d >= 10 && d <= 17)) ? '#FFFFFF' : '#E6EAF1';
+      var sw = (d <= 5 || (d >= 10 && d <= 17)) ? '2' : '1';
+      var rect = document.createElementNS(SVG_NS, 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', 80);
+      rect.setAttribute('width', rectW);
+      rect.setAttribute('height', 48);
+      rect.setAttribute('fill', 'none');
+      rect.setAttribute('stroke', stroke);
+      rect.setAttribute('stroke-width', sw);
+      rect.setAttribute('rx', 4);
+      g.appendChild(rect);
+      if (!showEveryDay && d !== 1 && d % 5 !== 0 && d !== cycle) continue;
+      var t = document.createElementNS(SVG_NS, 'text');
+      t.setAttribute('x', x + rectW / 2);
+      t.setAttribute('y', 159);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('font-size', '11');
+      t.setAttribute('fill', '#1A2E4A');
+      t.setAttribute('font-weight', '500');
+      t.textContent = String(d);
+      g.appendChild(t);
+    }
   }
 
   function formatDateRange(start, end) {
@@ -73,6 +138,8 @@
     var windowEndDay = data.windowEndDay;
     var peakDay = data.peakDay;
 
+    renderCycleGrid(cycle);
+
     /* Period band: 5 cells (we don't capture period length on this calc). */
     var pBand = document.getElementById('con-svg-period-band');
     if (pBand) {
@@ -88,19 +155,33 @@
     var fOutline = document.getElementById('con-svg-conception-outline');
     if (fOutline) { fOutline.setAttribute('x', f.x); fOutline.setAttribute('width', f.w); }
 
-    /* Most-likely-day (open ring): inclusive cycle day derived from computed date. */
+    /* Most-likely-day (open ring): cell centre at the peak cycle day. */
     var pkG = document.getElementById('con-svg-peak');
     if (pkG) {
-      var pkCx = cellX(peakDay, cycle) + 11;
+      var pkCx = cellCenterX(peakDay, cycle);
       var circle = pkG.querySelector('circle');
       if (circle) circle.setAttribute('cx', pkCx);
       pkG.querySelectorAll('text').forEach(function (t) { t.setAttribute('x', pkCx); });
     }
 
+    /* Reposition inline labels above the moving bands. */
+    var periodMidX = cellCenterX(3, cycle);
+    var fMid = Math.round((windowStartDay + windowEndDay) / 2);
+    var fertileMidX = cellCenterX(fMid, cycle);
+    var pTitle = document.getElementById('con-svg-period-label');
+    if (pTitle) pTitle.setAttribute('x', periodMidX);
+    var fTitle = document.getElementById('con-svg-conception-label');
+    if (fTitle) fTitle.setAttribute('x', fertileMidX);
+
     var dates = document.getElementById('con-svg-conception-dates');
-    if (dates) dates.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd) + ' · estimate';
+    if (dates) {
+      dates.setAttribute('x', fertileMidX);
+      dates.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd) + ' · estimate';
+    }
     var pkDate = document.getElementById('con-svg-peak-date');
     if (pkDate) pkDate.textContent = 'Day ' + peakDay + ' · ' + PL.shortDate(conception);
+
+    renderMobileKey(cycle, windowStartDay, windowEndDay, peakDay);
 
     var srDesc = document.querySelector('#con-cs-desc');
     if (srDesc) {

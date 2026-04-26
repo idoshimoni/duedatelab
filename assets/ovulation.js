@@ -8,8 +8,10 @@
      Fertile window  = [ovulation − 5, ovulation] (Wilcox 1995)
      Peak fertility  = [ovulation − 2, ovulation] (Wilcox 1995, highest daily probability)
 
-   Step 3 v3 (2026-04-26-round3): renderer rewritten for the new pl-result
-   panel + cycle-strip SVG visual + pl-next-steps. Computation is unchanged.
+   Step 3.1 (2026-04-26-round1): SVG geometry now scales to the actual cycle
+   length. stripMetrics(cycle) computes cellW = 672 / cycle from the strip
+   anchor (left=24, width=672), so cell positions are correct for any cycle
+   length 21..35. Day-tick labels and background cells regenerate dynamically.
 */
 (function () {
   'use strict';
@@ -35,14 +37,77 @@
     if (nextSteps) nextSteps.classList.add('hidden');
   }
 
-  function cellIndex(cycleDayN, cycle) {
-    return Math.round((cycleDayN - 1) * 28 / cycle);
+  /* Strip metrics — see period.js. Same anchor (left=24, width=672). */
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  function clampDay(day, cycle) {
+    return Math.max(1, Math.min(cycle, day));
   }
-  function cellX(cycleDayN, cycle) { return 24 + cellIndex(cycleDayN, cycle) * 24; }
+  function stripMetrics(cycle) {
+    var left = 24;
+    var width = 672;
+    var cellW = width / cycle;
+    return { left: left, width: width, cellW: cellW };
+  }
+  function cellX(day, cycle) {
+    var m = stripMetrics(cycle);
+    var d = clampDay(day, cycle);
+    return m.left + (d - 1) * m.cellW;
+  }
+  function cellCenterX(day, cycle) {
+    var m = stripMetrics(cycle);
+    return cellX(day, cycle) + (m.cellW / 2);
+  }
   function cellSpan(startDay, endDay, cycle) {
-    var startX = cellX(startDay, cycle);
-    var endX = 24 + cellIndex(endDay + 1, cycle) * 24;
-    return { x: startX, w: Math.max(22, endX - startX) };
+    var m = stripMetrics(cycle);
+    var start = clampDay(startDay, cycle);
+    var end = clampDay(endDay, cycle);
+    var x = cellX(start, cycle);
+    var w = ((end - start) + 1) * m.cellW;
+    return { x: x, w: w };
+  }
+
+  function renderMobileKey(cycle, fertileStart, fertileEnd, ovulation) {
+    var ul = document.getElementById('ov-cycle-mobile-key');
+    if (!ul) return;
+    ul.removeAttribute('hidden');
+    ul.innerHTML =
+      '<li><strong>Period:</strong> days 1–5</li>' +
+      '<li><strong>Fertile window:</strong> days ' + fertileStart + '–' + fertileEnd + '</li>' +
+      '<li><strong>Estimated ovulation:</strong> day ' + ovulation + '</li>';
+  }
+
+  function renderCycleGrid(cycle) {
+    var g = document.getElementById('ov-svg-grid');
+    if (!g) return;
+    while (g.firstChild) g.removeChild(g.firstChild);
+    var m = stripMetrics(cycle);
+    var rectW = Math.max(1, m.cellW - 2);
+    var showEveryDay = cycle <= 32;
+    for (var d = 1; d <= cycle; d++) {
+      var x = m.left + (d - 1) * m.cellW;
+      var stroke = (d <= 5 || (d >= 10 && d <= 15)) ? '#FFFFFF' : '#E6EAF1';
+      var sw = (d <= 5 || (d >= 10 && d <= 15)) ? '2' : '1';
+      var rect = document.createElementNS(SVG_NS, 'rect');
+      rect.setAttribute('x', x);
+      rect.setAttribute('y', 80);
+      rect.setAttribute('width', rectW);
+      rect.setAttribute('height', 48);
+      rect.setAttribute('fill', 'none');
+      rect.setAttribute('stroke', stroke);
+      rect.setAttribute('stroke-width', sw);
+      rect.setAttribute('rx', 4);
+      g.appendChild(rect);
+      if (!showEveryDay && d !== 1 && d % 5 !== 0 && d !== cycle) continue;
+      var t = document.createElementNS(SVG_NS, 'text');
+      t.setAttribute('x', x + rectW / 2);
+      t.setAttribute('y', 159);
+      t.setAttribute('text-anchor', 'middle');
+      t.setAttribute('font-size', '11');
+      t.setAttribute('fill', '#1A2E4A');
+      t.setAttribute('font-weight', '500');
+      t.textContent = String(d);
+      g.appendChild(t);
+    }
   }
 
   function populateSvg(data) {
@@ -52,6 +117,8 @@
     var fertileStartDay = data.fertileStartDay;
     var fertileEndDay = data.fertileEndDay;
     var ovulationDay = data.ovulationDay;
+
+    renderCycleGrid(cycle);
 
     /* Period band: hard-coded 5 cells (no period-length input on this calc). */
     var pBand = document.getElementById('ov-svg-period-band');
@@ -68,19 +135,33 @@
     var fOutline = document.getElementById('ov-svg-fertile-outline');
     if (fOutline) { fOutline.setAttribute('x', f.x); fOutline.setAttribute('width', f.w); }
 
-    /* Ovulation marker: inclusive cycle day derived from computed date. */
+    /* Ovulation marker: cell centre at the ovulation cycle day. */
     var ovG = document.getElementById('ov-svg-ovulation');
     if (ovG) {
-      var ovCx = cellX(ovulationDay, cycle) + 11;
+      var ovCx = cellCenterX(ovulationDay, cycle);
       var circle = ovG.querySelector('circle');
       if (circle) circle.setAttribute('cx', ovCx);
       ovG.querySelectorAll('text').forEach(function (t) { t.setAttribute('x', ovCx); });
     }
 
+    /* Reposition inline labels above the moving bands. */
+    var periodMidX = cellCenterX(3, cycle);
+    var fMid = Math.round((fertileStartDay + fertileEndDay) / 2);
+    var fertileMidX = cellCenterX(fMid, cycle);
+    var pTitle = document.getElementById('ov-svg-period-label');
+    if (pTitle) pTitle.setAttribute('x', periodMidX);
+    var fTitle = document.getElementById('ov-svg-fertile-label');
+    if (fTitle) fTitle.setAttribute('x', fertileMidX);
+
     var fDates = document.getElementById('ov-svg-fertile-dates');
-    if (fDates) fDates.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd) + ' · estimate';
+    if (fDates) {
+      fDates.setAttribute('x', fertileMidX);
+      fDates.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd) + ' · estimate';
+    }
     var ovDate = document.getElementById('ov-svg-ovulation-date');
     if (ovDate) ovDate.textContent = 'Day ' + ovulationDay + ' · ' + PL.shortDate(ovulation);
+
+    renderMobileKey(cycle, fertileStartDay, fertileEndDay, ovulationDay);
 
     var srDesc = document.querySelector('#ov-cs-desc');
     if (srDesc) {
