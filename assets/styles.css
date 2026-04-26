@@ -1107,9 +1107,19 @@ button { font-family: inherit; }
 }
 .pl-timeline-legend li { display: flex; align-items: center; gap: 8px; }
 .pl-timeline-legend .swatch {
-  width: 14px; height: 14px; border-radius: 3px;
+  width: 14px; height: 14px; border-radius: 50%;
   border: 1px solid rgba(26, 46, 74, 0.18);
   flex-shrink: 0;
+}
+/* Q4 (Step 3.3): legend swatches now match graph shapes.
+   Trimester segments on the strip are horizontal bars, so the
+   trimester swatches render as mini-bars (rounded rectangles).
+   LMP / Today halo / Due date markers are circles on the graph,
+   so those swatches stay round (border-radius 50%). */
+.pl-timeline-legend .swatch.is-track,
+.pl-timeline-legend .swatch.is-fertile,
+.pl-timeline-legend .swatch.is-tri {
+  width: 22px; height: 8px; border-radius: 4px;
 }
 .pl-timeline-legend .swatch.is-track { background: var(--viz-track); }
 .pl-timeline-legend .swatch.is-fertile { background: var(--viz-band-soft); }
@@ -1144,10 +1154,19 @@ button { font-family: inherit; }
   font-size: 13px; color: var(--text-soft);
 }
 .pl-cycle-strip-legend li { display: flex; align-items: center; gap: 8px; }
+/* Q4 (Step 3.3): cycle-strip legend swatches now match graph shapes.
+   Period and fertile bands are horizontal rectangles on the strip, so
+   their swatches are mini-bars. Ovulation and conception are round
+   markers on the strip, so their swatches are circles. Next-period is
+   a dashed rectangle marker so its swatch stays a small dashed square. */
 .pl-cycle-strip-legend .swatch {
-  width: 16px; height: 16px; border-radius: 3px;
+  width: 14px; height: 14px; border-radius: 50%;
   border: 1px solid rgba(26, 46, 74, 0.18);
   flex-shrink: 0; position: relative;
+}
+.pl-cycle-strip-legend .swatch.is-period,
+.pl-cycle-strip-legend .swatch.is-fertile {
+  width: 22px; height: 8px; border-radius: 4px;
 }
 .pl-cycle-strip-legend .swatch.is-period { background: var(--viz-band); }
 .pl-cycle-strip-legend .swatch.is-fertile {
@@ -1161,6 +1180,7 @@ button { font-family: inherit; }
   border: 2px solid var(--viz-accent);
 }
 .pl-cycle-strip-legend .swatch.is-next-period {
+  width: 14px; height: 14px; border-radius: 3px;
   background: var(--white);
   border: 2px dashed var(--navy);
 }
