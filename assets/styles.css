@@ -1419,6 +1419,20 @@ table.pl-chart-data th {
     line-height: 1.05;
   }
 }
+/* Q3 (Step 3.2): Ovulation hero string is intrinsically the longest of
+   the four calc heroes ("Days X–Y of your cycle") and still wraps to
+   2 lines at the global 64px desktop cap inside the 674px content
+   wrapper. Calculator-specific override keeps it single-line at desktop
+   while leaving Conception at the global 64px max where its date-range
+   strings fit cleanly. */
+body[data-calculator="ovulation"] .pl-result-big {
+  font-size: clamp(36px, 5vw, 52px);
+}
+@media (max-width: 640px) {
+  body[data-calculator="ovulation"] .pl-result-big {
+    font-size: clamp(30px, 9vw, 40px);
+  }
+}
 .pl-cta {
   width: 100%; min-height: 48px;
   background: var(--crimson); color: var(--white);

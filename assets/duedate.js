@@ -71,6 +71,16 @@
         if (stem) { stem.setAttribute('x1', todayX); stem.setAttribute('x2', todayX); }
         var todayWeeks = document.getElementById('dd-svg-today-weeks');
         if (todayWeeks) todayWeeks.textContent = weeks + 'w ' + days + 'd';
+        /* Q1 (Step 3.2): when Today is too close to LMP (< 64px), the
+           "Today / 0w 0d" labels collide with the "LMP / <date>" labels.
+           Suppress the Today text labels in that range — the pulsing halo
+           over the LMP marker still communicates the "you are here"
+           position visually. The stem and marker geometry stay visible. */
+        var todayLabel = document.getElementById('dd-svg-today-label');
+        var todayWeeksEl = document.getElementById('dd-svg-today-weeks');
+        var hideTodayLabels = (todayX - 20) < 64;
+        if (todayLabel) todayLabel.style.display = hideTodayLabels ? 'none' : '';
+        if (todayWeeksEl) todayWeeksEl.style.display = hideTodayLabels ? 'none' : '';
       } else {
         todayG.style.display = 'none';
       }
