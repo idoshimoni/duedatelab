@@ -65,4 +65,13 @@ URL_MAP = [
 # URL_MAP above or here, or the refresh script will error.
 EXCLUDED_FROM_SITEMAP = {
     "404.html",
+    # Step 4 names-cluster staging directories — gated on G1A/G2A licensing
+    # review before any names page can ship. Excluded from sitemap until
+    # then so they don't get indexed.
+    "names-pilot-staging/charlotte/index.html",
+    "names-pilot-staging/liam/index.html",
+    "names-pilot-staging/olivia/index.html",
+    "names-staging/charlotte/index.html",
+    "names-staging/liam/index.html",
+    "names-staging/olivia/index.html",
 }

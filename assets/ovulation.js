@@ -4,37 +4,113 @@
      Cycle length, 21 to 35 days (ACOG regular-cycle range), default 28
 
    Core formulas:
-     Ovulation day   = LMP + (cycle − 14)
-       Luteal phase is stable at ~14 days; cycle variability sits in the
-       follicular phase (Lenton BJOG 1984, ACOG). So a 28-day cycle
-       ovulates on day 14, a 32-day cycle ovulates on day 18.
+     Ovulation day   = LMP + (cycle − 14)        (Lenton 1984, ACOG)
+     Fertile window  = [ovulation − 5, ovulation] (Wilcox 1995)
+     Peak fertility  = [ovulation − 2, ovulation] (Wilcox 1995, highest daily probability)
 
-     Fertile window  = [ovulation − 5, ovulation]  (6 days ending on ovulation)
-       Wilcox, Weinberg, Baird, NEJM 1995;333:1517. Pregnancies were
-       attributed to a six-day period ending on the day of ovulation.
-
-     Peak fertility  = [ovulation − 2, ovulation]      (3 days)
-       Highest daily conception probability per Wilcox 1995
-       (roughly 25 to 33% per day of intercourse in this window).
-
-     Next period     = LMP + cycle
-     Next 3 fertile windows = shift ovulation by cycle × 1, 2, 3
+   Step 3 v3 (2026-04-26-round3): renderer rewritten for the new pl-result
+   panel + cycle-strip SVG visual + pl-next-steps. Computation is unchanged.
 */
 (function () {
   'use strict';
   var form = document.getElementById('ov-form');
   if (!form) return;
   var result = document.getElementById('ov-result');
+  var visual = document.getElementById('ov-visual');
+  var nextSteps = document.getElementById('ov-next-steps');
   var resultBig = document.getElementById('ov-big');
-  var resultExpl = document.getElementById('ov-expl');
-  var resultStats = document.getElementById('ov-stats');
-  var resultTrack = document.getElementById('ov-track');
-  var resultNext = document.getElementById('ov-next');
+  var resultSub = document.getElementById('ov-sub');
+  var statWindow = document.getElementById('ov-stat-window');
+  var statPeak = document.getElementById('ov-stat-peak');
   var errMsg = document.getElementById('ov-err');
+
+  /* Inclusive cycle-day numbering: Day 1 = LMP day, Day 2 = LMP + 1, etc. */
+  function cycleDay(date, lmp) {
+    return PL.diffDays(date, lmp) + 1;
+  }
+
+  function hideResultBlocks() {
+    if (result) result.classList.add('hidden');
+    if (visual) visual.classList.add('hidden');
+    if (nextSteps) nextSteps.classList.add('hidden');
+  }
+
+  function cellIndex(cycleDayN, cycle) {
+    return Math.round((cycleDayN - 1) * 28 / cycle);
+  }
+  function cellX(cycleDayN, cycle) { return 24 + cellIndex(cycleDayN, cycle) * 24; }
+  function cellSpan(startDay, endDay, cycle) {
+    var startX = cellX(startDay, cycle);
+    var endX = 24 + cellIndex(endDay + 1, cycle) * 24;
+    return { x: startX, w: Math.max(22, endX - startX) };
+  }
+
+  function populateSvg(data) {
+    var cycle = data.cycle;
+    var ovulation = data.ovulation;
+    var fertileStart = data.fertileStart, fertileEnd = data.fertileEnd;
+    var fertileStartDay = data.fertileStartDay;
+    var fertileEndDay = data.fertileEndDay;
+    var ovulationDay = data.ovulationDay;
+
+    /* Period band: hard-coded 5 cells (no period-length input on this calc). */
+    var pBand = document.getElementById('ov-svg-period-band');
+    if (pBand) {
+      var p = cellSpan(1, 5, cycle);
+      pBand.setAttribute('x', p.x);
+      pBand.setAttribute('width', p.w);
+    }
+
+    /* Fertile band + outline: inclusive cycle days derived from computed dates. */
+    var f = cellSpan(fertileStartDay, fertileEndDay, cycle);
+    var fBand = document.getElementById('ov-svg-fertile-band');
+    if (fBand) { fBand.setAttribute('x', f.x); fBand.setAttribute('width', f.w); }
+    var fOutline = document.getElementById('ov-svg-fertile-outline');
+    if (fOutline) { fOutline.setAttribute('x', f.x); fOutline.setAttribute('width', f.w); }
+
+    /* Ovulation marker: inclusive cycle day derived from computed date. */
+    var ovG = document.getElementById('ov-svg-ovulation');
+    if (ovG) {
+      var ovCx = cellX(ovulationDay, cycle) + 11;
+      var circle = ovG.querySelector('circle');
+      if (circle) circle.setAttribute('cx', ovCx);
+      ovG.querySelectorAll('text').forEach(function (t) { t.setAttribute('x', ovCx); });
+    }
+
+    var fDates = document.getElementById('ov-svg-fertile-dates');
+    if (fDates) fDates.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd) + ' · estimate';
+    var ovDate = document.getElementById('ov-svg-ovulation-date');
+    if (ovDate) ovDate.textContent = 'Day ' + ovulationDay + ' · ' + PL.shortDate(ovulation);
+
+    var srDesc = document.querySelector('#ov-cs-desc');
+    if (srDesc) {
+      srDesc.textContent = 'Cycle strip starting ' + PL.formatDate(data.lmp) + '. Period covers days 1 to 5. Estimated fertile window covers days ' +
+        fertileStartDay + ' to ' + fertileEndDay + ' (' + PL.formatDate(fertileStart) + ' – ' + PL.formatDate(fertileEnd) + '). Estimated ovulation on day ' +
+        ovulationDay + ' (' + PL.formatDate(ovulation) + ').';
+    }
+  }
+
+  function populateFallbackTable(data) {
+    var cycle = data.cycle, lmp = data.lmp, ovulation = data.ovulation;
+    var fertileStart = data.fertileStart, fertileEnd = data.fertileEnd;
+    var fertileStartDay = data.fertileStartDay;
+    var fertileEndDay = data.fertileEndDay;
+    var ovulationDay = data.ovulationDay;
+    var tbody = document.querySelector('#ov-fallback-table tbody');
+    if (tbody) {
+      tbody.innerHTML =
+        '<tr><td>Period</td><td>1–5</td><td>' + PL.shortDate(lmp) + ' – ' + PL.shortDate(PL.addDays(lmp, 4)) + '</td></tr>' +
+        '<tr><td>Estimated fertile window</td><td>' + fertileStartDay + '–' + fertileEndDay + '</td><td>' + PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd) + '</td></tr>' +
+        '<tr><td>Estimated ovulation</td><td>' + ovulationDay + '</td><td>' + PL.shortDate(ovulation) + '</td></tr>';
+    }
+    var caption = document.getElementById('ov-fallback-caption');
+    if (caption) caption.textContent = 'Fertile window for a ' + cycle + '-day cycle starting ' + PL.shortDate(lmp);
+  }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
     errMsg.textContent = '';
+    hideResultBlocks();
 
     var lmpVal = form.elements['lmp'].value;
     if (!lmpVal) {
@@ -46,88 +122,61 @@
       errMsg.textContent = 'Cycle length must be between 21 and 35 days.';
       return;
     }
-
     var lmp = new Date(lmpVal + 'T00:00:00');
     if (isNaN(lmp)) {
-      errMsg.textContent = 'Couldn\u2019t read that date. Please re-enter.';
+      errMsg.textContent = 'Couldn’t read that date. Please re-enter.';
       return;
     }
 
-    var ovulation   = PL.addDays(lmp, cycle - 14);
+    var ovulation    = PL.addDays(lmp, cycle - 14);
     var fertileStart = PL.addDays(ovulation, -5);
-    var fertileEnd   = ovulation;  // Wilcox 1995: 6-day window ending on ovulation day
-    var peakStart    = PL.addDays(ovulation, -2);
-    var peakEnd      = ovulation;
-    var nextPeriod   = PL.addDays(lmp, cycle);
+    var fertileEnd   = ovulation;
 
-    // Primary result
-    resultBig.innerHTML = PL.formatDate(ovulation);
-    resultExpl.innerHTML =
-      'Fertile window: <b>' + PL.shortDate(fertileStart) +
-      '</b> \u2013 <b>' + PL.shortDate(fertileEnd) + '</b>. ' +
-      'Peak fertility: <b>' + PL.shortDate(peakStart) +
-      '</b> \u2013 <b>' + PL.shortDate(peakEnd) + '</b>.';
+    /* Inclusive cycle-day numbering for user-facing labels. */
+    var fertileStartDay = cycleDay(fertileStart, lmp);
+    var fertileEndDay   = cycleDay(fertileEnd, lmp);
+    var ovulationDay    = cycleDay(ovulation, lmp);
 
-    // Stats grid
-    resultStats.innerHTML =
-      stat(PL.shortDate(ovulation), 'Ovulation') +
-      stat(PL.shortDate(peakStart) + ' \u2013 ' + PL.shortDate(peakEnd), 'Peak fertility') +
-      stat(PL.shortDate(fertileStart) + ' \u2013 ' + PL.shortDate(fertileEnd), 'Fertile window') +
-      stat(PL.shortDate(nextPeriod), 'Next period');
-
-    // Cycle-day timeline: LMP (0) → ovulation (cycle − 14) → next period (cycle)
-    var today = new Date(); today.setHours(0, 0, 0, 0);
-    var daysFromLmp = PL.diffDays(today, lmp);
-    var todayPct = Math.max(0, Math.min(100, (daysFromLmp / cycle) * 100));
-    var ovPct = ((cycle - 14) / cycle) * 100;
-    var fwStartPct = Math.max(0, ((cycle - 14 - 5) / cycle) * 100);
-    var fwEndPct = Math.min(100, ((cycle - 14) / cycle) * 100);  // ends on ovulation (Wilcox 1995)
-
-    resultTrack.innerHTML =
-      '<div class="pl-timeline-seg" style="left:' + fwStartPct + '%;width:' + (fwEndPct - fwStartPct) + '%;background:#FFE4EC;"></div>' +
-      '<div class="pl-timeline-seg" style="left:0;width:' + todayPct + '%"></div>' +
-      '<div class="pl-timeline-marker" style="left:' + ovPct + '%;background:#EC0D5C;" title="Ovulation"></div>' +
-      (daysFromLmp >= 0 && daysFromLmp <= cycle
-        ? '<div class="pl-timeline-marker" style="left:' + todayPct + '%;" title="Today"></div>'
-        : '');
-
-    // Next 3 predicted fertile windows (useful for TTC planning)
-    var nextRows = '';
-    for (var i = 1; i <= 3; i++) {
-      var ov = PL.addDays(ovulation, cycle * i);
-      var fs = PL.addDays(ov, -5);
-      var fe = ov;  // Wilcox 1995 window ends on ovulation
-      nextRows +=
-        '<tr>' +
-        '<td>' + PL.shortDate(ov) + '</td>' +
-        '<td>' + PL.shortDate(fs) + ' \u2013 ' + PL.shortDate(fe) + '</td>' +
-        '</tr>';
+    resultBig.textContent = 'Days ' + fertileStartDay + '–' + fertileEndDay + ' of your cycle';
+    if (resultSub) {
+      resultSub.textContent = 'Based on a ' + PL.formatDate(lmp) + ' LMP and a ' + cycle + '-day cycle. For a ' + cycle + '-day cycle, this estimate places ovulation around the middle of the cycle. Ovulation can shift by several days.';
     }
-    if (resultNext) {
-      resultNext.innerHTML =
-        '<table class="pl-next-table"><caption>Next 3 predicted cycles</caption>' +
-        '<thead><tr><th scope="col">Ovulation</th><th scope="col">Fertile window</th></tr></thead>' +
-        '<tbody>' + nextRows + '</tbody></table>';
-    }
+    if (statWindow) statWindow.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd);
+    if (statPeak) statPeak.textContent = PL.shortDate(ovulation);
+
+    populateSvg({
+      cycle: cycle, lmp: lmp, ovulation: ovulation,
+      fertileStart: fertileStart, fertileEnd: fertileEnd,
+      fertileStartDay: fertileStartDay, fertileEndDay: fertileEndDay,
+      ovulationDay: ovulationDay
+    });
+    populateFallbackTable({
+      cycle: cycle, lmp: lmp, ovulation: ovulation,
+      fertileStart: fertileStart, fertileEnd: fertileEnd,
+      fertileStartDay: fertileStartDay, fertileEndDay: fertileEndDay,
+      ovulationDay: ovulationDay
+    });
+
+    /* Dynamic figcaption update — reflects the user's actual cycle length. */
+    var cap = document.getElementById('ov-cs-title');
+    if (cap) cap.textContent = 'Fertile window and estimated ovulation (' + cycle + '-day cycle)';
 
     result.classList.remove('hidden');
+    if (visual) visual.classList.remove('hidden');
+    if (nextSteps) nextSteps.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-    // Only the static `tool` string is sent. User inputs (LMP, cycle length)
-    // never leave the browser, honoring the methodology privacy claim.
+    /* Only the static `tool` string is sent. User inputs (LMP, cycle length)
+       never leave the browser, honoring the methodology privacy claim. */
     if (window.gtag) {
       window.gtag('event', 'calculator_submit', { tool: 'ovulation' });
     }
   });
 
-  function stat(num, label) {
-    return '<div class="pl-stat"><div class="pl-stat-num">' + num + '</div><div class="pl-stat-label">' + label + '</div></div>';
-  }
-
   var tryagain = document.getElementById('ov-tryagain');
   if (tryagain) tryagain.addEventListener('click', function (e) {
     e.preventDefault();
-    result.classList.add('hidden');
+    hideResultBlocks();
     form.reset();
     window.PL.scrollToTop();
   });

@@ -12,10 +12,27 @@
   --text: #1A2E4A;
   --text-soft: #5A6B82;
   --border: #E6EAF1;
-  --crimson-dark: #C80A4E;
+  --crimson-dark: #C00B4D;
   --crimson-soft: #FDE6EE;
   --success: #1E7F4F;
   --error: #C80A4E;
+
+  /* Step 3 v3 (2026-04-26-round3) — appended tokens.
+     --cream: warm page bg for calculator pages only (scoped via body[data-calculator]).
+     --crimson-text: alias of --crimson-dark for small-text crimson (AA at 6.18:1 on white).
+     --navy-soft: secondary navy for axis labels.
+     --viz-*: visual-token palette for Step 3 timeline + cycle-strip SVGs.
+     --shadow-result: soft elevation for the .pl-result panel and friends. */
+  --cream: #FBF8F3;
+  --crimson-text: var(--crimson-dark);
+  --navy-soft: #3A5378;
+  --viz-track: var(--border);
+  --viz-band-soft: #DCE4F1;
+  --viz-band: #B9C7DD;
+  --viz-marker: var(--navy);
+  --viz-accent: var(--crimson);
+  --viz-accent-soft: var(--crimson-soft);
+  --shadow-result: 0 1px 2px rgba(26,46,74,0.04), 0 8px 24px rgba(26,46,74,0.06);
 
   --radius-card: 12px;
   --radius-btn: 8px;
@@ -39,6 +56,15 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 @media (min-width: 1024px) { body { font-size: 18px; } }
+
+/* Step 3 v3 (2026-04-26-round3) — calculator-page cream bg.
+   Scoped to body[data-calculator] only — non-calc pages keep var(--bg). */
+body[data-calculator="due-date"],
+body[data-calculator="period"],
+body[data-calculator="ovulation"],
+body[data-calculator="conception"] {
+  background: var(--cream);
+}
 
 a { color: var(--navy); }
 
@@ -314,7 +340,7 @@ a { color: var(--navy); }
 :root {
   --navy: #1A2E4A;
   --crimson: #EC0D5C;
-  --crimson-dark: #C80A4E;
+  --crimson-dark: #C00B4D;
   --crimson-soft: #FDE6EE;
   --white: #FFFFFF;
   --bg: #F7F8FA;
@@ -906,4 +932,501 @@ button { font-family: inherit; }
   .pl-gen-table td {
     white-space: nowrap;
   }
+}
+
+/* ─────────────────────────────────────────────────────────────
+   Step 3 v3 result modules (2026-04-26-round3)
+   Verified mock back-port: result panel + visual canvas + where-to-next.
+   Source: Plugins/duedatelab-step3-mock-v3-production-bound-2026-04-26/
+           assets/styles.css (lines 290, 327-455, 461-494, 501-540, 545-571,
+           576-585, 590-628, 645-743, 756-775, 928-952, 982-1000).
+   Order:
+     1. Helper class .pl-help (mock line 290).
+     2. Result panel headline classes (.pl-result-h, .pl-result-eyebrow*,
+        .pl-result-day, .pl-result-sub, .pl-result-stats*, disclaimer).
+     3. Visual canvas wrapper, figure, viz svg.
+     4. Timeline + cycle-strip legends.
+     5. Method note + data-table fallback + scoped reduced-motion.
+     6. Where-to-next block.
+     7. Visual-canvas corner ticks (::before / ::after).
+     8. Mobile breakpoints (880, 640, 380).
+     9. Today-pulse (static + no-preference) + keyframes.
+    10. Production-only overrides for .pl-result, .pl-result-big, .pl-cta,
+        .pl-page (scoped via body[data-calculator]).
+   ───────────────────────────────────────────────────────────── */
+.pl-help {
+  font-size: 13px; color: var(--text-soft); margin: 6px 0 0;
+}
+
+.pl-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.pl-result-h {
+  font-size: 13px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 1.2px; color: var(--text-soft);
+  margin: 0 0 8px;
+}
+.pl-result-eyebrow {
+  display: flex; align-items: center; flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 14px;
+  font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-soft);
+}
+.pl-result-eyebrow-rule {
+  display: inline-block;
+  width: 14px; height: 2px;
+  background: var(--crimson);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+.pl-result-eyebrow-label {
+  color: var(--text-soft);
+  letter-spacing: 1px;
+}
+.pl-result-eyebrow-label strong {
+  color: var(--navy);
+  font-weight: 700;
+}
+.pl-result-eyebrow-pip {
+  display: inline-flex; align-items: center; gap: 5px;
+  margin-left: auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: none;
+}
+.pl-result-eyebrow-pip-icon {
+  font-size: 10px;
+  line-height: 1;
+  opacity: 0.7;
+}
+.pl-result-day {
+  display: block;
+  margin: 4px 0 6px;
+  font-size: 14px; font-weight: 500;
+  color: var(--text-soft);
+  letter-spacing: 0.2px;
+}
+.pl-result-sub {
+  font-size: 15px; line-height: 1.5; color: var(--text-soft);
+  margin: 0 0 12px;
+}
+.pl-result-stats {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 0; margin: 20px 0 0;
+}
+.pl-result-stat {
+  padding: 18px 24px;
+  border-right: 1px solid var(--border);
+  display: flex; flex-direction: column; gap: 6px;
+  min-width: 0;
+  background: transparent;
+  border-radius: 0;
+}
+.pl-result-stat:first-child { padding-left: 0; }
+.pl-result-stat:last-child { border-right: 0; padding-right: 0; }
+.pl-result-stat-label {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 11px; font-weight: 500;
+  color: var(--text-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;
+}
+.pl-result-stat-value {
+  display: block;
+  font-size: 22px; font-weight: 500;
+  color: var(--navy);
+  letter-spacing: -0.015em;
+  font-variant-numeric: tabular-nums lining-nums;
+  white-space: nowrap;
+}
+.pl-result-stat-sub {
+  display: block;
+  font-size: 12px; font-weight: 400;
+  color: var(--text-soft); line-height: 1.4;
+  white-space: normal;
+}
+.pl-result-disclaimer {
+  margin: 14px 0 0; padding: 10px 12px;
+  background: var(--bg); border-left: 3px solid var(--viz-band);
+  font-size: 13px; color: var(--text-soft); line-height: 1.5;
+  border-radius: 0 var(--radius-btn) var(--radius-btn) 0;
+}
+
+.pl-result-visual {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 20px 22px 18px;
+  margin-top: 16px;
+  box-shadow: var(--shadow-card);
+}
+.pl-result-visual > h2 {
+  font-size: 18px; font-weight: 700; color: var(--navy);
+  margin: 0 0 4px; letter-spacing: -0.1px;
+}
+.pl-result-visual .pl-visual-summary {
+  font-size: 14px; line-height: 1.5; color: var(--text-soft);
+  margin: 0 0 18px;
+}
+.pl-timeline-figure,
+.pl-cycle-strip-figure {
+  margin: 0; padding: 0;
+}
+.pl-timeline-figure figcaption,
+.pl-cycle-strip-figure figcaption {
+  font-size: 14px; font-weight: 600; color: var(--navy);
+  margin-bottom: 6px;
+}
+.pl-viz-svg {
+  display: block; width: 100%; height: auto;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.pl-timeline-legend {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  margin: 14px 0 0; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-soft);
+}
+.pl-timeline-legend li { display: flex; align-items: center; gap: 8px; }
+.pl-timeline-legend .swatch {
+  width: 14px; height: 14px; border-radius: 3px;
+  border: 1px solid rgba(26, 46, 74, 0.18);
+  flex-shrink: 0;
+}
+.pl-timeline-legend .swatch.is-track { background: var(--viz-track); }
+.pl-timeline-legend .swatch.is-fertile { background: var(--viz-band-soft); }
+.pl-timeline-legend .swatch.is-tri { background: var(--viz-band); }
+.pl-timeline-legend .swatch.is-marker {
+  background: var(--viz-marker);
+  border-color: var(--viz-marker);
+}
+.pl-timeline-legend .swatch.is-today-halo {
+  background: radial-gradient(circle, rgba(236, 13, 92, 0.35) 0%, rgba(236, 13, 92, 0) 70%), var(--white);
+  border: 1px solid rgba(236, 13, 92, 0.4);
+  position: relative;
+}
+.pl-timeline-legend .swatch.is-today-halo::after {
+  content: "";
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 5px; height: 5px;
+  margin: -2.5px 0 0 -2.5px;
+  border-radius: 50%;
+  background: var(--crimson);
+}
+.pl-timeline-legend .swatch.is-due {
+  background: var(--white);
+  border: 2px solid var(--viz-accent);
+  width: 14px; height: 14px;
+}
+
+.pl-cycle-strip-legend {
+  display: flex; flex-wrap: wrap; gap: 12px 14px;
+  margin: 14px 0 0; padding: 0; list-style: none;
+  font-size: 13px; color: var(--text-soft);
+}
+.pl-cycle-strip-legend li { display: flex; align-items: center; gap: 8px; }
+.pl-cycle-strip-legend .swatch {
+  width: 16px; height: 16px; border-radius: 3px;
+  border: 1px solid rgba(26, 46, 74, 0.18);
+  flex-shrink: 0; position: relative;
+}
+.pl-cycle-strip-legend .swatch.is-period { background: var(--viz-band); }
+.pl-cycle-strip-legend .swatch.is-fertile {
+  background: var(--viz-band-soft);
+  background-image: linear-gradient(135deg, transparent 0%, transparent 38%, rgba(26, 46, 74, 0.18) 38%, rgba(26, 46, 74, 0.18) 50%, transparent 50%, transparent 88%, rgba(26, 46, 74, 0.18) 88%, rgba(26, 46, 74, 0.18) 100%);
+  background-size: 8px 8px;
+}
+.pl-cycle-strip-legend .swatch.is-ovulation { background: var(--viz-marker); }
+.pl-cycle-strip-legend .swatch.is-conception {
+  background: var(--white);
+  border: 2px solid var(--viz-accent);
+}
+.pl-cycle-strip-legend .swatch.is-next-period {
+  background: var(--white);
+  border: 2px dashed var(--navy);
+}
+
+.pl-method-note {
+  margin: 14px 0 0; padding-top: 14px;
+  border-top: 1px solid var(--border);
+  font-size: 13px; color: var(--text-soft); line-height: 1.55;
+}
+.pl-method-note a {
+  color: var(--crimson-dark); text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.pl-method-note a:hover { color: var(--crimson-dark); }
+
+.pl-chart-data-toggle {
+  margin-top: 12px;
+  font-size: 13px; color: var(--text-soft);
+}
+.pl-chart-data-toggle summary {
+  cursor: pointer; font-weight: 600; color: var(--navy);
+  padding: 6px 0; list-style: none;
+}
+.pl-chart-data-toggle summary::-webkit-details-marker { display: none; }
+.pl-chart-data-toggle summary::before {
+  content: "▸"; display: inline-block; width: 14px;
+  transition: transform 180ms ease; color: var(--text-soft);
+}
+.pl-chart-data-toggle[open] summary::before { transform: rotate(90deg); }
+.pl-chart-data-toggle summary:focus-visible {
+  outline: 2px solid var(--crimson); outline-offset: 2px;
+  border-radius: 4px;
+}
+
+table.pl-chart-data {
+  width: 100%; border-collapse: collapse;
+  margin: 8px 0 4px; font-size: 13.5px; color: var(--navy);
+}
+table.pl-chart-data caption {
+  text-align: left; padding: 4px 0 8px;
+  font-size: 13px; color: var(--text-soft); font-style: normal;
+}
+table.pl-chart-data th, table.pl-chart-data td {
+  text-align: left; padding: 8px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top; line-height: 1.45;
+}
+table.pl-chart-data th {
+  background: var(--bg); font-weight: 600; color: var(--navy);
+}
+
+.pl-next-steps-block {
+  margin-top: 56px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  box-shadow: none;
+}
+.pl-next-steps-h {
+  font-size: 22px; font-weight: 500;
+  letter-spacing: -0.3px;
+  color: var(--navy);
+  text-transform: none;
+  margin: 0 0 24px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.pl-next-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.pl-next-step {
+  display: flex; flex-direction: column;
+  justify-content: space-between;
+  min-height: 168px;
+  padding: 20px 22px 22px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 0;
+  color: var(--navy);
+  transition: border-color 160ms ease, background 160ms ease;
+  text-decoration: none;
+}
+.pl-next-step:hover, .pl-next-step:focus-visible {
+  border-color: var(--navy);
+  outline: none;
+}
+.pl-next-step:focus-visible {
+  box-shadow: 0 0 0 3px rgba(236, 13, 92, 0.18);
+}
+.pl-next-step-kind {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--text-soft);
+  margin-bottom: 10px;
+}
+.pl-next-step-kind::before {
+  content: ""; display: inline-block;
+  width: 14px; height: 1px;
+  background: currentColor;
+}
+.pl-next-step[data-card-kind="plan-ahead"] .pl-next-step-kind {
+  color: var(--crimson-text);
+}
+.pl-next-step[data-card-kind="read-up"] .pl-next-step-kind {
+  color: var(--text-soft);
+}
+.pl-next-step-title {
+  font-size: 19px; font-weight: 500;
+  line-height: 1.2; color: var(--navy);
+  letter-spacing: -0.01em;
+  display: block;
+  margin-bottom: 8px;
+}
+.pl-next-step-lede {
+  display: block;
+  font-size: 13px; font-weight: 400;
+  line-height: 1.45;
+  color: var(--text-soft);
+  margin: 0;
+}
+.pl-next-step-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 16px;
+  font-size: 12px; font-weight: 500;
+  color: var(--navy);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color 160ms ease;
+}
+.pl-next-step-cta .arrow {
+  display: inline-block; transition: transform 160ms ease;
+  color: inherit;
+}
+.pl-next-step:hover .pl-next-step-cta,
+.pl-next-step:focus-visible .pl-next-step-cta {
+  color: var(--crimson-text);
+}
+.pl-next-step:hover .pl-next-step-cta .arrow,
+.pl-next-step:focus-visible .pl-next-step-cta .arrow {
+  transform: translateX(4px);
+}
+
+/* Visual-canvas signature: 1px crimson corner ticks at top-left.
+   Position is relative on .pl-result-visual so absolute children anchor here. */
+.pl-result-visual {
+  position: relative;
+}
+.pl-result-visual::before,
+.pl-result-visual::after {
+  content: "";
+  position: absolute;
+  background: var(--crimson);
+  pointer-events: none;
+}
+.pl-result-visual::before {
+  top: 0; left: 0;
+  width: 24px; height: 1px;
+}
+.pl-result-visual::after {
+  top: 0; left: 0;
+  width: 1px; height: 24px;
+}
+
+/* Mobile breakpoints — verbatim from mock lines 928-952. */
+@media (max-width: 880px) {
+  .pl-next-steps { grid-template-columns: 1fr; gap: 12px; }
+  .pl-next-step { min-height: 0; }
+}
+@media (max-width: 640px) {
+  .pl-card, .pl-result, .pl-result-visual { padding: 16px; }
+  .pl-next-steps-block { margin-top: 36px; }
+  .pl-next-steps-h { font-size: 19px; margin-bottom: 18px; padding-bottom: 10px; }
+  .pl-result-stats { grid-template-columns: 1fr; }
+  .pl-result-stat {
+    padding: 14px 0;
+    border-right: 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .pl-result-stat:first-child { padding-top: 14px; }
+  .pl-result-stat:last-child { border-bottom: 0; }
+  body[data-calculator] .pl-page { padding: 16px 16px 40px; }
+}
+@media (max-width: 380px) {
+  body[data-calculator] .pl-page { padding: 14px 12px 32px; }
+}
+
+/* Scoped reduced-motion safety — only the new transition surfaces.
+   Production already has localized reduced-motion blocks elsewhere; a
+   global * rule would zero out existing crimson hovers + the spinner. */
+@media (prefers-reduced-motion: reduce) {
+  .pl-chart-data-toggle summary::before { transition: none; }
+  .pl-next-step,
+  .pl-next-step-cta,
+  .pl-next-step-cta .arrow { transition: none; }
+}
+
+/* Today-marker pulse — static state ships unconditionally; the animation
+   is enabled only inside prefers-reduced-motion: no-preference. WCAG 2.2.2
+   compliance: 2 cycles of 2.4s = 4.8s total, then settles at scale 2.8 +
+   opacity 0 (visually absent). The static halo + ring + dot remain. */
+.pl-today-pulse {
+  fill: none;
+  stroke: var(--crimson);
+  stroke-width: 1;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .pl-today-pulse {
+    animation: pl-today-pulse 2.4s ease-in-out 2;
+    animation-fill-mode: forwards;
+  }
+}
+@keyframes pl-today-pulse {
+  0%   { transform: scale(1);   opacity: 0.7; }
+  70%  { transform: scale(2.8); opacity: 0;   }
+  100% { transform: scale(2.8); opacity: 0;   }
+}
+
+/* Production-only overrides for shared classes — last-wins per CSS source
+   order. These intentionally REPLACE the older visuals on calc result pages
+   while leaving non-calc usage untouched (where the old defaults remain
+   visually correct for the non-calc context). */
+.pl-result {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: var(--radius-card);
+  padding: 22px 22px 20px;
+  margin-top: 16px;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 760px;
+  box-shadow: var(--shadow-result);
+}
+.pl-result-big {
+  display: block;
+  font-size: clamp(56px, 7.5vw, 88px);
+  font-weight: 600;
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: var(--crimson);
+  margin: 0 0 12px;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+.pl-cta {
+  width: 100%; min-height: 48px;
+  background: var(--crimson); color: var(--white);
+  border: 0; border-radius: var(--radius-btn);
+  font-size: 19px; font-weight: 700; cursor: pointer;
+  letter-spacing: -0.005em;
+  transition: background 120ms ease;
+  margin-top: 4px;
+  height: auto;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.pl-cta:hover, .pl-cta:focus-visible {
+  background: var(--crimson-dark); outline: none;
+}
+.pl-cta:focus-visible { box-shadow: 0 0 0 3px var(--crimson-soft); }
+body[data-calculator] .pl-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 24px 20px 56px;
 }
