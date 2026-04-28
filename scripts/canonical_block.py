@@ -85,11 +85,12 @@ ABOUT_SECTION = {
     "label": "About",
     "drawer_id": "drawer-about",
     "links": [
-        ("/about",      "About"),
-        ("/privacy",    "Privacy"),
-        ("/terms",      "Terms"),
-        ("/disclaimer", "Disclaimer"),
-        ("/contact",    "Contact"),
+        ("/about",                 "About"),
+        ("/privacy",               "Privacy"),
+        ("/terms",                 "Terms"),
+        ("/disclaimer",            "Disclaimer"),
+        ("/affiliate-disclosure",  "Affiliate Disclosure"),
+        ("/contact",               "Contact"),
     ],
 }
 
@@ -131,11 +132,12 @@ FOOTER_REFERENCE = [
 ]
 
 FOOTER_COMPANY = [
-    ("/about",      "About"),
-    ("/privacy",    "Privacy"),
-    ("/terms",      "Terms"),
-    ("/disclaimer", "Disclaimer"),
-    ("/contact",    "Contact"),
+    ("/about",                 "About"),
+    ("/privacy",               "Privacy"),
+    ("/terms",                 "Terms"),
+    ("/disclaimer",            "Disclaimer"),
+    ("/affiliate-disclosure",  "Affiliate Disclosure"),
+    ("/contact",               "Contact"),
 ]
 
 
@@ -541,6 +543,8 @@ def canonical_block(current_url):
         f'{_brand_logo("pl-footer-logo")}'
         '<p>Free, private, evidence-based pregnancy and parenting calculators.</p>'
         '<p class="legal">© 2026 DueDateLab. Not medical advice.</p>'
+        '<p class="legal pl-footer-affiliate">As an Amazon Associate, '
+        'DueDateLab earns from qualifying purchases.</p>'
         '</div>'
         + _footer_col("Calculators", FOOTER_CALCULATORS, current_url, "calculators",
                       cta=("/calculators/", "All Calculators"))

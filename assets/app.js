@@ -490,6 +490,25 @@
     });
   });
 
+  // affiliate_click — fire when a visitor clicks an affiliate link.
+  // Privacy-safe: only static metadata about the placement and merchant.
+  // Never includes calculator inputs, results, due dates, weeks, or any
+  // user-derived value. Per research-AI rollout review 2026-04-27.
+  document.querySelectorAll('a[data-affiliate-link]').forEach(function (a) {
+    a.addEventListener('click', function () {
+      var href = a.getAttribute('href') || '';
+      var destination_domain = '';
+      try { destination_domain = new URL(href, window.location.origin).hostname; } catch (e) {}
+      track('affiliate_click', {
+        affiliate_program: 'amazon_associates',
+        merchant: a.getAttribute('data-affiliate-link') || 'unknown',
+        placement: a.getAttribute('data-affiliate-placement') || '',
+        asin: a.getAttribute('data-affiliate-asin') || '',
+        destination_domain: destination_domain,
+      });
+    });
+  });
+
   // ── Preserved events (unchanged) ──────────────────────────
   // calculator_submit, share_click, outbound_source_click,
   // methodology_view, scroll_90, logo_click are wired in their existing

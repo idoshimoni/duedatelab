@@ -104,16 +104,19 @@ def _add_data_calculator(html, tool):
 
 
 def _bump_cachebust(html):
-    """Bump styles.css to current version + app.js to current version. Idempotent.
-    Current target: styles.css?v=17 (responsive table fix on 2026-04-25),
-                    app.js?v=15 (v4 IIFE merge on 2026-04-25)."""
+    """Bump styles.css and app.js cache-bust versions to current targets.
+    Idempotent. Current targets:
+        styles.css?v=23 (Amazon affiliate footer + card styles, 2026-04-27)
+        app.js?v=17     (Amazon affiliate_click event, 2026-04-27)
+    """
     n_styles = 0
     n_app = 0
     new = html
-    # Bump any older styles.css version up to v=17.
-    new, c = re.subn(r'(/assets/styles\.css\?v=)1[56](?=["\'?&])', r'\g<1>17', new)
+    # Bump any styles.css version 15-22 up to v=23.
+    new, c = re.subn(r'(/assets/styles\.css\?v=)(?:1[5-9]|2[0-2])(?=["\'?&])', r'\g<1>23', new)
     n_styles += c
-    new, c = re.subn(r'(/assets/app\.js\?v=)14(?=["\'?&])', r'\g<1>15', new)
+    # Bump any app.js version 14-16 up to v=17.
+    new, c = re.subn(r'(/assets/app\.js\?v=)(?:1[4-6])(?=["\'?&])', r'\g<1>17', new)
     n_app += c
     return new, n_styles, n_app
 

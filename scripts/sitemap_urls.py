@@ -53,11 +53,12 @@ URL_MAP = [
     {"url": "/methodology/chinese-gender-chart",                  "source": "methodology/chinese-gender-chart.html",            "priority": "0.8", "changefreq": "monthly"},
 
     # Company
-    {"url": "/about",        "source": "about.html",        "priority": "0.5", "changefreq": "yearly"},
-    {"url": "/privacy",      "source": "privacy.html",      "priority": "0.4", "changefreq": "yearly"},
-    {"url": "/terms",        "source": "terms.html",        "priority": "0.4", "changefreq": "yearly"},
-    {"url": "/disclaimer",   "source": "disclaimer.html",   "priority": "0.4", "changefreq": "yearly"},
-    {"url": "/contact",      "source": "contact.html",      "priority": "0.4", "changefreq": "yearly"},
+    {"url": "/about",                "source": "about.html",                "priority": "0.5", "changefreq": "yearly"},
+    {"url": "/privacy",              "source": "privacy.html",              "priority": "0.4", "changefreq": "yearly"},
+    {"url": "/terms",                "source": "terms.html",                "priority": "0.4", "changefreq": "yearly"},
+    {"url": "/disclaimer",           "source": "disclaimer.html",           "priority": "0.4", "changefreq": "yearly"},
+    {"url": "/affiliate-disclosure", "source": "affiliate-disclosure.html", "priority": "0.4", "changefreq": "yearly"},
+    {"url": "/contact",              "source": "contact.html",              "priority": "0.4", "changefreq": "yearly"},
 ]
 
 # HTML files that exist in dist/ but are explicitly NOT listed in the

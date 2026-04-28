@@ -11,6 +11,7 @@
   var result = document.getElementById('dd-result');
   var visual = document.getElementById('dd-visual');
   var nextSteps = document.getElementById('dd-next-steps');
+  var affiliate = document.getElementById('dd-affiliate');
   var resultBig = document.getElementById('dd-big');
   var resultDay = document.getElementById('dd-day');
   var resultSub = document.getElementById('dd-sub');
@@ -37,6 +38,7 @@
     if (result) result.classList.add('hidden');
     if (visual) visual.classList.add('hidden');
     if (nextSteps) nextSteps.classList.add('hidden');
+    if (affiliate) affiliate.classList.add('hidden');
   }
 
   function setX(ids, x, attr) {
@@ -196,6 +198,7 @@
     result.classList.remove('hidden');
     if (visual) visual.classList.remove('hidden');
     if (nextSteps) nextSteps.classList.remove('hidden');
+    if (affiliate) affiliate.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     /* GA4 event: only fires if gtag was loaded and consent is granted.
