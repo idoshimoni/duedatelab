@@ -12,6 +12,28 @@
   var visual = document.getElementById('dd-visual');
   var nextSteps = document.getElementById('dd-next-steps');
   var affiliate = document.getElementById('dd-affiliate');
+
+  // due_date_result_shown one-shot guard, per round-3.5 research-AI
+  // review 2026-04-28 (Q2b must-fix). Fires once per page load on the
+  // first successful Due Date result render, aligning with
+  // affiliate_card_view which also fires once per page load. The
+  // ratio affiliate_card_view / due_date_result_shown then measures
+  // "fraction of page loads where a valid result was shown that
+  // scrolled far enough to see the affiliate card."
+  var dueDateResultShownFired = false;
+  function trackDueDateResultShown() {
+    if (dueDateResultShownFired) return;
+    dueDateResultShownFired = true;
+    // Privacy-safe: tool name only. No due date, LMP, cycle length,
+    // week-along value, result text, or other user-derived value.
+    if (typeof window.gtag === 'function') {
+      try {
+        window.gtag('event', 'due_date_result_shown', {
+          tool: 'due-date'
+        });
+      } catch (e) {}
+    }
+  }
   var resultBig = document.getElementById('dd-big');
   var resultDay = document.getElementById('dd-day');
   var resultSub = document.getElementById('dd-sub');
@@ -199,6 +221,8 @@
     if (visual) visual.classList.remove('hidden');
     if (nextSteps) nextSteps.classList.remove('hidden');
     if (affiliate) affiliate.classList.remove('hidden');
+
+    trackDueDateResultShown();
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     /* GA4 event: only fires if gtag was loaded and consent is granted.
