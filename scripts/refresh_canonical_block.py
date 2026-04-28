@@ -107,13 +107,13 @@ def _add_data_calculator(html, tool):
 
 def _bump_cachebust(html):
     """Bump styles.css and app.js cache-bust to current targets.
-        styles.css?v=23 (Amazon affiliate footer + card styles, 2026-04-27)
+        styles.css?v=24 (footer disclosure cascade-specificity fix, 2026-04-28)
         app.js?v=17     (Amazon affiliate_click event, 2026-04-27)
     """
     n_styles = 0
     n_app = 0
     new = html
-    new, c = re.subn(r'(/assets/styles\.css\?v=)(?:1[5-9]|2[0-2])(?=["\'?&])', r'\g<1>23', new)
+    new, c = re.subn(r'(/assets/styles\.css\?v=)(?:1[5-9]|2[0-3])(?=["\'?&])', r'\g<1>24', new)
     n_styles += c
     new, c = re.subn(r'(/assets/app\.js\?v=)(?:1[4-6])(?=["\'?&])', r'\g<1>17', new)
     n_app += c

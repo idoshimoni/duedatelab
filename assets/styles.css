@@ -1513,8 +1513,12 @@ body[data-calculator] .pl-page {
 /* Footer disclosure line, sits with the existing .legal copyright text.
    Override .legal opacity + weight per round-2 research-AI review,
    2026-04-28: Amazon's "clearly and prominently" language wants this
-   line more visible than the generic copyright legal boilerplate. */
-.pl-footer-affiliate {
+   line more visible than the generic copyright legal boilerplate.
+   Selector chained .legal.pl-footer-affiliate to win specificity over
+   .pl-footer-brand .legal which is 0,2,0. Live-site QA 2026-04-28
+   caught the cascade defect. */
+.pl-footer-brand .legal.pl-footer-affiliate,
+.legal.pl-footer-affiliate {
   margin-top: 8px;
   color: rgba(255,255,255,0.85);
   font-weight: 500;
