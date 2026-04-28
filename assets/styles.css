@@ -1510,9 +1510,14 @@ body[data-calculator] .pl-page {
      - Footer disclosure line uses the existing .legal style, slight emphasis.
    ───────────────────────────────────────────────────────────────────── */
 
-/* Footer disclosure line, sits with the existing .legal copyright text */
+/* Footer disclosure line, sits with the existing .legal copyright text.
+   Override .legal opacity + weight per round-2 research-AI review,
+   2026-04-28: Amazon's "clearly and prominently" language wants this
+   line more visible than the generic copyright legal boilerplate. */
 .pl-footer-affiliate {
   margin-top: 8px;
+  color: rgba(255,255,255,0.85);
+  font-weight: 500;
 }
 
 /* Affiliate card section, sits in the calculator main flow */
