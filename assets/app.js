@@ -509,6 +509,36 @@
     });
   });
 
+  // affiliate_card_view — fire once per page-load when an affiliate card
+  // section becomes at least 50% visible in the viewport. Provides the
+  // denominator for measuring affiliate CTR. Uses IntersectionObserver
+  // and disconnects after first fire to avoid double-counting on scroll
+  // back. Per research-AI round-3 placement review 2026-04-28: do not
+  // move the card yet, instrument first.
+  if (typeof IntersectionObserver === 'function') {
+    document.querySelectorAll('.pl-affiliate-card[id]').forEach(function (card) {
+      var fired = false;
+      var anchor = card.querySelector('a[data-affiliate-link]');
+      var placement = anchor ? (anchor.getAttribute('data-affiliate-placement') || '') : '';
+      var asin = anchor ? (anchor.getAttribute('data-affiliate-asin') || '') : '';
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (!fired && entry.isIntersecting && entry.intersectionRatio >= 0.5) {
+            fired = true;
+            track('affiliate_card_view', {
+              affiliate_program: 'amazon_associates',
+              merchant: 'amazon',
+              placement: placement,
+              asin: asin,
+            });
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.5 });
+      observer.observe(card);
+    });
+  }
+
   // ── Preserved events (unchanged) ──────────────────────────
   // calculator_submit, share_click, outbound_source_click,
   // methodology_view, scroll_90, logo_click are wired in their existing
