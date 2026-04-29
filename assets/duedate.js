@@ -255,7 +255,7 @@
        date, due date, cycle length, chosen mode, computed trimester) never
        leave the browser, honoring the methodology privacy claim. */
     if (window.gtag) {
-      window.gtag('event', 'calculator_submit', { tool: 'due_date' });
+      window.gtag('event', 'calculator_submit', { tool: 'due-date' });
     }
   });
 
