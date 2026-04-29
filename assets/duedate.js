@@ -206,6 +206,31 @@
         statAlong.textContent = weeks + 'w ' + days + 'd';
       }
     }
+
+    /* Dynamic weeks-to-months deep-link per round 1.5 reply Q6:
+       deep-link the journey card to /pregnancy/weeks-to-months/N/ when
+       gestational age is in [1, 42]. Hub fallback for out-of-range.
+
+       Per round 4 reviewer F3 must-fix: user-facing href stays exact,
+       but the analytics fields must NOT include the user-derived week
+       number. The GA4 result_next_step_click handler reads
+       data-destination-path, so we set that to a generic placeholder
+       and bucket the deep-link as 'leaf' (no week suffix). */
+    var w2mLink = document.getElementById('dd-w2m-link');
+    if (w2mLink) {
+      var displayedWeek = Math.max(1, weeks);
+      if (daysPreg < 0 || daysPreg > 294 || displayedWeek > 42) {
+        w2mLink.setAttribute('href', '/pregnancy/weeks-to-months/');
+        w2mLink.setAttribute('data-destination-path', '/pregnancy/weeks-to-months/');
+        w2mLink.setAttribute('data-w2m-deep-link', 'hub');
+      } else {
+        var leafHref = '/pregnancy/weeks-to-months/' + displayedWeek + '/';
+        w2mLink.setAttribute('href', leafHref);
+        // Analytics: generic placeholder, never the user-derived week.
+        w2mLink.setAttribute('data-destination-path', '/pregnancy/weeks-to-months/week/');
+        w2mLink.setAttribute('data-w2m-deep-link', 'leaf');
+      }
+    }
     if (statTri) statTri.textContent = (daysPreg < 0) ? '—' : ('Trimester ' + trimester);
 
     if (statTerm) {

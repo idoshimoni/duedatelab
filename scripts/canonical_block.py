@@ -113,6 +113,7 @@ FOOTER_CALCULATORS = [
 ]
 
 FOOTER_PREGNANCY = [
+    ("/pregnancy/weeks-to-months/",              "Weeks to Months Calculator"),
     ("/articles/first-trimester-week-by-week",   "First Trimester Week by Week"),
     ("/articles/due-date-vs-conception-date",    "Due Date vs Conception Date"),
     ("/articles/chinese-gender-chart-accuracy",  "Chinese Gender Chart Accuracy"),
