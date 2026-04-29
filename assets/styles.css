@@ -221,6 +221,32 @@ a { color: var(--navy); }
 .pl-legal a[href^="mailto:"] { color: var(--crimson-dark); font-weight: 600; border-bottom-color: var(--crimson-soft); }
 .pl-legal a[href^="mailto:"]:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
 
+/* Editorial body links — pink underline, navy text. Scoped to inline text contexts so
+   card wrappers (.pl-related-card, .pl-article-card, .pl-hub-card) and CTA buttons keep
+   their own design language. Convention: applies inside .pl-legal, .pl-explain, .pl-sources. */
+.pl-legal :is(p, li, dd, td, th) a,
+.pl-explain :is(p, li, dd, td, th) a,
+.pl-sources :is(li, p) a {
+  color: var(--navy);
+  text-decoration: none;
+  border-bottom: 2px solid var(--crimson);
+  padding-bottom: 1px;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.pl-legal :is(p, li, dd, td, th) a:hover,
+.pl-explain :is(p, li, dd, td, th) a:hover,
+.pl-sources :is(li, p) a:hover {
+  color: var(--crimson);
+  border-bottom-color: var(--crimson-dark);
+}
+.pl-legal :is(p, li, dd, td, th) a:focus-visible,
+.pl-explain :is(p, li, dd, td, th) a:focus-visible,
+.pl-sources :is(li, p) a:focus-visible {
+  outline: 2px solid var(--crimson);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
 /* (OLD .pl-footer 4-column block was removed during the 2026-04-25 IA
    restructure. The new 6-column footer rules live at the bottom of this
    file in the v4-styles section.) */
