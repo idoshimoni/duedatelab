@@ -91,7 +91,7 @@ a { color: var(--navy); }
 .pl-card { background: var(--surface); border: 1px solid var(--border); border-top: 2px solid var(--navy); border-radius: var(--radius-card); padding: 24px; box-shadow: var(--shadow-card); max-width: 640px; margin: 0 auto; }
 @media (min-width: 1024px) { .pl-card { padding: 32px; } }
 
-.pl-h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin: 0 0 8px; line-height: 1.2; }
+.pl-h1 { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; margin: 0 0 8px; line-height: 1.2; text-wrap: balance; }
 @media (min-width: 1024px) { .pl-h1 { font-size: 36px; } }
 .pl-sub { font-size: 16px; color: var(--text-soft); margin: 0 0 24px; }
 

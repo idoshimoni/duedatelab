@@ -107,8 +107,8 @@ def _add_data_calculator(html, tool):
 
 def _bump_cachebust(html):
     """Bump styles.css and app.js cache-bust to current targets.
-        styles.css?v=24 (footer disclosure cascade-specificity fix, 2026-04-28)
-        app.js?v=18     (affiliate_card_view IntersectionObserver, 2026-04-28)
+        styles.css?v=25 (footer disclosure cascade-specificity fix, 2026-04-28)
+        app.js?v=19     (affiliate_card_view IntersectionObserver, 2026-04-28)
     """
     n_styles = 0
     n_app = 0

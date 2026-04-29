@@ -4,7 +4,7 @@ Per-week leaf HTML template for /pregnancy/weeks-to-months/N/.
 Phase 2 Step 5 (Option B), per round 1.5 research-AI consult.
 Renders one HTML file from a W2MRecord. Visual + structural parity
 with the existing 7 calculator pages: same canonical block via
-refresh_canonical_block.py, same CSS classes from styles.css?v=24,
+refresh_canonical_block.py, same CSS classes from styles.css?v=25,
 same byline + share + sources patterns.
 
 The canonical header/drawer/footer are stub-marked here and populated
@@ -35,7 +35,7 @@ from canonical_block import canonical_block
 
 
 # Static asset versions, kept in sync with the rest of dist/.
-STYLES_VERSION = "v=24"
+STYLES_VERSION = "v=25"
 APP_JS_VERSION = "v=19"
 
 

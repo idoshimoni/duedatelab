@@ -144,9 +144,9 @@ def _check_one(week: int, html: str, expected_robots: str,
         errors.append(f"{where}: hero answer not rendered correctly")
 
     # 3. Cache-bust strings present.
-    if "/assets/styles.css?v=24" not in html:
+    if "/assets/styles.css?v=25" not in html:
         errors.append(f"{where}: styles.css cache-bust missing")
-    if "/assets/app.js?v=18" not in html:
+    if "/assets/app.js?v=19" not in html:
         errors.append(f"{where}: app.js cache-bust missing")
 
     # 4. Robots meta matches build mode (round 2 Q11 must-fix).
