@@ -36,7 +36,7 @@ from canonical_block import canonical_block
 
 # Static asset versions, kept in sync with the rest of dist/.
 STYLES_VERSION = "v=24"
-APP_JS_VERSION = "v=18"
+APP_JS_VERSION = "v=19"
 
 
 def _all_records_by_week() -> dict[int, W2MRecord]:

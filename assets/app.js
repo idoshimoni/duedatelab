@@ -479,12 +479,20 @@
   // Modules opt in via [data-next-step-module] on the wrapper and
   // [data-next-step-link] on the anchor. Wired here for forward-compat;
   // the modules themselves land on calculator pages in a separate task.
+  //
+  // Privacy: when a module exposes a static `data-destination-path` placeholder
+  // on the anchor (e.g. the Due Date → weeks-to-months deep-link card writes
+  // `/pregnancy/weeks-to-months/week/` while the user-facing href is the exact
+  // gestational-week leaf `/pregnancy/weeks-to-months/N/`), prefer that
+  // placeholder over the href so the GA4 payload never carries a user-derived
+  // value. Modules without `data-destination-path` keep the prior behavior
+  // and read `href` directly.
   document.querySelectorAll('[data-next-step-module] a[data-next-step-link]').forEach(function (a) {
     a.addEventListener('click', function () {
       var module = a.closest('[data-next-step-module]');
       track('result_next_step_click', {
         tool: (module && module.getAttribute('data-tool')) || calcTool || '',
-        destination_path: pageRelative(a.getAttribute('href')),
+        destination_path: pageRelative(a.getAttribute('data-destination-path') || a.getAttribute('href')),
         module_label: (module && module.getAttribute('data-next-step-module')) || '',
       });
     });
