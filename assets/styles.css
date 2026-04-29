@@ -1639,3 +1639,19 @@ body[data-calculator] .pl-page {
     font-size: 17px;
   }
 }
+
+/* === Article: spotting-during-ovulation (Step 6 R3 fix-forward) === */
+.pl-callout { background: #fff8e1; border-left: 4px solid #f0a800; border-radius: 8px; padding: 16px 18px; margin: 24px 0; }
+.pl-callout-warning { background: #fff8e1; border-left-color: #f0a800; }
+.pl-callout-title { font-size: 16px; font-weight: 700; margin: 0 0 8px; color: #3a2a00; }
+.pl-callout p { margin: 0 0 8px; line-height: 1.55; }
+.pl-callout ul { margin: 4px 0 8px 22px; padding: 0; }
+.pl-callout li { margin: 4px 0; line-height: 1.5; }
+.pl-callout-foot { font-size: 13px; color: var(--text-soft); border-top: 1px dashed rgba(0,0,0,0.12); padding-top: 8px; margin-top: 8px !important; }
+.pl-table-scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 16px 0; border: 1px solid var(--border); border-radius: 8px; }
+.pl-table-scroll:focus { outline: 2px solid var(--navy); outline-offset: 2px; }
+.pl-compare-table { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; }
+.pl-compare-table th, .pl-compare-table td { text-align: left; padding: 10px 12px; vertical-align: top; border-bottom: 1px solid var(--border); }
+.pl-compare-table thead th { background: #f6f7fb; font-weight: 700; font-size: 13px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.4px; }
+.pl-compare-table tbody th { background: #fafbfd; font-weight: 600; }
+.pl-compare-table tbody tr:last-child th, .pl-compare-table tbody tr:last-child td { border-bottom: none; }
