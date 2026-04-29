@@ -221,23 +221,33 @@ a { color: var(--navy); }
 .pl-legal a[href^="mailto:"] { color: var(--crimson-dark); font-weight: 600; border-bottom-color: var(--crimson-soft); }
 .pl-legal a[href^="mailto:"]:hover { color: var(--crimson); border-bottom-color: var(--crimson); }
 
-/* Editorial body links — pink underline, navy text. Scoped to inline text contexts so
-   card wrappers (.pl-related-card, .pl-article-card, .pl-hub-card) and CTA buttons keep
-   their own design language. Convention: applies inside .pl-legal, .pl-explain, .pl-sources. */
+/* Editorial body links — calm rest state, brand accent on interaction. Scoped to inline
+   text contexts so card wrappers (.pl-related-card, .pl-article-card, .pl-hub-card) and
+   CTA buttons keep their own design language. Convention: applies inside .pl-legal,
+   .pl-explain, .pl-sources. Recipe locked 2026-04-29 per research-AI consult.
+   Rest: navy text + 1px crimson underline + 3px offset (native text-decoration).
+   Hover/focus: crimson text + crimson underline + 1.5px thickness. */
 .pl-legal :is(p, li, dd, td, th) a,
 .pl-explain :is(p, li, dd, td, th) a,
 .pl-sources :is(li, p) a {
   color: var(--navy);
-  text-decoration: none;
-  border-bottom: 2px solid var(--crimson);
-  padding-bottom: 1px;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  text-decoration: underline;
+  text-decoration-color: var(--crimson);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  border-bottom: none;
+  padding-bottom: 0;
+  transition: color 0.15s ease, text-decoration-thickness 0.15s ease;
 }
 .pl-legal :is(p, li, dd, td, th) a:hover,
 .pl-explain :is(p, li, dd, td, th) a:hover,
-.pl-sources :is(li, p) a:hover {
+.pl-sources :is(li, p) a:hover,
+.pl-legal :is(p, li, dd, td, th) a:focus-visible,
+.pl-explain :is(p, li, dd, td, th) a:focus-visible,
+.pl-sources :is(li, p) a:focus-visible {
   color: var(--crimson);
-  border-bottom-color: var(--crimson-dark);
+  text-decoration-color: var(--crimson);
+  text-decoration-thickness: 1.5px;
 }
 .pl-legal :is(p, li, dd, td, th) a:focus-visible,
 .pl-explain :is(p, li, dd, td, th) a:focus-visible,
