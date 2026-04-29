@@ -11,3 +11,14 @@ Thumbs.db
 .vscode/
 .idea/
 *.swp
+
+# Step 4 names build, work-in-progress, do NOT ship until G1A clears.
+# These directories are generated output, not source. Keep on local disk
+# for Step 4 work but never commit. The build scripts below are kept
+# local-only until the names cluster is cleared for ship.
+names-staging/
+names-pilot-staging/
+scripts/build_names.py
+scripts/name_leaf_template.py
+scripts/names_data_schema.py
+scripts/verify_names_batch.py
