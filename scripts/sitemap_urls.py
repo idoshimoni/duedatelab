@@ -35,6 +35,7 @@ URL_MAP = [
     {"url": "/articles/",                                         "source": "articles/index.html",                              "priority": "0.8", "changefreq": "weekly"},
     {"url": "/articles/due-date-vs-conception-date",              "source": "articles/due-date-vs-conception-date.html",        "priority": "0.7", "changefreq": "monthly"},
     {"url": "/articles/spotting-during-ovulation",                "source": "articles/spotting-during-ovulation.html",          "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/articles/implantation-bleeding",                    "source": "articles/implantation-bleeding.html",              "priority": "0.7", "changefreq": "monthly"},
     {"url": "/articles/first-trimester-week-by-week",             "source": "articles/first-trimester-week-by-week.html",       "priority": "0.7", "changefreq": "monthly"},
     {"url": "/articles/chinese-gender-chart-accuracy",            "source": "articles/chinese-gender-chart-accuracy.html",      "priority": "0.7", "changefreq": "monthly"},
     {"url": "/articles/sleep-regressions-by-month",               "source": "articles/sleep-regressions-by-month.html",         "priority": "0.7", "changefreq": "monthly"},

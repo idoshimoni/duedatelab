@@ -35,6 +35,7 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 - [Due Date vs. Conception Date](https://duedatelab.com/articles/due-date-vs-conception-date): How the two dates relate, LMP math, ultrasound confirmation
 - [Spotting During Ovulation](https://duedatelab.com/articles/spotting-during-ovulation): What ovulation spotting can look like, comparison with implantation bleeding and other intermenstrual bleeding, when to check in with a clinician
+- [Implantation Bleeding](https://duedatelab.com/articles/implantation-bleeding): What implantation bleeding can look like, when to test, when pregnancy bleeding needs urgent care, distinction from period and miscarriage and ectopic pregnancy
 - [First Trimester Week by Week](https://duedatelab.com/articles/first-trimester-week-by-week): Weeks 1 through 13 development summary
 - [Baby Percentile Explained](https://duedatelab.com/articles/baby-percentile-explained): Reading growth charts, what percentiles mean, when to ask a doctor
 - [Chinese Gender Chart Accuracy](https://duedatelab.com/articles/chinese-gender-chart-accuracy): Historical origin, accuracy analysis, why it is entertainment only
