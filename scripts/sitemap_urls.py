@@ -106,6 +106,15 @@ URL_MAP = [
     {"url": "/disclaimer",           "source": "disclaimer.html",           "priority": "0.4", "changefreq": "yearly"},
     {"url": "/affiliate-disclosure", "source": "affiliate-disclosure.html", "priority": "0.4", "changefreq": "yearly"},
     {"url": "/contact",              "source": "contact.html",              "priority": "0.4", "changefreq": "yearly"},
+
+    # Pregnancy week-by-week (Step 8 Batch 1A) — hub + leaves for weeks 4-9
+    {"url": "/pregnancy/week-by-week/",                       "source": "pregnancy/week-by-week/index.html",                       "priority": "0.8", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/4-weeks-pregnant/",      "source": "pregnancy/week-by-week/4-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/5-weeks-pregnant/",      "source": "pregnancy/week-by-week/5-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/6-weeks-pregnant/",      "source": "pregnancy/week-by-week/6-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/7-weeks-pregnant/",      "source": "pregnancy/week-by-week/7-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/8-weeks-pregnant/",      "source": "pregnancy/week-by-week/8-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/9-weeks-pregnant/",      "source": "pregnancy/week-by-week/9-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
 ]
 
 # HTML files that exist in dist/ but are explicitly NOT listed in the

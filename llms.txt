@@ -44,6 +44,16 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 - [8 Month Sleep Regression](https://duedatelab.com/articles/8-month-sleep-regression): Separation anxiety and sleep in the second half of the first year, what helps, and what is not supported
 - [Generations by Year](https://duedatelab.com/articles/generations-by-year): Pew Research birth-year ranges for Silent Generation through Generation Z, McCrindle Research ranges for Generation Alpha and Generation Beta, naming-trend snapshot by generation
 
+## Pregnancy week by week
+
+- [Pregnancy Week by Week hub](https://duedatelab.com/pregnancy/week-by-week/): Find-your-week directory; weeks 4 to 9 detailed, weeks 10 to 42 planned. NHS, Mayo Clinic, MedlinePlus anchored
+- [4 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/4-weeks-pregnant/): NHS week-4 development, LMP convention, when to test, when bleeding or symptoms need care
+- [5 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/5-weeks-pregnant/): NHS week-5 development including early heart formation, when many people realise they are pregnant, testing, care routes
+- [6 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/6-weeks-pregnant/): NHS describes around 6 mm size and limb buds; cautious heartbeat wording for vaginal ultrasound, with care routes
+- [7 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/7-weeks-pregnant/): NHS describes around 10 mm size and brain/face development; pregnancy-wide blood-volume context, care routes
+- [8 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/8-weeks-pregnant/): NHS describes around 16 mm size and placenta preparation; neutral on embryo/fetus terminology
+- [9 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/9-weeks-pregnant/): NHS describes hCG peak around week 9 and around 22 mm size; final leaf in current batch
+
 ## Editorial standards
 
 - Medical and calculation claims are source-cited on their pages or methodology pages, using major health bodies (ACOG, NHS, AAP, WHO) or peer-reviewed journals where appropriate.
