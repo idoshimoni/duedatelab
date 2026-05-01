@@ -42,7 +42,10 @@ SECTIONS = {
             ("/ovulation-calculator",  "Ovulation Calculator"),
             ("/conception-calculator", "Conception Calculator"),
         ],
-        "guides": [],
+        "guides": [
+            ("/articles/spotting-during-ovulation", "Spotting During Ovulation"),
+            ("/articles/implantation-bleeding",     "Implantation Bleeding"),
+        ],
         "reference": [],
     },
     "pregnancy": {

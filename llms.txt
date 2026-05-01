@@ -46,13 +46,21 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 ## Pregnancy week by week
 
-- [Pregnancy Week by Week hub](https://duedatelab.com/pregnancy/week-by-week/): Find-your-week directory; weeks 4 to 9 detailed, weeks 10 to 42 planned. NHS, Mayo Clinic, MedlinePlus anchored
+- [Pregnancy Week by Week hub](https://duedatelab.com/pregnancy/week-by-week/): Find-your-week directory; weeks 4 to 17 detailed, weeks 18 to 42 planned. NHS, Mayo Clinic, MedlinePlus anchored
 - [4 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/4-weeks-pregnant/): NHS week-4 development, LMP convention, when to test, when bleeding or symptoms need care
 - [5 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/5-weeks-pregnant/): NHS week-5 development including early heart formation, when many people realise they are pregnant, testing, care routes
 - [6 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/6-weeks-pregnant/): NHS describes around 6 mm size and limb buds; cautious heartbeat wording for vaginal ultrasound, with care routes
 - [7 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/7-weeks-pregnant/): NHS describes around 10 mm size and brain/face development; pregnancy-wide blood-volume context, care routes
 - [8 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/8-weeks-pregnant/): NHS describes around 16 mm size and placenta preparation; neutral on embryo/fetus terminology
-- [9 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/9-weeks-pregnant/): NHS describes hCG peak around week 9 and around 22 mm size; final leaf in current batch
+- [9 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/9-weeks-pregnant/): NHS describes hCG peak around week 9 and around 22 mm size; forward links to week 10
+- [10 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/10-weeks-pregnant/): NHS describes around 30 mm size near the end of first trimester; movement can be seen on a scan; booking and dating-scan timing
+- [11 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/11-weeks-pregnant/): NHS describes around 41 mm size; pregnancy-wide blood-volume context; tests around this stage
+- [12 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/12-weeks-pregnant/): NHS describes around 5.4 cm size; heartbeat can be picked up on ultrasound (no bpm); dating-scan window
+- [13 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/13-weeks-pregnant/): NHS describes around 7.4 cm size; small bump may be visible; movement window starts around week 17
+- [14 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/14-weeks-pregnant/): NHS describes around 8.5 cm size at the start of the second trimester; placenta is fully active; mid-stage safety routes
+- [15 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/15-weeks-pregnant/): NHS describes around 10.1 cm size; lanugo and early hearing; discharge-pattern context
+- [16 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/16-weeks-pregnant/): NHS describes around 11.6 cm size; arm and leg movement; midwife-appointment context
+- [17 weeks pregnant: what is happening this week](https://duedatelab.com/pregnancy/week-by-week/17-weeks-pregnant/): NHS describes around 12 cm size; some readers might start to feel movement; first-feel window 18 to 24 weeks
 
 ## Editorial standards
 

@@ -107,7 +107,7 @@ URL_MAP = [
     {"url": "/affiliate-disclosure", "source": "affiliate-disclosure.html", "priority": "0.4", "changefreq": "yearly"},
     {"url": "/contact",              "source": "contact.html",              "priority": "0.4", "changefreq": "yearly"},
 
-    # Pregnancy week-by-week (Step 8 Batch 1A) — hub + leaves for weeks 4-9
+    # Pregnancy week-by-week (Step 8 Batch 1A + 1B) — hub + leaves for weeks 4-17
     {"url": "/pregnancy/week-by-week/",                       "source": "pregnancy/week-by-week/index.html",                       "priority": "0.8", "changefreq": "monthly"},
     {"url": "/pregnancy/week-by-week/4-weeks-pregnant/",      "source": "pregnancy/week-by-week/4-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
     {"url": "/pregnancy/week-by-week/5-weeks-pregnant/",      "source": "pregnancy/week-by-week/5-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
@@ -115,6 +115,14 @@ URL_MAP = [
     {"url": "/pregnancy/week-by-week/7-weeks-pregnant/",      "source": "pregnancy/week-by-week/7-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
     {"url": "/pregnancy/week-by-week/8-weeks-pregnant/",      "source": "pregnancy/week-by-week/8-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
     {"url": "/pregnancy/week-by-week/9-weeks-pregnant/",      "source": "pregnancy/week-by-week/9-weeks-pregnant/index.html",      "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/10-weeks-pregnant/",     "source": "pregnancy/week-by-week/10-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/11-weeks-pregnant/",     "source": "pregnancy/week-by-week/11-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/12-weeks-pregnant/",     "source": "pregnancy/week-by-week/12-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/13-weeks-pregnant/",     "source": "pregnancy/week-by-week/13-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/14-weeks-pregnant/",     "source": "pregnancy/week-by-week/14-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/15-weeks-pregnant/",     "source": "pregnancy/week-by-week/15-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/16-weeks-pregnant/",     "source": "pregnancy/week-by-week/16-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/pregnancy/week-by-week/17-weeks-pregnant/",     "source": "pregnancy/week-by-week/17-weeks-pregnant/index.html",     "priority": "0.7", "changefreq": "monthly"},
 ]
 
 # HTML files that exist in dist/ but are explicitly NOT listed in the
