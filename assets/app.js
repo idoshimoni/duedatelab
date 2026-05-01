@@ -1,17 +1,20 @@
 /* DueDateLab — shared UI behavior
-   Header/drawer, Consent Mode v2 defaults, GA4 loader, share widget.
-   Consent UI is handled by Google's CMP (configured in AdSense), not by this
-   file. The custom .pl-cookie banner has been removed to avoid double-render
-   with Google's CMP on EEA/UK/CH traffic.
+   Header/drawer, cookie consent, GA4 loader (Consent Mode v2), share widget.
+   Custom .pl-cookie banner restored 2026-05-01: Google Funding Choices CMP
+   is gated on AdSense site approval which is still pending, so the FC banner
+   never fires for users. The custom banner provides immediate consent UI for
+   all visitors and gates GA4 collection per user choice. When AdSense
+   approves and Funding Choices begins firing, this file can be revisited.
    No framework, no build. */
 (function () {
   'use strict';
 
+  // ── Config ───────────────────────────────────────────────
   var GA4_ID = 'G-PG9K79G7RK';
+  var CONSENT_KEY = 'pl-consent';   // 'granted' | 'denied'
+  var LEGACY_KEY  = 'pl-cookie';    // pre-2026-04-21 key, migrated once
 
   // ── Consent Mode v2 defaults (must run before gtag.js) ──
-  // Google's CMP will issue gtag('consent', 'update', ...) based on the user's
-  // choice. Until then, personalized ads and analytics stay denied.
   window.dataLayer = window.dataLayer || [];
   function gtag(){ window.dataLayer.push(arguments); }
   window.gtag = gtag;
@@ -26,18 +29,79 @@
     wait_for_update: 500
   });
 
-  // ── GA4 loader ──────────────────────────────────────────
-  // gtag/js loads on every page. Consent Mode v2 defaults above keep
-  // measurement gated until the CMP (or user) updates consent.
-  (function loadGA4() {
+  // ── Consent helpers ──────────────────────────────────────
+  function readConsent() { return localStorage.getItem(CONSENT_KEY); }
+
+  function applyGranted() {
+    gtag('consent', 'update', {
+      ad_storage: 'granted',
+      ad_user_data: 'granted',
+      ad_personalization: 'granted',
+      analytics_storage: 'granted'
+    });
+    loadGA4();
+  }
+
+  function applyDenied() {
+    gtag('consent', 'update', {
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      analytics_storage: 'denied'
+    });
+  }
+
+  function grantConsent() {
+    localStorage.setItem(CONSENT_KEY, 'granted');
+    try { localStorage.removeItem(LEGACY_KEY); } catch (e) {}
+    applyGranted();
+  }
+
+  function denyConsent() {
+    localStorage.setItem(CONSENT_KEY, 'denied');
+    try { localStorage.removeItem(LEGACY_KEY); } catch (e) {}
+    applyDenied();
+  }
+
+  // Migrate legacy "pl-cookie = accepted" users once.
+  if (!readConsent() && localStorage.getItem(LEGACY_KEY) === 'accepted') {
+    grantConsent();
+  }
+
+  // ── GA4 loader (only fires after consent is granted) ─────
+  function loadGA4() {
+    if (window.__ga4Loaded) return;
     if (!GA4_ID || GA4_ID.indexOf('G-') !== 0) return;
+    window.__ga4Loaded = true;
+
     gtag('js', new Date());
     gtag('config', GA4_ID, { anonymize_ip: true });
+
     var s = document.createElement('script');
     s.async = true;
     s.src = 'https://www.googletagmanager.com/gtag/js?id=' + encodeURIComponent(GA4_ID);
     document.head.appendChild(s);
-  })();
+  }
+
+  // Apply stored consent immediately on load.
+  if (readConsent() === 'granted') applyGranted();
+  else if (readConsent() === 'denied') applyDenied();
+
+  // ── Cookie banner ────────────────────────────────────────
+  function initCookie() {
+    var banner = document.querySelector('[data-cookie]');
+    if (!banner) return;
+    // If user has made a choice already, hide the banner.
+    if (readConsent()) { banner.classList.add('hidden'); return; }
+
+    banner.querySelectorAll('[data-cookie-dismiss]').forEach(function (el) {
+      el.addEventListener('click', function () {
+        if (el.classList.contains('accept')) grantConsent();
+        else denyConsent();
+        banner.classList.add('hidden');
+      });
+    });
+  }
 
   // (Old initDrawer() removed: the OLD flat-nav drawer is replaced by the v4
   // canonical block's pl-mobile-header + pl-drawer disclosure pattern. The
@@ -228,7 +292,15 @@
     if (document.readyState !== 'loading') fn();
     else document.addEventListener('DOMContentLoaded', fn);
   }
-  ready(function () { initShare(); initLogoClick(); initOutboundSourceClick(); });
+  ready(function () { initCookie(); initShare(); initLogoClick(); initOutboundSourceClick(); });
+
+  // Optional: future "Manage consent" link can call this to reopen the banner.
+  window.PL = window.PL || {};
+  window.PL.resetConsent = function () {
+    localStorage.removeItem(CONSENT_KEY);
+    var banner = document.querySelector('[data-cookie]');
+    if (banner) banner.classList.remove('hidden');
+  };
 
   // ── Date helpers ─────────────────────────────────────────
   window.PL.formatDate = function (d) {

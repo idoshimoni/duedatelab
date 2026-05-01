@@ -562,6 +562,12 @@ def canonical_block(current_url):
         + '<a href="/disclaimer">not medical advice</a>.</span>'
         + '<span>Made with care.</span>'
         + '</div>'
+        + '<div class="pl-cookie" data-cookie role="region" aria-label="Cookie consent">'
+        + '<div class="pl-cookie-text">We use cookies to measure traffic and (once enabled) to serve ads. See our '
+        + '<a href="/privacy" style="color:#EC0D5C">Privacy Policy</a>.</div>'
+        + '<button class="pl-cookie-btn" data-cookie-dismiss type="button">Decline</button>'
+        + '<button class="pl-cookie-btn accept" data-cookie-dismiss type="button">Accept</button>'
+        + '</div>'
         '</footer>'
     )
 
