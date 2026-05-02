@@ -1693,3 +1693,8 @@ body[data-calculator] .pl-page {
 .pl-compare-table thead th { background: #f6f7fb; font-weight: 700; font-size: 13px; color: var(--text-soft); text-transform: uppercase; letter-spacing: 0.4px; }
 .pl-compare-table tbody th { background: #fafbfd; font-weight: 600; }
 .pl-compare-table tbody tr:last-child th, .pl-compare-table tbody tr:last-child td { border-bottom: none; }
+
+/* Linked superscript citation marker — fixed size so citations render uniformly regardless of parent paragraph. */
+sup.pl-cite { font-size: 11px; line-height: 0; vertical-align: super; font-weight: 500; margin-left: 1px; }
+sup.pl-cite a { color: var(--navy); text-decoration: none; }
+sup.pl-cite a:hover, sup.pl-cite a:focus { color: var(--crimson); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
