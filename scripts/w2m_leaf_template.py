@@ -278,7 +278,7 @@ def render_leaf(record: W2MRecord, build_mode: str = "production") -> str:
 <main class="pl-page">
   <div class="pl-card">
     <h1 class="pl-h1">{record.h1}</h1>
-    <p class="pl-byline" style="font-size:13px;color:#5A6B82;margin:0 0 14px;line-height:1.5;">Written by <strong style="font-weight:600;color:#1A2E4A;">DueDateLab Editorial Team</strong> &middot; Last updated <time datetime="{today_iso}">{today_human}</time></p>
+    <p class="pl-byline" style="font-size:13px;color:#5A6B82;margin:0 0 14px;line-height:1.5;">Written by <a href="/editorial-policy" data-cta-source="byline" style="font-weight:600;color:#1A2E4A;">DueDateLab Editorial</a> &middot; Last updated <time datetime="{today_iso}">{today_human}</time></p>
     <p class="pl-sub">A direct conversion using DueDateLab's transparent four-week pregnancy-month convention, with an average calendar-month comparison alongside.</p>
   </div>
 
