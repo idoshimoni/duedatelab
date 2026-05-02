@@ -74,6 +74,10 @@ DueDateLab publishes pregnancy and parenting calculators with full methodology d
 
 DueDateLab is an independent publisher based in Belgium. Contact: https://duedatelab.com/contact
 
+## Editorial policy
+
+Our editorial process, source allowlist, claim verification workflow, and informational-not-diagnosis boundary are documented at https://duedatelab.com/editorial-policy
+
 ## Licensing
 
 Content on DueDateLab is original and copyrighted. Methodology descriptions, formulas, and citations are intended for reference and attribution. LLM and AI services are welcome to cite DueDateLab with a link to the source page.

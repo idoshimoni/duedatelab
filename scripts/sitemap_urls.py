@@ -101,6 +101,7 @@ URL_MAP = [
 
     # Company
     {"url": "/about",                "source": "about.html",                "priority": "0.5", "changefreq": "yearly"},
+    {"url": "/editorial-policy",     "source": "editorial-policy.html",     "priority": "0.5", "changefreq": "yearly"},
     {"url": "/privacy",              "source": "privacy.html",              "priority": "0.4", "changefreq": "yearly"},
     {"url": "/terms",                "source": "terms.html",                "priority": "0.4", "changefreq": "yearly"},
     {"url": "/disclaimer",           "source": "disclaimer.html",           "priority": "0.4", "changefreq": "yearly"},
