@@ -290,6 +290,11 @@ a { color: var(--navy); }
 .pl-cookie-btn:active { transform: translateY(1px); }
 .pl-cookie-btn.accept { background: var(--crimson); color: #fff; border-color: var(--crimson); }
 .pl-cookie-btn.accept:hover { background: #c70a4d; border-color: #c70a4d; color: #fff; }
+.pl-cookie-btn:focus-visible,
+.pl-cookie-text a:focus-visible {
+  outline: 3px solid rgba(236, 13, 92, 0.35);
+  outline-offset: 3px;
+}
 @media (max-width: 720px) {
   .pl-cookie {
     padding: 14px 16px;

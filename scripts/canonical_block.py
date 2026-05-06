@@ -563,7 +563,7 @@ def canonical_block(current_url):
         + '<span>Made with care.</span>'
         + '</div>'
         + '<div class="pl-cookie" data-cookie role="region" aria-label="Cookie consent">'
-        + '<div class="pl-cookie-text">We use cookies to measure traffic and (once enabled) to serve ads. See our '
+        + '<div class="pl-cookie-text">We use cookies to measure traffic and may use cookies to serve ads if advertising is enabled. See our '
         + '<a href="/privacy" style="color:#EC0D5C">Privacy Policy</a>.</div>'
         + '<button class="pl-cookie-btn" data-cookie-dismiss type="button">Decline</button>'
         + '<button class="pl-cookie-btn accept" data-cookie-dismiss type="button">Accept</button>'
