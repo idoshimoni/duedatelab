@@ -72,6 +72,12 @@
   function loadGA4() {
     if (window.__ga4Loaded) return;
     if (!GA4_ID || GA4_ID.indexOf('G-') !== 0) return;
+    // Hostname guard. Defense-in-depth alongside the Pages middleware
+    // redirect from non-canonical hosts. Prevents GA4 from firing on
+    // duedatelab-v2.pages.dev or any future preview URL even if the
+    // middleware is bypassed or temporarily disabled.
+    var host = (window.location && window.location.hostname || '').toLowerCase();
+    if (host !== 'duedatelab.com' && host !== 'www.duedatelab.com') return;
     window.__ga4Loaded = true;
 
     gtag('js', new Date());
