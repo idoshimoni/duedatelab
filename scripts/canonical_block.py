@@ -80,7 +80,7 @@ SECTIONS = {
             ("/articles/baby-percentile-explained",  "Baby Percentile Explained"),
         ],
         "reference": [
-            ("/methodology/names",                   "Names methodology"),
+            ("/names/",                              "Baby names"),
         ],
     },
 }
@@ -129,7 +129,7 @@ FOOTER_BABY_CHILD = [
     ("/articles/sleep-regressions-by-month",    "Sleep Regressions by Month"),
     ("/articles/4-month-sleep-regression",      "4 Month Sleep Regression"),
     ("/articles/8-month-sleep-regression",      "8 Month Sleep Regression"),
-    ("/methodology/names",                      "Names methodology"),
+    ("/names/",                                 "Baby names"),
 ]
 
 FOOTER_REFERENCE = [
