@@ -63,6 +63,7 @@ URL_MAP = [
     {"url": "/methodology/names",                                 "source": "methodology/names.html",                           "priority": "0.8", "changefreq": "monthly"},
 
     # Names cluster (Phase 2 Step 4 pilot)
+    {"url": "/names/",                                            "source": "names/index.html",                                 "priority": "0.7", "changefreq": "monthly"},
     {"url": "/names/olivia/",                                     "source": "names/olivia/index.html",                          "priority": "0.7", "changefreq": "monthly"},
     {"url": "/names/liam/",                                       "source": "names/liam/index.html",                            "priority": "0.7", "changefreq": "monthly"},
     {"url": "/names/charlotte/",                                  "source": "names/charlotte/index.html",                       "priority": "0.7", "changefreq": "monthly"},
