@@ -561,7 +561,7 @@ def canonical_block(current_url):
         + _footer_col("Company", FOOTER_COMPANY, current_url, "company")
         + '</div>'
         + '<div class="pl-footer-bottom">'
-        + '<span>Privacy-first tools. Informational only — '
+        + '<span>Privacy-first tools, informational only, '
         + '<a href="/disclaimer">not medical advice</a>.</span>'
         + '<span>Made with care.</span>'
         + '</div>'

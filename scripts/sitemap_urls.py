@@ -62,6 +62,13 @@ URL_MAP = [
     {"url": "/methodology/chinese-gender-chart",                  "source": "methodology/chinese-gender-chart.html",            "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/names",                                 "source": "methodology/names.html",                           "priority": "0.8", "changefreq": "monthly"},
 
+    # Names cluster (Phase 2 Step 4 pilot)
+    {"url": "/names/olivia/",                                     "source": "names/olivia/index.html",                          "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/names/liam/",                                       "source": "names/liam/index.html",                            "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/names/charlotte/",                                  "source": "names/charlotte/index.html",                       "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/names/mateo/",                                      "source": "names/mateo/index.html",                           "priority": "0.7", "changefreq": "monthly"},
+    {"url": "/names/avery/",                                      "source": "names/avery/index.html",                           "priority": "0.7", "changefreq": "monthly"},
+
     # Company
     {"url": "/about",                "source": "about.html",                "priority": "0.5", "changefreq": "yearly"},
     {"url": "/editorial-policy",     "source": "editorial-policy.html",     "priority": "0.5", "changefreq": "yearly"},
@@ -97,11 +104,15 @@ EXCLUDED_FROM_SITEMAP = {
     # Step 4 names-cluster staging directories — gated on G1A/G2A licensing
     # review before any names page can ship. Excluded from sitemap until
     # then so they don't get indexed.
+    "names-pilot-staging/avery/index.html",
     "names-pilot-staging/charlotte/index.html",
     "names-pilot-staging/liam/index.html",
+    "names-pilot-staging/mateo/index.html",
     "names-pilot-staging/olivia/index.html",
+    "names-staging/avery/index.html",
     "names-staging/charlotte/index.html",
     "names-staging/liam/index.html",
+    "names-staging/mateo/index.html",
     "names-staging/olivia/index.html",
     # W2M silent-tail leaves — noindex,follow on 38 leaves with zero GSC
     # impressions in the first 6 days post-launch (2026-04-29 deploy).
