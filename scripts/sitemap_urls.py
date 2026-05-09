@@ -60,6 +60,7 @@ URL_MAP = [
     {"url": "/methodology/baby-percentile",                       "source": "methodology/baby-percentile.html",                 "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/sleep-needs-by-age",                    "source": "methodology/sleep-needs-by-age.html",              "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/chinese-gender-chart",                  "source": "methodology/chinese-gender-chart.html",            "priority": "0.8", "changefreq": "monthly"},
+    {"url": "/methodology/names",                                 "source": "methodology/names.html",                           "priority": "0.8", "changefreq": "monthly"},
 
     # Company
     {"url": "/about",                "source": "about.html",                "priority": "0.5", "changefreq": "yearly"},
