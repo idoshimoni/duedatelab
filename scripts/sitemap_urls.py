@@ -60,15 +60,11 @@ URL_MAP = [
     {"url": "/methodology/baby-percentile",                       "source": "methodology/baby-percentile.html",                 "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/sleep-needs-by-age",                    "source": "methodology/sleep-needs-by-age.html",              "priority": "0.8", "changefreq": "monthly"},
     {"url": "/methodology/chinese-gender-chart",                  "source": "methodology/chinese-gender-chart.html",            "priority": "0.8", "changefreq": "monthly"},
-    {"url": "/methodology/names",                                 "source": "methodology/names.html",                           "priority": "0.8", "changefreq": "monthly"},
 
-    # Names cluster (Phase 2 Step 4 pilot)
-    {"url": "/names/",                                            "source": "names/index.html",                                 "priority": "0.7", "changefreq": "monthly"},
-    {"url": "/names/olivia/",                                     "source": "names/olivia/index.html",                          "priority": "0.7", "changefreq": "monthly"},
-    {"url": "/names/liam/",                                       "source": "names/liam/index.html",                            "priority": "0.7", "changefreq": "monthly"},
-    {"url": "/names/charlotte/",                                  "source": "names/charlotte/index.html",                       "priority": "0.7", "changefreq": "monthly"},
-    {"url": "/names/mateo/",                                      "source": "names/mateo/index.html",                           "priority": "0.7", "changefreq": "monthly"},
-    {"url": "/names/avery/",                                      "source": "names/avery/index.html",                           "priority": "0.7", "changefreq": "monthly"},
+    # Names cluster (Phase 2 Step 4 pilot) — REMOVED FROM SITEMAP 2026-05-15 per AdSense
+    # second-rejection diagnostic. All 7 URLs (hub + 5 leaves + methodology) are now
+    # noindex,follow and de-linked from public nav. Files preserved on disk; restore
+    # to sitemap only after AdSense flips Ready. See project_adsense_rejection_2026-05-15.md.
 
     # Company
     {"url": "/about",                "source": "about.html",                "priority": "0.5", "changefreq": "yearly"},
@@ -115,6 +111,38 @@ EXCLUDED_FROM_SITEMAP = {
     "names-staging/liam/index.html",
     "names-staging/mateo/index.html",
     "names-staging/olivia/index.html",
+    # Phase 0 Batch 1 staging pages (rendered 2026-05-10, G2A-CLOSED).
+    # Awaiting AdSense approval before promotion to dist/names/.
+    "names-staging/amelia/index.html",
+    "names-staging/eliana/index.html",
+    "names-staging/elijah/index.html",
+    "names-staging/emma/index.html",
+    "names-staging/evelyn/index.html",
+    "names-staging/henry/index.html",
+    "names-staging/isabella/index.html",
+    "names-staging/james/index.html",
+    "names-staging/kasai/index.html",
+    "names-staging/klarity/index.html",
+    "names-staging/lucas/index.html",
+    "names-staging/mia/index.html",
+    "names-staging/noah/index.html",
+    "names-staging/oliver/index.html",
+    "names-staging/quinn/index.html",
+    "names-staging/rowan/index.html",
+    "names-staging/sofia/index.html",
+    "names-staging/sophia/index.html",
+    "names-staging/theodore/index.html",
+    "names-staging/william/index.html",
+    # Names cluster pulled from sitemap 2026-05-15 per AdSense second-rejection
+    # diagnostic. All 7 URLs are noindex,follow + de-linked from public nav.
+    # Files remain on disk so they can be restored after AdSense approval.
+    "methodology/names.html",
+    "names/index.html",
+    "names/olivia/index.html",
+    "names/liam/index.html",
+    "names/charlotte/index.html",
+    "names/mateo/index.html",
+    "names/avery/index.html",
     # W2M silent-tail leaves — noindex,follow on 38 leaves with zero GSC
     # impressions in the first 6 days post-launch (2026-04-29 deploy).
     # Removed from sitemap 2026-05-05 per AdSense resubmit prep, R2 reviewer

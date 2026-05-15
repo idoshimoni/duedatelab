@@ -79,9 +79,12 @@ SECTIONS = {
             ("/articles/8-month-sleep-regression",   "8 Month Sleep Regression"),
             ("/articles/baby-percentile-explained",  "Baby Percentile Explained"),
         ],
-        "reference": [
-            ("/names/",                              "Baby names"),
-        ],
+        # "reference" intentionally empty. Names cluster pulled from public nav
+        # 2026-05-15 per AdSense second-rejection diagnostic. All 7 URLs
+        # (/names/ + 5 leaves + /methodology/names) are noindex,follow and
+        # absent from sitemap. Restore this entry only after AdSense approval.
+        # See project_adsense_rejection_2026-05-15.md.
+        "reference": [],
     },
 }
 
@@ -129,7 +132,8 @@ FOOTER_BABY_CHILD = [
     ("/articles/sleep-regressions-by-month",    "Sleep Regressions by Month"),
     ("/articles/4-month-sleep-regression",      "4 Month Sleep Regression"),
     ("/articles/8-month-sleep-regression",      "8 Month Sleep Regression"),
-    ("/names/",                                 "Baby names"),
+    # "Baby names" /names/ entry pulled from footer 2026-05-15 per AdSense
+    # second-rejection diagnostic. Restore after AdSense approval.
 ]
 
 FOOTER_REFERENCE = [
