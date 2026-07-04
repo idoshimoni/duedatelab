@@ -37,7 +37,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/styles.css?v=36">
+<link rel="stylesheet" href="/assets/styles.css?v=37">
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4285310692091665" crossorigin="anonymous"></script>
 </head>
 <body data-calculator="due-date" data-build-version="step3.1-2026-04-26-round4">
@@ -47,7 +47,7 @@
 <main class="pl-page">
   <div class="pl-card">
     <h1 class="pl-h1">Due Date Calculator</h1>
-    <p class="pl-byline" style="font-size:13px;color:#5A6B82;margin:0 0 14px;line-height:1.5;">Written by <a href="/editorial-policy" data-cta-source="byline" style="font-weight:600;color:#1A2E4A;">DueDateLab Editorial</a> &middot; Last updated <time datetime="2026-05-15">May 15, 2026</time></p>
+    <p class="pl-byline" style="font-size:13px;color:#5A6B82;margin:0 0 14px;line-height:1.5;">Written by <a href="/editorial-policy" data-cta-source="byline" style="font-weight:600;color:#1A2E4A;">DueDateLab Editorial</a> &middot; Last updated <time datetime="2026-07-04">July 4, 2026</time></p>
     <p class="pl-sub">Estimate your due date from your last period, conception date, or a known due date.</p>
     <form id="dd-form" novalidate>
       <div class="pl-field" style="margin-bottom:20px">
@@ -93,6 +93,7 @@
     <span class="pl-result-day" id="dd-day"></span>
     <output class="pl-result-big" id="dd-big" aria-live="polite" aria-atomic="true"></output>
     <p class="pl-result-sub" id="dd-sub"></p>
+    <p class="pl-milestone hidden" id="dd-milestone" aria-live="polite"></p>
     <div class="pl-result-stats">
       <div class="pl-result-stat">
         <span class="pl-result-stat-label">How far along</span>
@@ -107,6 +108,18 @@
         <span class="pl-result-stat-value" id="dd-stat-term"></span>
         <span class="pl-result-stat-sub">37&ndash;42 weeks is full term. Most babies arrive in this range; after week 42 is post-term.</span>
       </div>
+    </div>
+    <div class="pl-weeknote hidden" id="dd-weeknote">
+      <div class="pl-weeknote-illo hidden" id="dd-weeknote-illo" aria-hidden="true"></div>
+      <div class="pl-weeknote-copy">
+        <h3 class="pl-weeknote-h">Your baby this week</h3>
+        <p class="pl-weeknote-p" id="dd-weeknote-p"></p>
+        <p class="pl-weeknote-fine">A playful size comparison &mdash; every baby grows at their own pace.</p>
+      </div>
+    </div>
+    <div class="pl-progress hidden" id="dd-progress" aria-hidden="true">
+      <div class="pl-progress-track"><div class="pl-progress-fill" id="dd-progress-fill"></div></div>
+      <div class="pl-progress-labels"><span>LMP</span><span id="dd-progress-mid"></span><span>Due date</span></div>
     </div>
     <div class="pl-share">
       <span class="pl-share-label">Share</span>
@@ -321,6 +334,6 @@
 
 
 <script src="/assets/app.js?v=20"></script>
-<script src="/assets/duedate.js?v=11"></script>
+<script src="/assets/duedate.js?v=12"></script>
 </body>
 </html>

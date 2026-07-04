@@ -40,6 +40,110 @@
   var statAlong = document.getElementById('dd-stat-along');
   var statTri = document.getElementById('dd-stat-trimester');
   var statTerm = document.getElementById('dd-stat-term');
+  var milestoneEl = document.getElementById('dd-milestone');
+  var weeknoteEl = document.getElementById('dd-weeknote');
+  var weeknoteP = document.getElementById('dd-weeknote-p');
+  var progressEl = document.getElementById('dd-progress');
+  var progressFill = document.getElementById('dd-progress-fill');
+  var progressMid = document.getElementById('dd-progress-mid');
+
+  /* Phase 1 result delight (2026-07-04). Weekly size comparisons use the
+     familiar, deliberately approximate fruit-and-veg convention and are
+     labeled as playful in the UI. Companion lines are warm and
+     non-clinical by design; the one movement mention (week 18) matches
+     the NHS 18-24 week first-movement window already cited on the
+     week-by-week pages. No user-derived values leave the browser. */
+  var WEEK_NOTES = {
+    4:  ['a poppy seed', 'Tiny but mighty. This is where the story starts.'],
+    5:  ['a sesame seed', 'Easy to miss, impossible to forget.'],
+    6:  ['a lentil', 'Small and busy. Early days, big changes.'],
+    7:  ['a blueberry', 'One quiet day at a time.'],
+    8:  ['a raspberry', 'Growing steadily, week by week.'],
+    9:  ['a cherry', 'Little by little, taking shape.'],
+    10: ['a strawberry', 'Double digits. A milestone of its own.'],
+    11: ['a fig', 'Nearly through the first trimester.'],
+    12: ['a plum', 'The first big chapter is almost complete.'],
+    13: ['a pea pod', 'The edge of the second trimester.'],
+    14: ['a lemon', 'A fresh trimester begins.'],
+    15: ['an apple', 'Many parents find a little energy returning around now.'],
+    16: ['an avocado', 'A favorite stretch of pregnancy for many.'],
+    17: ['a pear', 'Growing gracefully.'],
+    18: ['a sweet potato', 'Many parents feel the first movements somewhere between 18 and 24 weeks.'],
+    19: ['a mango', 'Halfway is just around the corner.'],
+    20: ['a banana', 'Halfway there. Take a moment — you have come a long way.'],
+    21: ['a carrot', 'The second half begins.'],
+    22: ['a papaya', 'Steady weeks of quiet growth.'],
+    23: ['a grapefruit', 'Every week from here is another small win.'],
+    24: ['an ear of corn', 'A meaningful milestone week for many families.'],
+    25: ['a cauliflower', 'Growing room is getting cozier.'],
+    26: ['a head of lettuce', 'The second trimester is winding down.'],
+    27: ['a cabbage', 'Third trimester, nearly. Deep breaths.'],
+    28: ['an eggplant', 'Welcome to the third trimester.'],
+    29: ['a butternut squash', 'The home stretch begins.'],
+    30: ['a large cabbage', 'Thirty weeks in. Roughly ten to go.'],
+    31: ['a coconut', 'Hospital bag not packed yet? No rush — but soon.'],
+    32: ['a napa cabbage', 'Every week from here counts double.'],
+    33: ['a pineapple', 'Sweet weeks, big growth.'],
+    34: ['a cantaloupe', 'Closer every day.'],
+    35: ['a honeydew melon', 'Single-digit weeks remaining.'],
+    36: ['a head of romaine lettuce', 'Almost full term.'],
+    37: ['a bunch of Swiss chard', 'Full term is close. Baby could arrive any week now.'],
+    38: ['a leek', 'Any day now. Rest when you can.'],
+    39: ['a mini watermelon', 'So close. Your bag, your plan, your people — ready.'],
+    40: ['a small pumpkin', 'Due week. Few babies keep to the schedule, and that is normal.'],
+    41: ['a small pumpkin', 'Going past the due date is common. Your care team keeps watch from here.']
+  };
+
+  function renderDelight(daysPreg, weeks, dueDate, lmp, today) {
+    var inRange = daysPreg >= 0 && daysPreg <= 294;
+    var daysToGo = PL.diffDays(dueDate, today);
+
+    if (milestoneEl) {
+      var badge = '';
+      if (inRange) {
+        if (weeks >= 41) badge = 'Past your due date — hang in there';
+        else if (weeks >= 40) badge = '🎉 Due any day now';
+        else if (weeks >= 37) badge = 'Full term — almost there';
+        else if (weeks >= 28) badge = 'Third trimester — the home stretch';
+        else if (weeks >= 21) badge = 'Past halfway — ' + Math.max(0, daysToGo) + ' days to go';
+        else if (weeks === 20) badge = '🎉 Halfway there';
+        else if (weeks >= 14) badge = 'Second trimester';
+        else badge = 'First trimester — early days';
+      }
+      milestoneEl.textContent = badge;
+      milestoneEl.classList.toggle('hidden', !badge);
+    }
+
+    if (weeknoteEl && weeknoteP) {
+      var note = inRange ? WEEK_NOTES[Math.min(41, weeks)] : null;
+      if (note && weeks >= 4) {
+        weeknoteP.textContent = 'Around week ' + weeks + ', your baby is about the size of ' +
+          note[0] + '. ' + note[1];
+        weeknoteEl.classList.remove('hidden');
+      } else {
+        weeknoteEl.classList.add('hidden');
+      }
+    }
+
+    if (progressEl && progressFill) {
+      if (inRange) {
+        var total = PL.diffDays(dueDate, lmp);
+        var pct = Math.round(Math.min(100, Math.max(0, (daysPreg / total) * 100)));
+        progressEl.classList.remove('hidden');
+        if (progressMid) progressMid.textContent = 'You are here — ' + pct + '%';
+        /* Set width on the next frame so the CSS transition animates
+           from 0 after the panel becomes visible. */
+        progressFill.style.width = '0%';
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            progressFill.style.width = Math.max(2, pct) + '%';
+          });
+        });
+      } else {
+        progressEl.classList.add('hidden');
+      }
+    }
+  }
   var errMsg = document.getElementById('dd-err');
   var modeInputs = form.querySelectorAll('input[name="mode"]');
   var fieldLmp = document.getElementById('dd-field-lmp');
@@ -241,6 +345,12 @@
 
     populateSvg({ lmp: lmp, dueDate: dueDate, daysPreg: daysPreg, weeks: weeks, days: days, cycle: cycle });
     populateFallbackTable({ lmp: lmp, conception: conception, dueDate: dueDate, cycle: cycle });
+    renderDelight(daysPreg, weeks, dueDate, lmp, today);
+
+    /* One-shot reveal animation; re-trigger cleanly on repeat submits. */
+    result.classList.remove('pl-reveal');
+    void result.offsetWidth;
+    result.classList.add('pl-reveal');
 
     result.classList.remove('hidden');
     if (visual) visual.classList.remove('hidden');
