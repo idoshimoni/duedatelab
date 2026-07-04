@@ -43,6 +43,7 @@
   var milestoneEl = document.getElementById('dd-milestone');
   var weeknoteEl = document.getElementById('dd-weeknote');
   var weeknoteP = document.getElementById('dd-weeknote-p');
+  var weeknoteIllo = document.getElementById('dd-weeknote-illo');
   var progressEl = document.getElementById('dd-progress');
   var progressFill = document.getElementById('dd-progress-fill');
   var progressMid = document.getElementById('dd-progress-mid');
@@ -120,8 +121,24 @@
         weeknoteP.textContent = 'Around week ' + weeks + ', your baby is about the size of ' +
           note[0] + '. ' + note[1];
         weeknoteEl.classList.remove('hidden');
+        /* Weekly illustration (style C set, 2026-07-04). Decorative:
+           empty alt, aria-hidden container. Hidden again if the asset
+           fails to load so the card never shows a broken image. */
+        if (weeknoteIllo) {
+          var wk = Math.min(41, weeks);
+          var pad = wk < 10 ? '0' + wk : String(wk);
+          weeknoteIllo.innerHTML = '';
+          var illoImg = document.createElement('img');
+          illoImg.alt = '';
+          illoImg.loading = 'lazy';
+          illoImg.onerror = function () { weeknoteIllo.classList.add('hidden'); };
+          illoImg.src = '/assets/weeks/week-' + pad + '.webp';
+          weeknoteIllo.appendChild(illoImg);
+          weeknoteIllo.classList.remove('hidden');
+        }
       } else {
         weeknoteEl.classList.add('hidden');
+        if (weeknoteIllo) weeknoteIllo.classList.add('hidden');
       }
     }
 
