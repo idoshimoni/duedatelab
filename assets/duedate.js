@@ -205,10 +205,12 @@
     if (dueLabel) dueLabel.textContent = PL.shortDate(dueDate) + ' · estimate';
 
     var todayG = document.getElementById('dd-svg-today');
+    var todayXVisible = null;
     if (todayG) {
       if (daysPreg >= 0 && daysPreg <= 280) {
         var weeksSinceLmp = daysPreg / 7;
         var todayX = 20 + (weeksSinceLmp / 40) * 680;
+        todayXVisible = todayX;
         todayG.style.display = '';
         setX(['dd-svg-today-halo', 'dd-svg-today-ring', 'dd-svg-today-dot', 'dd-svg-today-pulse'], todayX, 'cx');
         setX(['dd-svg-today-label', 'dd-svg-today-weeks'], todayX, 'x');
@@ -223,11 +225,34 @@
            position visually. The stem and marker geometry stay visible. */
         var todayLabel = document.getElementById('dd-svg-today-label');
         var todayWeeksEl = document.getElementById('dd-svg-today-weeks');
-        var hideTodayLabels = (todayX - 20) < 64;
+        /* Q2 extension (2026-07-04): also suppress Today text when it
+           would collide with the "Due date" label block on the right
+           (weeks ~38-40). The pulsing halo still marks the position. */
+        var hideTodayLabels = (todayX - 20) < 64 || (700 - todayX) < 76;
         if (todayLabel) todayLabel.style.display = hideTodayLabels ? 'none' : '';
         if (todayWeeksEl) todayWeeksEl.style.display = hideTodayLabels ? 'none' : '';
       } else {
         todayG.style.display = 'none';
+      }
+    }
+
+    /* Q2 (2026-07-04, Ido screenshot report): when the Today stem lands
+       near a trimester label center, the stem strikes through the label
+       text (e.g. 20w0d vs "Trimester 2" at x=368). Nudge that
+       trimester's title + weeks text away from the stem; reset all
+       others to their default centers so repeat submits stay clean. */
+    var TRI_CENTERS = [130, 368, 598];
+    var triTitles = document.getElementById('dd-svg-tri-titles');
+    var triWeeks = document.getElementById('dd-svg-tri-weeks');
+    if (triTitles && triWeeks) {
+      for (var ti = 0; ti < 3; ti++) {
+        var triX = TRI_CENTERS[ti];
+        if (todayXVisible !== null && Math.abs(todayXVisible - triX) < 58) {
+          triX = (triX <= todayXVisible) ? (todayXVisible - 62) : (todayXVisible + 62);
+          triX = Math.max(64, Math.min(656, triX));
+        }
+        if (triTitles.children[ti]) triTitles.children[ti].setAttribute('x', triX);
+        if (triWeeks.children[ti]) triWeeks.children[ti].setAttribute('x', triX);
       }
     }
 
