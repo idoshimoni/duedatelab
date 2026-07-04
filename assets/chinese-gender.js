@@ -95,6 +95,10 @@
     resultBig.innerHTML = isBoy ? 'It\u2019s a <span style="color:#1A2E4A">boy</span>' : 'It\u2019s a <span style="color:#EC0D5C">girl</span>';
     resultExpl.innerHTML = 'Lunar age <b>' + age + '</b> · Conception lunar month <b>' + month + '</b>. This is a novelty prediction, about 50% accurate.';
     chartWrap.innerHTML = renderChart(age, month);
+    /* Result delight (2026-07-04): one-shot reveal animation. */
+    result.classList.remove('pl-reveal');
+    void result.offsetWidth;
+    result.classList.add('pl-reveal');
     result.classList.remove('hidden');
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 

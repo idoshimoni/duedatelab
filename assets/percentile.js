@@ -142,6 +142,10 @@
     }
     resultExpl.textContent = explText;
     resultStats.innerHTML = stat(fW.label,'Weight %') + stat(fH.label,'Height %') + stat(bmi.toFixed(1),'BMI');
+    /* Result delight (2026-07-04): one-shot reveal animation. */
+    result.classList.remove('pl-reveal');
+    void result.offsetWidth;
+    result.classList.add('pl-reveal');
     result.classList.remove('hidden');
     result.scrollIntoView({behavior:'smooth',block:'start'});
 

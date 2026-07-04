@@ -282,6 +282,22 @@
     if (statPeak) statPeak.textContent = PL.formatDate(conception);
     if (statDue) statDue.textContent = PL.formatDate(dueDate) + ' (estimate)';
 
+    /* Result delight (2026-07-04): "how far along today" badge for
+       ongoing-pregnancy modes. Hidden for the retrospective birth mode.
+       Computed locally; nothing user-derived leaves the browser. */
+    var milestoneEl = document.getElementById('con-milestone');
+    if (milestoneEl) {
+      var today0 = new Date(); today0.setHours(0, 0, 0, 0);
+      var dpr = PL.diffDays(today0, lmp);
+      var badge = '';
+      if (mode !== 'birth' && dpr >= 0 && dpr <= 294) {
+        var bw = Math.floor(dpr / 7), bd = dpr - bw * 7;
+        badge = 'By this timing, about ' + bw + 'w ' + bd + 'd along today';
+      }
+      milestoneEl.textContent = badge;
+      milestoneEl.classList.toggle('hidden', !badge);
+    }
+
     populateSvg({
       cycle: cycle, conception: conception,
       fertileStart: fertileStart, fertileEnd: fertileEnd,
@@ -297,6 +313,9 @@
     var cap = document.getElementById('con-cs-title');
     if (cap) cap.textContent = 'Estimated conception window (' + cycle + '-day cycle)';
 
+    result.classList.remove('pl-reveal');
+    void result.offsetWidth;
+    result.classList.add('pl-reveal');
     result.classList.remove('hidden');
     if (visual) visual.classList.remove('hidden');
     if (nextSteps) nextSteps.classList.remove('hidden');

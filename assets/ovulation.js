@@ -225,6 +225,27 @@
     if (statWindow) statWindow.textContent = PL.shortDate(fertileStart) + ' – ' + PL.shortDate(fertileEnd);
     if (statPeak) statPeak.textContent = PL.shortDate(ovulation);
 
+    /* Result delight (2026-07-04): fertile-window status badge.
+       Computed locally; nothing user-derived leaves the browser. */
+    var milestoneEl = document.getElementById('ov-milestone');
+    if (milestoneEl) {
+      var today0 = new Date(); today0.setHours(0, 0, 0, 0);
+      var dToWin = PL.diffDays(fertileStart, today0);
+      var dToOv = PL.diffDays(ovulation, today0);
+      var badge = '';
+      if (dToWin > 0) {
+        badge = 'Fertile window opens in ' + dToWin + (dToWin === 1 ? ' day' : ' days');
+      } else if (dToOv > 0) {
+        badge = 'You are in your estimated fertile window';
+      } else if (dToOv === 0) {
+        badge = 'Estimated ovulation day — peak of the window';
+      } else {
+        badge = 'This window has passed — the next is estimated around ' + PL.shortDate(PL.addDays(fertileStart, cycle));
+      }
+      milestoneEl.textContent = badge;
+      milestoneEl.classList.toggle('hidden', !badge);
+    }
+
     populateSvg({
       cycle: cycle, lmp: lmp, ovulation: ovulation,
       fertileStart: fertileStart, fertileEnd: fertileEnd,
@@ -242,6 +263,9 @@
     var cap = document.getElementById('ov-cs-title');
     if (cap) cap.textContent = 'Fertile window and estimated ovulation (' + cycle + '-day cycle)';
 
+    result.classList.remove('pl-reveal');
+    void result.offsetWidth;
+    result.classList.add('pl-reveal');
     result.classList.remove('hidden');
     if (visual) visual.classList.remove('hidden');
     if (nextSteps) nextSteps.classList.remove('hidden');

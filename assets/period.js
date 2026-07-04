@@ -287,6 +287,43 @@
     if (statWindow) statWindow.textContent = PL.shortDate(nextPeriod) + ' – ' + PL.shortDate(nextPeriodEnd);
     if (statCycle) statCycle.textContent = cycle + ' days · ' + periodLen + '-day period';
 
+    /* Result delight (2026-07-04): cycle-position badge + progress bar.
+       All values computed locally; nothing user-derived leaves the browser. */
+    var milestoneEl = document.getElementById('pe-milestone');
+    var progressEl = document.getElementById('pe-progress');
+    var progressFill = document.getElementById('pe-progress-fill');
+    var progressMid = document.getElementById('pe-progress-mid');
+    var dayToday = cycleDay(today0, lmp);
+    var daysToNext = PL.diffDays(nextPeriod, today0);
+    if (milestoneEl) {
+      var badge = '';
+      if (dayToday >= 1 && dayToday <= cycle) {
+        if (daysToNext <= 1) badge = 'Your next period may start any day now';
+        else if (dayToday >= fertileStartDay && dayToday <= fertileEndDay) badge = 'Day ' + dayToday + ' of your cycle — in your estimated fertile window';
+        else if (dayToday <= periodLen) badge = 'Day ' + dayToday + ' of your cycle — period days';
+        else badge = 'Day ' + dayToday + ' of your cycle — next period in ' + daysToNext + ' days';
+      } else if (dayToday > cycle) {
+        badge = 'This cycle estimate has passed — cycles vary, so recalculate with your latest period';
+      }
+      milestoneEl.textContent = badge;
+      milestoneEl.classList.toggle('hidden', !badge);
+    }
+    if (progressEl && progressFill) {
+      if (dayToday >= 1 && dayToday <= cycle) {
+        var pct = Math.round((dayToday / cycle) * 100);
+        progressEl.classList.remove('hidden');
+        if (progressMid) progressMid.textContent = 'Day ' + dayToday + ' of ' + cycle;
+        progressFill.style.width = '0%';
+        window.requestAnimationFrame(function () {
+          window.requestAnimationFrame(function () {
+            progressFill.style.width = Math.max(2, pct) + '%';
+          });
+        });
+      } else {
+        progressEl.classList.add('hidden');
+      }
+    }
+
     populateSvg({
       cycle: cycle, periodLen: periodLen,
       lmp: lmp, currentPeriodEnd: currentPeriodEnd,
@@ -308,6 +345,9 @@
     var cap = document.getElementById('pe-cs-title');
     if (cap) cap.textContent = 'Period and next-period estimate (' + cycle + '-day cycle)';
 
+    result.classList.remove('pl-reveal');
+    void result.offsetWidth;
+    result.classList.add('pl-reveal');
     result.classList.remove('hidden');
     if (visual) visual.classList.remove('hidden');
     if (nextSteps) nextSteps.classList.remove('hidden');
