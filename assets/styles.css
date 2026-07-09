@@ -1,9 +1,15 @@
 /* DueDateLab — production styles
    Brand tokens are locked in :root — see README for details. */
 :root {
-  /* LOCKED brand tokens (brief §2.4) */
+  /* Brand tokens (brief §2.4). Revision 2026-07-04, operator-approved:
+     --crimson softened #EC0D5C -> #D6336C to match the illustration
+     system's raspberry and to pass WCAG AA for normal text on white
+     (4.59:1 vs the old 3.99:1). The logo mark dot stays #EC0D5C per
+     the never-recolor rule. --sage added as the official secondary
+     accent, drawn from the illustration foliage. */
   --navy: #1A2E4A;
-  --crimson: #EC0D5C;
+  --crimson: #D6336C;
+  --sage: #B9CDB6;
   --white: #FFFFFF;
 
   /* Derived support palette */
@@ -103,7 +109,7 @@ a { color: var(--navy); }
   padding: 0 14px; font: inherit; font-size: 16px; color: var(--text);
   background: #fff; outline: none; transition: border-color 150ms, box-shadow 150ms;
 }
-.pl-input:focus, select.pl-input:focus, input.pl-input:focus { border-color: var(--crimson); box-shadow: 0 0 0 2px rgba(236,13,92,0.2); }
+.pl-input:focus, select.pl-input:focus, input.pl-input:focus { border-color: var(--crimson); box-shadow: 0 0 0 2px rgba(214,51,108,0.2); }
 .pl-input.error { border-color: var(--error); }
 .pl-row { display: flex; gap: 10px; }
 .pl-row > * { flex: 1; }
@@ -166,7 +172,7 @@ a { color: var(--navy); }
 .pl-timeline { background: #fff; border-radius: 10px; padding: 14px; margin-top: 16px; }
 .pl-timeline-track { position: relative; height: 8px; background: var(--border); border-radius: 4px; }
 .pl-timeline-seg { position: absolute; top: 0; height: 100%; background: var(--navy); }
-.pl-timeline-marker { position: absolute; top: -4px; width: 16px; height: 16px; border-radius: 50%; background: var(--crimson); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(236,13,92,0.4); transform: translateX(-50%); }
+.pl-timeline-marker { position: absolute; top: -4px; width: 16px; height: 16px; border-radius: 50%; background: var(--crimson); border: 2px solid #fff; box-shadow: 0 1px 4px rgba(214,51,108,0.4); transform: translateX(-50%); }
 
 /* Related */
 .pl-related { margin-top: 32px; max-width: 960px; margin-left: auto; margin-right: auto; }
@@ -380,7 +386,7 @@ a { color: var(--navy); }
     display: block;
     font-size: 14px;
     font-weight: 700;
-    color: #EC0D5C;
+    color: #D6336C;
     letter-spacing: 0.5px;
     margin-bottom: 24px;
   }
@@ -411,7 +417,7 @@ a { color: var(--navy); }
  */
 :root {
   --navy: #1A2E4A;
-  --crimson: #EC0D5C;
+  --crimson: #D6336C; /* 2026-07-04 brand revision, see header token block */
   --crimson-dark: #C00B4D;
   --crimson-soft: #FDE6EE;
   --white: #FFFFFF;
@@ -746,7 +752,7 @@ button { font-family: inherit; }
   border: 0;
 }
 .pl-drawer-sublink .pl-badge.badge-article {
-  background: rgba(236,13,92,0.18);
+  background: rgba(214,51,108,0.18);
   color: #FFC4D5;
 }
 .pl-drawer-sublink .pl-badge.badge-entertainment {
@@ -1812,7 +1818,7 @@ sup.pl-cite a:hover, sup.pl-cite a:focus { color: var(--crimson); text-decoratio
   height: 100%;
   width: 0;
   border-radius: 999px;
-  background: linear-gradient(90deg, #B9CDB6, var(--crimson));
+  background: linear-gradient(90deg, var(--sage), var(--crimson));
   transition: width 1.1s cubic-bezier(0.2, 0.8, 0.3, 1);
 }
 .pl-progress-labels { display: flex; justify-content: space-between; font-size: 11.5px; color: #5A6B82; margin-top: 6px; }
