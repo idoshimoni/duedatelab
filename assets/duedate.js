@@ -400,6 +400,18 @@
     if (affiliate) affiliate.classList.remove('hidden');
 
     trackDueDateResultShown();
+
+    /* Phase 2 (2026-07-09): remember the LMP on this device only, so
+       week-by-week pages can greet the reader with their current week.
+       Never transmitted; the week-page banner shows a visible "forget"
+       control that clears it. Fails silently in private mode. */
+    try {
+      var isoLmp = lmp.getFullYear() + '-' +
+        String(lmp.getMonth() + 1).padStart(2, '0') + '-' +
+        String(lmp.getDate()).padStart(2, '0');
+      window.localStorage.setItem('ddl_lmp', isoLmp);
+    } catch (e) {}
+
     result.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
     /* GA4 event: only fires if gtag was loaded and consent is granted.
