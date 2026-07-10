@@ -79,3 +79,30 @@
     try { current.scrollIntoView({ block: 'nearest', inline: 'center' }); } catch (e) {}
   }
 })();
+
+
+/* Week motion figure (Phase 2.3 pilot, 2026-07-10). Replaces the static
+   at-a-glance illustration with a gentle 5s loop on pages that ship one.
+   Decorative only (aria-hidden, muted, no controls). Honors
+   prefers-reduced-motion: users who ask for less motion keep the still
+   poster. Source attaches only at runtime, so no video bytes load for
+   reduced-motion users. Fails silently to the poster image everywhere. */
+(function () {
+  var v = document.querySelector('.pl-weekglance video[data-motion-webm], .pl-weekglance video[data-motion-mp4]');
+  if (!v) return;
+  try {
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    v.muted = true;
+    ['webm', 'mp4'].forEach(function (fmt) {
+      var url = v.getAttribute('data-motion-' + fmt);
+      if (!url) return;
+      var s = document.createElement('source');
+      s.src = url;
+      s.type = 'video/' + fmt;
+      v.appendChild(s);
+    });
+    v.load();
+    var p = v.play();
+    if (p && typeof p.catch === 'function') p.catch(function () {});
+  } catch (e) {}
+})();

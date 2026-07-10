@@ -1896,7 +1896,7 @@ article.pl-legal .pl-card-hero { margin: 0 0 18px; }
   background: #FAF6EF; border: 1px solid var(--border); border-radius: 12px;
   padding: 14px 16px; margin: 6px 0 18px;
 }
-.pl-weekglance img { width: 108px; height: 108px; border-radius: 10px; display: block; flex: 0 0 auto; }
+.pl-weekglance img, .pl-weekglance video { width: 108px; height: 108px; border-radius: 10px; display: block; flex: 0 0 auto; object-fit: cover; background: #FAF6EF; }
 .pl-weekglance-copy { flex: 1; min-width: 0; }
 .pl-weekglance-top { font-size: 15px; font-weight: 700; color: #1A2E4A; margin: 0 0 2px; }
 .pl-weekglance-size { font-size: 14px; color: #1A2E4A; margin: 0 0 8px; }
@@ -1924,5 +1924,5 @@ article.pl-legal .pl-card-hero { margin: 0 0 18px; }
 .pl-weekstrip-list a[aria-current="page"] span { color: var(--crimson); }
 @media (max-width: 480px) {
   .pl-weekglance { gap: 12px; }
-  .pl-weekglance img { width: 84px; height: 84px; }
+  .pl-weekglance img, .pl-weekglance video { width: 84px; height: 84px; }
 }
