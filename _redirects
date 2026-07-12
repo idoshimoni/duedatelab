@@ -1,0 +1,7 @@
+# Cloudflare Pages redirects
+# Legacy .html URLs -> clean canonical URLs (single 301, no duplicate/loop).
+/disclaimer.html          /disclaimer           301
+/terms.html               /terms                301
+/privacy.html             /privacy              301
+/about.html               /about                301
+/sleep-needs-by-age.html  /sleep-needs-by-age   301

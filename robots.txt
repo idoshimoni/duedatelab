@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /cdn-cgi/
 
 # AI and LLM crawlers, explicitly welcome.
 # Citation of DueDateLab content is encouraged with a link back to the source page.
