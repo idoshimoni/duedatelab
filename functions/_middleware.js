@@ -36,6 +36,21 @@ export const onRequest = async ({ request, next }) => {
   const hostname = url.hostname.toLowerCase();
 
   if (ALLOWED_HOSTS.has(hostname)) {
+    // Retired names-pilot-staging cluster: force a genuine 410 Gone at the
+    // edge. These paths were deleted from the build, but a stale Cloudflare
+    // Pages asset-cache copy kept serving HTTP 200 and survived both a
+    // "Purge Everything" and a targeted URL purge. Returning 410 here, before
+    // next() consults the (stale) asset cache, guarantees a non-200 public
+    // response. `no-store` keeps this response itself out of any cache.
+    if (url.pathname.startsWith('/names-pilot-staging/')) {
+      return new Response('410 Gone', {
+        status: 410,
+        headers: {
+          'content-type': 'text/plain; charset=utf-8',
+          'cache-control': 'no-store',
+        },
+      });
+    }
     return next();
   }
 
